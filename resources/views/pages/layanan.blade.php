@@ -4,7 +4,7 @@
 
 @section('content')
 {{-- Hero Section --}}
-<section class="relative w-full h-[253px] bg-gradient-to-r from-blue-600/80 to-blue-400/80 overflow-hidden">
+<section class="relative w-full h-[253px] absolute inset-0 bg-blue-600/55">
   <img 
     src="{{ asset('assets/images/hero-pages.png') }}" 
     alt="Hero Background" 
@@ -25,7 +25,7 @@
 </section>
 
 {{-- Tab Navigation --}}
-<div class="bg-white border-b border-[#DBDBDB] sticky top-0 z-40">
+<div class="bg-white border-b border-[#DBDBDB] z-40">
   <div class="max-w-6xl mx-auto px-6">
     <div class="flex gap-8 overflow-x-auto">
       <button 
