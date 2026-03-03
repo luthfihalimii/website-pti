@@ -1,3 +1,4 @@
+
 <style>
   .business-hours-card,
   .business-hours-card * {

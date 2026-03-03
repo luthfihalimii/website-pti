@@ -1,9 +1,1 @@
-<svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<ellipse cx="9.5" cy="9.75359" rx="9.5" ry="9.75359" fill="url(#pattern0_2525_248)"/>
-<defs>
-<pattern id="pattern0_2525_248" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_2525_248" transform="matrix(0.00641684 0 0 0.00625 -0.183393 0)"/>
-</pattern>
-<image id="image0_2525_248" width="213" height="160" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANUAAACgCAMAAACscdnDAAAADFBMVEX/AAD/////YWH/4uKhGkXuAAAAgElEQVR4nO3PARHAMAwAoaz173k2+jlwwAwAAAAAAAAAAAAAAAAAAAAAjzgbzd1ovo2sOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDp+Vb9F5YjZD38AAAAASUVORK5CYII="/>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="19" height="20" fill="none" viewBox="0 0 19 20"><ellipse cx="9.5" cy="9.754" fill="url(#pattern0_2525_248)" rx="9.5" ry="9.754"/><defs><pattern id="pattern0_2525_248" width="1" height="1" patternContentUnits="objectBoundingBox"><use transform="matrix(0.00641684 0 0 0.00625 -0.183393 0)" xlink:href="#image0_2525_248"/></pattern><image id="image0_2525_248" width="213" height="160" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANUAAACgCAMAAACscdnDAAAADFBMVEX/AAD/////YWH/4uKhGkXuAAAAgElEQVR4nO3PARHAMAwAoaz173k2+jlwwAwAAAAAAAAAAAAAAAAAAAAAjzgbzd1ovo2sOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDqsOqw6rDp+Vb9F5YjZD38AAAAASUVORK5CYII="/></defs></svg>
