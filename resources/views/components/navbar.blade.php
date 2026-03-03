@@ -1,7 +1,7 @@
 @php
   $isActive = fn($path) => request()->is($path) ? 'text-blue-600 font-semibold' : 'text-slate-500';
   $isHome = request()->is('/') ? 'text-blue-600 font-semibold' : 'text-slate-500';
-  $isKarir = request()->is('magang') || request()->is('lowongan');
+  $isKarir = request()->is('magang*') || request()->is('lowongan');
 @endphp
 
 <header class="sticky top-0 z-50">

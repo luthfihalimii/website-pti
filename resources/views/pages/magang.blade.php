@@ -3,173 +3,280 @@
 @section('title', 'Magang')
 
 @section('content')
-  {{-- HERO / BREADCRUMB --}}
-  <section class="relative">
-    <div class="absolute inset-0">
-      <img
-        src="{{ asset('assets/images/hero-pages.png') }}"
-        alt="Hero Karir"
-        class="h-full w-full object-cover"
-      />
-      <div class="absolute inset-0 bg-blue-700/60"></div>
+
+@php
+    $img = fn ($file) => asset('assets/images/' . rawurlencode($file));
+
+    $divisi = [
+        [
+            'title' => 'Web Development',
+            'desc'  => 'Siswa magang belajar membangun dan mengelola website secara langsung sesuai standar industri.',
+            'img'   => 'Web Development.png',
+        ],
+        [
+            'title' => 'Mobile Development',
+            'desc'  => 'Siswa magang belajar mengembangkan aplikasi mobile yang fungsional dan siap digunakan.',
+            'img'   => 'Mobile Development.png',
+        ],
+        [
+            'title' => 'UI/UX Designer',
+            'desc'  => 'Siswa magang belajar merancang tampilan dan pengalaman pengguna yang intuitif serta menarik.',
+            'img'   => 'UI_UX Designer.png',
+        ],
+        [
+            'title' => 'IT Support',
+            'desc'  => 'Siswa magang belajar menangani instalasi, troubleshooting, dan pemeliharaan sistem IT.',
+            'img'   => 'IT Support.png',
+        ],
+    ];
+@endphp
+
+
+{{-- ================= HERO ================= --}}
+<section class="relative w-full h-[253px] bg-gradient-to-r from-blue-600/80 to-blue-400/80 overflow-hidden">
+  <img 
+    src="{{ asset('assets/images/hero-pages.png') }}" 
+    alt="Hero Background" 
+    class="absolute inset-0 w-full h-full object-cover -z-10"
+  >
+  
+  <div class="relative max-w-6xl mx-auto px-6 h-full flex flex-col items-center justify-center text-white">
+    <h1 class="text-5xl md:text-[68px] font-bold text-shadow-lg mb-4">
+      Karir
+    </h1>
+    
+    <div class="flex items-center gap-2 text-lg md:text-[21px] font-semibold">
+      <span>Home</span>
+      <div class="w-3 h-[3px] bg-white"></div>
+      <span>Magang</span>
     </div>
+  </div>
+</section>
 
-    <div class="relative mx-auto max-w-6xl px-4 py-16 md:py-20 text-center text-white">
-      <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Karir</h1>
-      <p class="mt-3 text-sm md:text-base opacity-90">Home &nbsp;–&nbsp; Magang</p>
+
+{{-- ================= INTRO ================= --}}
+<section class="max-w-6xl mx-auto px-4 py-16 text-center">
+    <div class="flex items-center justify-center gap-6">
+        <div class="w-14 h-[2px] bg-gray-400"></div>
+        <span class="text-blue-600 text-lg md:text-xl font-semibold tracking-[3px]">
+            MAGANG
+        </span>
+        <div class="w-14 h-[2px] bg-gray-400"></div>
     </div>
-  </section>
-
-  {{-- INTRO --}}
-  <section class="mx-auto max-w-6xl px-4 py-14 md:py-16">
-    <div class="text-center">
-      <div class="flex items-center justify-center gap-3">
-        <span class="h-px w-12 bg-slate-300"></span>
-        <p class="text-blue-600 font-semibold tracking-wide">MAGANG</p>
-        <span class="h-px w-12 bg-slate-300"></span>
-      </div>
-
-      <h2 class="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">#DariMagangJadiJago</h2>
-
-      <p class="mx-auto mt-5 max-w-3xl text-slate-600 leading-relaxed">
+    <h2 class="text-4xl font-extrabold mt-3">
+      #DariMagangJadiJago
+    </h2>
+    <p class="mt-6 text-slate-700 text-lg leading-relaxed max-w-3xl mx-auto">
         Di PT. Piramida Teknologi Informasi, kalian nggak cuma magang — kalian bertumbuh.
         Terlibat di project nyata, dibimbing mentor berpengalaman, dan diasah jadi lebih siap
         masuk dunia profesional. Datang belajar, pulang jadi lebih jago.
-      </p>
-    </div>
-  </section>
+    </p>
+</section>
 
-  {{-- DIVISI (BACKGROUND IMAGE) --}}
-  <section class="relative">
-    <div class="absolute inset-0">
-      <img
-        src="{{ asset('assets/images/hero-pages.png') }}"
-        alt="Background"
-        class="h-full w-full object-cover"
-      />
-      <div class="absolute inset-0 bg-blue-800/70"></div>
-    </div>
+{{-- ================= DIVISI ================= --}}
+<section class="relative overflow-hidden">
 
-    <div class="relative mx-auto max-w-6xl px-4 py-14 md:py-16">
-      <h3 class="text-center text-2xl md:text-3xl font-bold text-white">
-        Kami mempunyai berbagai divisi <span class="font-extrabold">untuk mengasah skill anda</span>
-      </h3>
+  {{-- Background image --}}
+  <img
+    src="{{ asset('assets/images/Latar Belakang Divisi.png') }}"
+    alt="Latar belakang divisi"
+    class="absolute inset-0 w-full h-full object-cover"
+  >
 
-      @php
-        $divisi = [
-          [
-            'title' => 'Web Development',
-            'desc'  => 'Siswa magang belajar membangun dan mengelola website secara langsung sesuai standar industri.',
-            'img'   => 'WEB.png',
-          ],
-          [
-            'title' => 'Mobile Development',
-            'desc'  => 'Siswa magang belajar mengembangkan aplikasi mobile yang fungsional dan siap digunakan.',
-            'img'   => 'MOBILE.png',
-          ],
-          [
-            'title' => 'UI/UX Designer',
-            'desc'  => 'Siswa magang belajar merancang tampilan dan pengalaman pengguna yang intuitif serta menarik.',
-            'img'   => 'UIUX.png',
-          ],
-          [
-            'title' => 'IT Support',
-            'desc'  => 'Siswa magang belajar menangani instalasi, troubleshooting, dan pemeliharaan sistem IT.',
-            'img'   => 'IT.png',
-          ],
-        ];
-      @endphp
+  {{-- Overlay --}}
+  <div class="absolute inset-0 bg-sky-500/20 backdrop-blur-[1px]"></div>
 
-      <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        @foreach ($divisi as $d)
-          <div class="rounded-2xl bg-white/95 p-6 shadow-lg ring-1 ring-black/5">
-            <div class="flex items-center justify-center">
-              <div class="grid h-14 w-14 place-items-center rounded-xl bg-blue-50">
-                <img
-                  src="{{ asset('assets/images/' . $d['img']) }}"
-                  alt="{{ $d['title'] }}"
-                  class="h-10 w-10 object-contain"
-                />
-              </div>
-            </div>
+  <div class="relative max-w-6xl mx-auto px-6 py-16">
 
-            <h4 class="mt-4 text-center font-bold text-slate-900">{{ $d['title'] }}</h4>
-            <p class="mt-2 text-center text-sm text-slate-600 leading-relaxed">
-              {{ $d['desc'] }}
-            </p>
-          </div>
-        @endforeach
-      </div>
-    </div>
-  </section>
+    <h3 class="text-center text-white text-3xl md:text-4xl leading-tight">
+      Kami mempunyai berbagai divisi<br>
+      <span class="font-bold">untuk mengasah skill Anda</span>
+    </h3>
 
-  {{-- BENEFIT --}}
-  <section class="mx-auto max-w-6xl px-4 py-14 md:py-16">
-    <div class="text-center">
-      <h3 class="text-3xl md:text-4xl font-extrabold tracking-tight">Benefit Program Magang</h3>
-      <p class="mx-auto mt-4 max-w-3xl text-slate-600 leading-relaxed">
-        Bersama kami, bangun fondasi karier yang kuat dan ciptakan perjalanan profesional yang penuh
-        tantangan, pembelajaran, serta peluang berkembang.
-      </p>
-    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+      @foreach($divisi as $d)
+        <div class="bg-white rounded-2xl shadow-lg
+                    w-full max-w-[260px] h-[260px]
+                    mx-auto px-6 py-7
+                    text-center flex flex-col items-center">
 
-    @php
-      $benefit = [
-        ['no'=>1,'title'=>'Terlibat dalam real proyek','desc'=>'Berkesempatan bekerja langsung pada proyek nyata yang berdampak.'],
-        ['no'=>2,'title'=>'Lingkungan kerja yang profesional','desc'=>'Suasana kerja yang mendukung pengembangan dan pertumbuhan kemampuan anda.'],
-        ['no'=>3,'title'=>'Mentor berpengalaman','desc'=>'Bimbingan langsung dari profesional yang ahli di bidangnya.'],
-        ['no'=>4,'title'=>'Sertifikat magang','desc'=>'Sertifikat resmi sebagai bukti pengalaman magang anda.'],
-      ];
-    @endphp
+          {{-- icon --}}
+          <img
+            src="{{ asset('assets/images/' . rawurlencode($d['img'])) }}"
+            alt="{{ $d['title'] }}"
+            class="w-20 h-20 object-contain mt-1"
+          >
 
-    <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-      @foreach ($benefit as $b)
-        <div class="rounded-2xl bg-white p-7 shadow-lg ring-1 ring-black/5">
-          <div class="flex items-start gap-5">
-            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-blue-600 text-white font-bold">
-              {{ $b['no'] }}
-            </div>
-            <div>
-              <h4 class="text-lg font-bold text-slate-900">{{ $b['title'] }}</h4>
-              <p class="mt-2 text-slate-600">{{ $b['desc'] }}</p>
-            </div>
-          </div>
+          <h4 class="font-bold text-base mt-5">
+            {{ $d['title'] }}
+          </h4>
+
+          <p class="text-slate-600 text-xs mt-3 leading-relaxed">
+            {{ $d['desc'] }}
+          </p>
+
         </div>
       @endforeach
     </div>
-  </section>
 
-  {{-- CTA --}}
-  <section class="mx-auto max-w-6xl px-4 pb-16">
-    <p class="text-blue-600 font-extrabold tracking-wide">SUDAH SIAP MAGANG DI PTI?</p>
+  </div>
+</section>
 
-    <div class="mt-6 grid grid-cols-1 items-center gap-10 md:grid-cols-2">
-      <div>
-        <h3 class="text-4xl md:text-5xl font-extrabold leading-tight">
-          MEMBENTUK MASA DEPAN <br />
-          <span class="text-blue-600">MAGANG DI PTI</span>
-        </h3>
+{{-- ================= BENEFIT ================= --}}
+<section class="bg-white py-20">
+  <div class="max-w-6xl mx-auto px-6">
 
-        <p class="mt-4 text-slate-600 leading-relaxed">
-          Dengan fokus pada peningkatan kualitas, pengembangan keterampilan, dan pemberdayaan, PTI berupaya
-          menciptakan lingkungan yang kondusif bagi peserta magang untuk tumbuh dan berkembang.
-        </p>
+    {{-- Title --}}
+    <h2 class="text-center text-4xl font-bold text-black">
+      Benefit Program Magang
+    </h2>
 
-        <a
-          href="{{ url('/kontak') }}"
-          class="mt-6 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white shadow hover:bg-blue-700"
-        >
-          Daftar <span aria-hidden="true">→</span>
-        </a>
+    <p class="text-center text-black mt-4 max-w-3xl mx-auto">
+      Bersama kami, bangun fondasi karier yang kuat dan ciptakan perjalanan profesional 
+      yang penuh tantangan, pembelajaran, serta peluang berkembang.
+    </p>
+
+    {{-- Grid --}}
+    <div class="grid md:grid-cols-2 gap-10 mt-16">
+
+      {{-- 1 --}}
+      <div class="bg-white rounded-2xl p-10
+                  shadow-2xl border border-gray-300 bg-white
+                  min-h-[190px]">
+
+        <div class="flex items-start gap-6">
+
+          <div class="w-12 h-12 rounded-full
+                      bg-blue-500 text-white
+                      flex items-center justify-center
+                      font-semibold text-lg flex-shrink-0">
+            1
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-xl text-black">
+              Terlibat dalam real proyek
+            </h4>
+            <p class="text-black mt-3">
+              Berkesempatan bekerja langsung pada proyek nyata yang berdampak.
+            </p>
+          </div>
+
+        </div>
       </div>
 
-      <div class="flex justify-center md:justify-end">
-        <img
-          src="{{ asset('assets/images/Magang.png') }}"
-          alt="Ilustrasi Magang"
-          class="max-w-md w-full"
-        />
+      {{-- 2 --}}
+      <div class="bg-white rounded-2xl p-10
+                  shadow-2xl border border-gray-300 bg-white
+                  min-h-[190px]">
+
+        <div class="flex items-start gap-6">
+
+          <div class="w-12 h-12 rounded-full
+                      bg-blue-500 text-white
+                      flex items-center justify-center
+                      font-semibold text-lg flex-shrink-0">
+            2
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-xl text-black">
+              Lingkungan kerja yang profesional
+            </h4>
+            <p class="text-black mt-3">
+              Suasana kerja yang mendukung pengembangan dan pertumbuhan kemampuan Anda.
+            </p>
+          </div>
+
+        </div>
       </div>
+
+      {{-- 3 --}}
+      <div class="bg-white rounded-2xl p-10
+                  shadow-2xl border border-gray-300 bg-white
+                  min-h-[190px]">
+
+        <div class="flex items-start gap-6">
+
+          <div class="w-12 h-12 rounded-full
+                      bg-blue-500 text-white
+                      flex items-center justify-center
+                      font-semibold text-lg flex-shrink-0">
+            3
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-xl text-black">
+              Mentor berpengalaman
+            </h4>
+            <p class="text-black mt-3">
+              Bimbingan langsung dari profesional yang ahli di bidangnya.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      {{-- 4 --}}
+      <div class="bg-white rounded-2xl p-10
+                  shadow-2xl border border-gray-300 bg-white
+                  min-h-[190px]">
+
+        <div class="flex items-start gap-6">
+
+          <div class="w-12 h-12 rounded-full
+                      bg-blue-500 text-white
+                      flex items-center justify-center
+                      font-semibold text-lg flex-shrink-0">
+            4
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-xl text-black">
+              Sertifikat magang
+            </h4>
+            <p class="text-black mt-3">
+              Sertifikat resmi sebagai bukti pengalaman magang Anda.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
+
+
+{{-- ================= CTA ================= --}}
+<section class="max-w-6xl mx-auto px-4 pb-20">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+            <p class="text-blue-600 text-2xl md:text-3xl font-semibold tracking-widest">
+              SUDAH SIAP MAGANG DI PTI?
+            </p>
+            <h3 class="text-4xl font-extrabold mt-4">
+                MEMBENTUK MASA DEPAN <span class="text-blue-600">MAGANG DI PTI</span>
+            </h3>
+            <p class="text-gray-600 mt-4">
+                Dengan fokus pada peningkatan kualitas, pengembangan keterampilan, dan pemberdayaan.
+                PTI berupaya menciptakan lingkungan yang kondusif bagi peserta magang untuk tumbuh dan berkembang.
+            </p>
+
+            {{-- Tombol ke Tahap 1 --}}
+            <a href="{{ url('/magang/tahap-1') }}"
+               class="inline-block mt-6 bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700">
+                Daftar →
+            </a>
+        </div>
+
+         {{-- RIGHT IMAGE --}}
+        <div class="flex justify-center">
+            <img src="{{ asset('assets/images/Magang.png') }}"
+                 alt="Magang"
+                 class="max-w-md w-full">
+        </div>
+    </div>
+</section>
+
 @endsection
