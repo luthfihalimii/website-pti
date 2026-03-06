@@ -1,5 +1,17 @@
 * text=auto eol=lf
 
+# Binary files — prevent git from applying EOL normalization
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+
 *.blade.php diff=html
 *.css diff=css
 *.html diff=html

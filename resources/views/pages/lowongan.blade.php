@@ -55,7 +55,7 @@
         {{-- Card Image --}}
         <div class="h-[200px] overflow-hidden">
           <img 
-            src="{{ asset('assets/images/poster lowongan.png') }}" 
+            src="{{ asset('assets/images/poster-lowongan.png') }}" 
             alt="UI/UX Designer" 
             class="w-full h-full object-cover"
           />

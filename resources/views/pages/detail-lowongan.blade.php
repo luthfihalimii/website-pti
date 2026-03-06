@@ -151,7 +151,7 @@
       <a href="/lowongan/form" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-md font-medium text-[14px] transition-colors inline-flex items-center gap-2">
         Lamar →
       </a>
-      <a href="{{ asset('assets/images/poster lowongan.png') }}" 
+      <a href="{{ asset('assets/images/poster-lowongan.png') }}" 
         target="_blank"
         class="bg-white hover:bg-slate-50 text-blue-600 border-2 border-blue-600 px-8 py-3 rounded-md font-medium text-[14px] transition-colors">
         Lihat Poster

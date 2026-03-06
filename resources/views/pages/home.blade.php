@@ -16,19 +16,19 @@
         [
             'title' => 'ERP BUSINESS SYSTEM',
             'description' => 'Aplikasi untuk membantu perusahaan mengelola manajemen keuangan, gudang, dan inventaris, pembelian penjualan, dan manufaktur.',
-            'image' => asset('assets/images/ERP _ Bussines System.png'),
+            'image' => asset('assets/images/erp-business-system.png'),
             'icon' => 'BS',
         ],
         [
             'title' => 'IT CONSULTANT',
             'description' => 'Kami menawarkan solusi terintegrasi lengkap untuk konsultasi, perancangan, penerapan dan pemeliharaan produk untuk perusahaan.',
-            'image' => asset('assets/images/IT Consultant.png'),
+            'image' => asset('assets/images/it-consultant.png'),
             'icon' => 'IT',
         ],
         [
             'title' => 'E-GOVERMENT & SMART CITY',
             'description' => 'Penerapan pemanfaatan teknologi informasi yang mengikat hubungan antara pemerintah dengan pihak lain.',
-            'image' => asset('assets/images/E-Government .png'),
+            'image' => asset('assets/images/e-government.png'),
             'icon' => 'EG',
         ],
     ];
@@ -50,7 +50,7 @@
             'tab' => 'HRIS/HRMS',
             'tab_mobile' => 'HRIS/HRMS',
             'title' => 'HRIS / HRMS',
-            'image' => asset('assets/images/Latar Belakang Divisi.png'),
+            'image' => asset('assets/images/latar-belakang-divisi.png'),
             'summary' => [
                 'Sistem manajemen SDM terintegrasi untuk administrasi personalia, absensi, cuti, payroll, hingga evaluasi kinerja.',
                 'Mempermudah departemen HR menjalankan workflow berbasis data dan menyiapkan laporan operasional secara real-time.',
@@ -72,7 +72,7 @@
             'tab' => 'eGovernment',
             'tab_mobile' => 'eGovernment',
             'title' => 'E-GOVERNMENT',
-            'image' => asset('assets/images/E-Government .png'),
+            'image' => asset('assets/images/e-government.png'),
             'summary' => [
                 'Solusi digital pemerintahan untuk mempercepat pelayanan publik dan meningkatkan transparansi pengelolaan data.',
                 'Dapat mencakup layanan perizinan, pengaduan, dashboard kinerja, hingga integrasi lintas perangkat daerah.',
@@ -83,7 +83,7 @@
             'tab' => 'Insight Gov',
             'tab_mobile' => 'Insight Gov',
             'title' => 'INSIGHT GOV',
-            'image' => asset('assets/images/E-Government .png'),
+            'image' => asset('assets/images/e-government.png'),
             'summary' => [
                 'Dashboard analitik pemerintahan untuk membantu pimpinan memantau KPI, tren pelayanan, dan performa organisasi.',
                 'Visualisasi data disusun agar mudah dipahami untuk mendukung pengambilan keputusan yang cepat dan tepat.',

@@ -138,7 +138,7 @@
         
         <div class="flex justify-center">
           <img 
-            src="{{ asset('assets/images/IT Consultant.png') }}" 
+            src="{{ asset('assets/images/it-consultant.png') }}" 
             alt="IT Consultant" 
             class="w-full max-w-md rounded-xl shadow-lg"
           >
@@ -179,7 +179,7 @@
         
         <div class="flex justify-center">
           <img 
-            src="{{ asset('assets/images/ERP _ Bussines System.png') }}" 
+            src="{{ asset('assets/images/erp-business-system.png') }}" 
             alt="Business System" 
             class="w-full max-w-md rounded-xl shadow-lg"
           >
@@ -224,7 +224,7 @@
         
         <div class="flex justify-center">
           <img 
-            src="{{ asset('assets/images/E-Government .png') }}" 
+            src="{{ asset('assets/images/e-government.png') }}" 
             alt="E-Government" 
             class="w-full max-w-md rounded-xl shadow-lg"
           >
