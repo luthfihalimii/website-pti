@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class HomeLandingPageTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_home_page_shows_primary_landing_sections(): void
     {
         $response = $this->get('/');

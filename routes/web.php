@@ -1,17 +1,82 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\InternshipApplicationController as AdminInternshipApplicationController;
+use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ProductInquiryController as AdminProductInquiryController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CareerController;
+use App\Http\Controllers\InternshipApplicationController;
+use App\Http\Controllers\JobApplicationController;
+use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductCatalogController;
+use App\Http\Controllers\ProductInquiryController;
+use App\Http\Controllers\PublicationController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'pages.home');
-Route::view('/tentang', 'pages.tentang');
-Route::view('/layanan', 'pages.layanan');
-Route::view('/produk', 'pages.produk');
-Route::view('/magang', 'pages.magang');
-Route::view('/lowongan', 'pages.lowongan');
-Route::view('/lowongan/detail', 'pages.detail-lowongan');
-Route::view('/lowongan/form', 'pages.form-lamaran');
-Route::view('/magang/tahap-1', 'pages.magang-tahap1');
-Route::view('/magang/tahap-2', 'pages.magang-tahap2');
-Route::view('/kontak', 'pages.kontak');
-Route::view('/publikasi', 'pages.publikasi')->name('publikasi.index');
-Route::view('/publikasi/flipbook', 'components.flipbook')->name('publikasi.flipbook');
+Route::post('/locale', [LocaleController::class, 'update'])->name('locale.switch');
+
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/tentang', [PageController::class, 'about'])->name('about');
+Route::get('/layanan', [PageController::class, 'services'])->name('services');
+Route::get('/produk', [ProductCatalogController::class, 'index'])->name('products.index');
+Route::get('/produk/{slug}', [ProductCatalogController::class, 'show'])->name('products.show');
+Route::post('/produk/{slug}/inquiry', [ProductInquiryController::class, 'store'])->name('products.inquiries.store');
+Route::get('/kontak', [ContactController::class, 'index'])->name('contact');
+Route::post('/kontak', [ContactController::class, 'store'])->name('contact.store');
+
+Route::get('/magang', [CareerController::class, 'internships'])->name('internships.index');
+Route::get('/magang/tahap-1', [InternshipApplicationController::class, 'createStepOne'])->name('internships.steps.one');
+Route::post('/magang/tahap-1', [InternshipApplicationController::class, 'storeStepOne'])->name('internships.steps.one.store');
+Route::get('/magang/tahap-2', [InternshipApplicationController::class, 'createStepTwo'])->name('internships.steps.two');
+Route::post('/magang/tahap-2', [InternshipApplicationController::class, 'storeStepTwo'])->name('internships.steps.two.store');
+
+Route::get('/lowongan', [CareerController::class, 'vacancies'])->name('careers.index');
+Route::get('/lowongan/detail', [CareerController::class, 'showVacancy'])->name('careers.show');
+Route::get('/lowongan/form', [CareerController::class, 'createApplication'])->name('careers.applications.create');
+Route::post('/lowongan/form', [JobApplicationController::class, 'store'])->name('careers.applications.store');
+
+Route::get('/publikasi', [PublicationController::class, 'index'])->name('publications.index');
+Route::get('/publikasi/flipbook', [PublicationController::class, 'flipbook'])->name('publications.flipbook');
+Route::redirect('/login', '/admin/login');
+Route::get('/admin', function () {
+    $user = auth()->user();
+
+    return $user?->is_admin
+        ? redirect()->route('admin.dashboard')
+        : redirect()->route('admin.login');
+});
+Route::get('/dashboard', function () {
+    $user = auth()->user();
+
+    return $user?->is_admin
+        ? redirect()->route('admin.dashboard')
+        : redirect()->route('admin.login');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::middleware('guest')->group(function () {
+        Route::get('/login', [AdminLoginController::class, 'create'])->name('login');
+        Route::post('/login', [AdminLoginController::class, 'store'])->name('login.store');
+    });
+
+    Route::middleware('admin')->group(function () {
+        Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+        Route::post('/logout', [AdminLoginController::class, 'destroy'])->name('logout');
+        Route::resource('categories', AdminCategoryController::class)->except(['show']);
+        Route::resource('products', AdminProductController::class)->except(['show']);
+        Route::get('/product-inquiries', [AdminProductInquiryController::class, 'index'])->name('product-inquiries.index');
+        Route::get('/job-applications', [AdminJobApplicationController::class, 'index'])->name('job-applications.index');
+        Route::get('/job-applications/{jobApplication}', [AdminJobApplicationController::class, 'show'])->name('job-applications.show');
+        Route::get('/job-applications/{jobApplication}/download', [AdminJobApplicationController::class, 'download'])->name('job-applications.download');
+        Route::patch('/job-applications/{jobApplication}/status', [AdminJobApplicationController::class, 'updateStatus'])->name('job-applications.status.update');
+        Route::get('/internship-applications', [AdminInternshipApplicationController::class, 'index'])->name('internship-applications.index');
+        Route::get('/internship-applications/{internshipApplication}', [AdminInternshipApplicationController::class, 'show'])->name('internship-applications.show');
+        Route::get('/internship-applications/{internshipApplication}/download', [AdminInternshipApplicationController::class, 'download'])->name('internship-applications.download');
+        Route::patch('/internship-applications/{internshipApplication}/status', [AdminInternshipApplicationController::class, 'updateStatus'])->name('internship-applications.status.update');
+    });
+});

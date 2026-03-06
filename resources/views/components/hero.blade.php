@@ -1,46 +1,22 @@
 @php
-$slides = [
-  [
-    'tag' => 'Tentang kami',
-    'title' => 'Business Intelligence',
-    'subtitle' => 'Visualisasi infografis untuk presentasi yang menarik & memudahkan pengguna, analis dan top manajemen. Infografis yang ditampilkan dinamis mengikuti update data.',
-    'image' => asset('assets/images/hero.png'),
-    'primary' => ['text' => 'Baca selengkapnya', 'href' => url('/tentang')],
-    'secondary' => ['text' => 'Hubungi kami', 'href' => url('/kontak')],
-  ],
-  [
-    'tag' => 'Tentang kami',
-    'title' => 'Dapatkan Solusi Lebih Baik untuk Bisnis Anda',
-    'subtitle' => 'Kami akan membantu  Anda mewujudkan ide kreatif perusahaaan Anda menjadi kenyataan.',
-    'image' => asset('assets/images/hero.png'),
-    'primary' => ['text' => 'Baca selengkapnya', 'href' => url('/tentang')],
-    'secondary' => ['text' => 'Hubungi kami', 'href' => url('/kontak')],
-  ],
-  [
-    'tag' => 'Tentang kami',
-    'title' => 'Data Warehouse',
-    'subtitle' => 'Aplikasi ini berfungsi untuk menyimpan Daftar Kamus Data dan menjadi gudang data. User dapat melakukan input data, verifikasi, update data, view dan monitoring. Dapat terintegrasi Odengan aplikasi transaksi operasional lainnya, ataupun ekstraksi data dari format pdf.',
-    'image' => asset('assets/images/hero.png'),
-    'primary' => ['text' => 'Baca selengkapnya', 'href' => url('/tentang')],
-    'secondary' => ['text' => 'Hubungi kami', 'href' => url('/kontak')],
-  ],
-  [
-    'tag' => 'Tentang kami',
-    'title' => 'Membantu Organisasi Berinovasi',
-    'subtitle' => 'Kami membantu klien menyelesaikan masalah saat ini dan mengantisipasi tantangan masa depan, sehingga mereka dapat mengambil keputusan yang efektif bagi organisasi.',
-    'image' => asset('assets/images/hero.png'),
-    'primary' => ['text' => 'Baca selengkapnya', 'href' => url('/tentang')],
-    'secondary' => ['text' => 'Hubungi kami', 'href' => url('/kontak')],
-  ],
-  [
-    'tag' => 'Tentang kami',
-    'title' => 'Penyedia Solusi IT',
-    'subtitle' => 'Berdiri sejak 2012 dan aktif sejak 2013, perusahaan ini telah melayani 200+ pelanggan di Indonesia dalam bidang Teknologi dan Sistem Informasi, menyediakan solusi aplikasi dan konsultasi sistem, serta didukung 20+ tim ahli berpengalaman.',
-    'image' => asset('assets/images/hero.png'),
-    'primary' => ['text' => 'Baca selengkapnya', 'href' => url('/tentang')],
-    'secondary' => ['text' => 'Hubungi kami', 'href' => url('/kontak')],
-  ],
-];
+$slides = collect(config('site.hero_slides'))
+    ->map(fn ($slide) => [
+        ...$slide,
+        'tag' => __($slide['tag']),
+        'title' => __($slide['title']),
+        'subtitle' => __($slide['subtitle']),
+        'image' => asset($slide['image']),
+        'primary' => [
+            'text' => __($slide['primary']['text']),
+            'href' => route($slide['primary']['route']),
+        ],
+        'secondary' => [
+            'text' => __($slide['secondary']['text']),
+            'href' => route($slide['secondary']['route']),
+        ],
+    ])
+    ->values()
+    ->all();
 
 $heroId = 'hero_' . uniqid();
 @endphp
@@ -50,7 +26,7 @@ $heroId = 'hero_' . uniqid();
 
     <img data-hero-image
       src="{{ $slides[0]['image'] }}"
-      alt="Hero"
+      alt="{{ __('Hero') }}"
       class="w-full h-[420px] md:h-[560px] object-cover">
 
     <div class="absolute inset-0 z-10 bg-gradient-to-r from-[#2563EB]/95 via-[#2563EB]/85 to-transparent"></div>
@@ -63,7 +39,7 @@ $heroId = 'hero_' . uniqid();
             <div data-hero-bullets class="hero-bullet-column">
               @foreach($slides as $i => $s)
                 <button type="button"
-                  aria-label="Slide {{ $i+1 }}"
+                  aria-label="{{ __('Slide :number', ['number' => $i + 1]) }}"
                   data-hero-dot="{{ $i }}"
                   class="hero-bullet">
                 </button>
@@ -124,143 +100,6 @@ $heroId = 'hero_' . uniqid();
   </div>
 </section>
 
-<style>
-.hero-wrap .hero-bullet-wrap{
-  padding-top: 58px;
-  flex: 0 0 16px;
-}
-
-.hero-wrap .hero-content-grid{
-  display: flex;
-  align-items: flex-start;
-  gap: 32px;
-  padding-left: 40px;
-}
-
-.hero-wrap .hero-bullet-column{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-
-.hero-wrap .hero-copy{
-  padding-top: 40px;
-}
-
-.hero-wrap .hero-bullet{
-  width: 16px;
-  height: 16px;
-  border-radius: 9999px;
-
-  border: 0;                
-  background: transparent;
-  box-shadow: inset 0 0 0 2px #fff;  
-
-  padding: 0;
-  margin: 0;
-  display: block;
-  box-sizing: border-box;
-
-  appearance: none;
-  -webkit-appearance: none;
-  outline: none;
-}
-
-.hero-wrap .hero-bullet.is-active{
-  background: #fff;      
-  box-shadow: none;         
-}
-
-.hero-wrap .hero-tag-wrap{
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-.hero-wrap .hero-tag-line{
-  width: 90px;
-  height: 3px;
-  background: #fff;
-  border-radius: 2px;
-}
-.hero-wrap .hero-tag-text{
-  font-size: 1rem;
-  font-weight: 500;
-  color: rgba(255,255,255,.9);
-  line-height: 1;
-}
-
-.hero-wrap .hero-title{
-  font-size: 3rem !important;
-  font-weight: 600 !important;
-  line-height: 1.1 !important;
-  letter-spacing: -0.02em !important;
-  margin: 0 0 16px 0 !important;
-  max-width: 650px !important;
-  text-align: left !important;
-}
-
-.hero-wrap .hero-subtitle{
-  font-size: 1rem !important;
-  line-height: 1.6 !important;
-  margin: 0 0 24px 0 !important;
-  max-width: 520px !important;
-  color: rgba(255,255,255,.9) !important;
-  text-align: left !important;
-}
-
-.hero-wrap .hero-btn{
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 12px !important;
-  padding: 12px 24px !important;
-  border-radius: 12px !important;
-  font-size: 1rem !important;
-  font-weight: 500 !important;
-  text-decoration: none !important;
-  line-height: 1 !important;
-}
-
-.hero-wrap .hero-btn--primary{
-  background: #fff !important;
-  color: #2563EB !important;
-  border: 2px solid #fff !important;
-}
-
-.hero-wrap .hero-btn--secondary{
-  background: transparent !important;
-  color: #fff !important;
-  border: 2px solid rgba(255,255,255,.9) !important;
-}
-
-.hero-wrap .hero-arrow{
-  font-size: 18px !important;
-  line-height: 1 !important;
-}
-
-@media (min-width: 768px){
-  .hero-wrap .hero-content-grid{
-    padding-left: 64px;
-  }
-}
-
-@media (max-width: 767px){
-  .hero-wrap .hero-content-grid{
-    padding-left: 20px;
-    gap: 20px;
-  }
-
-  .hero-wrap .hero-bullet-wrap{
-    padding-top: 52px;
-  }
-
-  .hero-wrap .hero-copy{
-    padding-top: 30px;
-  }
-}
-</style>
-
 <script>
 (function () {
   const root = document.getElementById(@json($heroId));
@@ -303,8 +142,8 @@ function setActive(){
 
     elPrimary.href = s.primary?.href || '#';
     elSecondary.href = s.secondary?.href || '#';
-    elPrimaryText.textContent = s.primary?.text || 'Baca selengkapnya';
-    elSecondaryText.textContent = s.secondary?.text || 'Hubungi kami';
+    elPrimaryText.textContent = s.primary?.text || @json(__('Baca selengkapnya'));
+    elSecondaryText.textContent = s.secondary?.text || @json(__('Hubungi kami'));
 
     setActive();
   }
