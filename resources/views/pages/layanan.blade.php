@@ -13,11 +13,11 @@
   >
   
   <div class="relative max-w-6xl mx-auto px-6 h-full flex flex-col items-center justify-center text-white">
-    <h1 class="text-5xl md:text-[68px] font-bold text-shadow-lg mb-4">
+    <h1 class="text-4xl sm:text-5xl lg:text-[68px] font-bold text-shadow-lg mb-4">
       {{ __('Layanan') }}
     </h1>
     
-    <div class="flex items-center gap-2 text-lg md:text-[21px] font-semibold">
+    <div class="flex items-center gap-2 text-base sm:text-lg lg:text-[21px] font-semibold">
       <span>{{ __('Home') }}</span>
       <div class="w-3 h-[3px] bg-white"></div>
       <span>{{ __('Layanan') }}</span>

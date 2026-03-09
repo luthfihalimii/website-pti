@@ -9,7 +9,8 @@
   </div>
 
   <div class="mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-    <table class="min-w-full divide-y divide-slate-200 text-sm">
+    <div class="overflow-x-auto">
+      <table class="min-w-[880px] divide-y divide-slate-200 text-sm">
       <thead class="bg-slate-50 text-left text-slate-600">
         <tr>
           <th class="px-5 py-4 font-semibold">Produk</th>
@@ -27,7 +28,9 @@
             <td class="px-5 py-4 text-slate-600">{{ $inquiry->name }}</td>
             <td class="px-5 py-4 text-slate-600">{{ $inquiry->email }}</td>
             <td class="px-5 py-4 text-slate-600">{{ $inquiry->company ?: '-' }}</td>
-            <td class="px-5 py-4 text-slate-600">{{ $inquiry->message }}</td>
+            <td class="px-5 py-4 text-slate-600">
+              <p class="max-w-[360px] break-words">{{ $inquiry->message }}</p>
+            </td>
             <td class="px-5 py-4 text-right">
               <form action="{{ route('admin.product-inquiries.destroy', $inquiry) }}" method="POST" onsubmit="return confirm('Hapus inquiry ini?');">
                 @csrf
@@ -43,5 +46,6 @@
         @endforelse
       </tbody>
     </table>
+    </div>
   </div>
 @endsection

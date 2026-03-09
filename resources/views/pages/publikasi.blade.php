@@ -13,7 +13,7 @@
     >
 
     <div class="max-w-6xl mx-auto px-6 h-full flex flex-col items-center justify-center text-white text-center">
-      <h1 class="text-5xl md:text-[64px] font-extrabold drop-shadow-lg leading-none">
+      <h1 class="text-4xl sm:text-5xl lg:text-[64px] font-extrabold drop-shadow-lg leading-none">
         {{ __('Publikasi') }}
       </h1>
       <div class="mt-3 flex items-center gap-2 text-base md:text-[18px] font-semibold opacity-95">

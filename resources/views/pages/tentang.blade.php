@@ -17,7 +17,7 @@
 
     {{-- FIX: kasih z-10 biar text pasti di atas overlay --}}
     <div class="relative z-10 max-w-6xl mx-auto px-6 h-full flex flex-col items-center justify-center text-white">
-      <h1 class="font-extrabold leading-none drop-shadow text-[54px] md:text-[68px]">
+      <h1 class="font-extrabold leading-none drop-shadow text-4xl sm:text-5xl lg:text-[68px]">
         {{ __('Tentang kami') }}
       </h1>
 

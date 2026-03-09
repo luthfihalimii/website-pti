@@ -3,7 +3,7 @@
     class="footer-gradient px-6 py-10"
   >
     <div class="max-w-6xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
 
         <!-- KIRI -->
         <div>
@@ -66,8 +66,8 @@
           <div class="flex-1"></div>
 
           <!-- BUSINESS HOURS -->
-          <div class="mt-8 md:mt-0 md:flex md:justify-end">
-            <div class="business-hours-card bg-white rounded-lg shadow-md overflow-hidden w-full md:w-[380px]">
+          <div class="mt-8 lg:mt-0 lg:flex lg:justify-end">
+            <div class="business-hours-card w-full overflow-hidden rounded-lg bg-white shadow-md lg:w-[380px]">
               <div class="flex items-center text-sm">
 
                 <!-- LEFT -->

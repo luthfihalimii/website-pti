@@ -14,7 +14,7 @@
     <div class="absolute inset-0 bg-gradient-to-r from-blue-700/95 via-blue-600/80 to-blue-500/70"></div>
 
     <div class="relative z-10 max-w-6xl mx-auto px-6 h-full flex flex-col items-center justify-center text-white">
-      <h1 class="font-extrabold leading-none drop-shadow text-[54px] md:text-[68px]">
+      <h1 class="font-extrabold leading-none drop-shadow text-4xl sm:text-5xl lg:text-[68px]">
         {{ __('Detail Kerja') }}
       </h1>
 

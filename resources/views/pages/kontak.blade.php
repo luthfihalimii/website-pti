@@ -119,25 +119,25 @@
       <div>
         <h3 class="text-xl font-bold text-blue-600 mb-4">{{ __('No. Telepon & Email') }}</h3>
         <div class="space-y-3 text-[15px] text-[#5e5b5b]">
-          <div class="flex items-center gap-3">
+          <div class="flex flex-wrap items-start gap-2 sm:gap-3">
             <span class="font-semibold">{{ __('Email 1:') }}</span>
-            <a href="mailto:{{ config('site.company.primary_email') }}" class="hover:text-blue-600">{{ config('site.company.primary_email') }}</a>
+            <a href="mailto:{{ config('site.company.primary_email') }}" class="break-all hover:text-blue-600">{{ config('site.company.primary_email') }}</a>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex flex-wrap items-start gap-2 sm:gap-3">
             <span class="font-semibold">{{ __('Email 2:') }}</span>
-            <a href="mailto:{{ config('site.company.secondary_email') }}" class="hover:text-blue-600">{{ config('site.company.secondary_email') }}</a>
+            <a href="mailto:{{ config('site.company.secondary_email') }}" class="break-all hover:text-blue-600">{{ config('site.company.secondary_email') }}</a>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex flex-wrap items-start gap-2 sm:gap-3">
             <span class="font-semibold">{{ __('Telepon:') }}</span>
             <a href="tel:03158283512" class="hover:text-blue-600">{{ config('site.company.phone') }}</a>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex flex-wrap items-start gap-2 sm:gap-3">
             <span class="font-semibold">{{ __('Whatsapp:') }}</span>
             <a href="https://wa.me/6285954320729" class="hover:text-blue-600">{{ config('site.company.whatsapp') }}</a>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex flex-wrap items-start gap-2 sm:gap-3">
             <span class="font-semibold">{{ __('LinkedIn:') }}</span>
-            <span>{{ config('site.company.linkedin') }}</span>
+            <span class="break-all">{{ config('site.company.linkedin') }}</span>
           </div>
         </div>
       </div>

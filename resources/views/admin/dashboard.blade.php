@@ -16,7 +16,7 @@
     </div>
   </section>
 
-  <section class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+  <section class="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
     <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <p class="text-xs font-medium tracking-wide text-slate-500">Kategori</p>
       <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{{ $stats['categories'] }}</p>
@@ -39,7 +39,7 @@
     </article>
   </section>
 
-  <section class="mt-6 grid gap-5 xl:grid-cols-3">
+  <section class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
     <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <div class="flex items-center justify-between">
         <h2 class="text-lg font-semibold tracking-tight text-slate-900">Lamaran Kerja Terbaru</h2>

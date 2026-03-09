@@ -19,7 +19,7 @@
 
   <section class="mt-6 overflow-hidden rounded-[30px] border border-slate-200/80 bg-white shadow-sm">
     <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-slate-200 text-sm">
+      <table class="min-w-[920px] divide-y divide-slate-200 text-sm">
         <thead class="bg-slate-50 text-left text-slate-500">
           <tr>
             <th class="px-5 py-4 font-semibold">Pendaftar</th>
@@ -44,7 +44,7 @@
                 </span>
               </td>
               <td class="px-5 py-4">
-                <div class="flex justify-end gap-2">
+                <div class="admin-table-actions flex justify-end gap-2 whitespace-nowrap">
                   <a href="{{ route('admin.internship-applications.show', $application) }}" class="inline-flex rounded-xl bg-slate-950 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-900">
                     Detail
                   </a>

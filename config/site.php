@@ -401,7 +401,7 @@ return [
                     'Kesempatan pengembangan karier dan skill improvement.',
                     'Bonus performa berdasarkan evaluasi kinerja.',
                 ],
-                'poster' => 'assets/images/poster lowongan.png',
+                'poster' => 'assets/images/poster-lowongan.png',
             ],
         ],
     ],

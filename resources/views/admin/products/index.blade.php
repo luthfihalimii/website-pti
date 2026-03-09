@@ -3,7 +3,7 @@
 @section('title', 'Produk')
 
 @section('content')
-  <div class="flex items-end justify-between gap-4">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
     <div>
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Products</p>
       <h1 class="mt-2 text-3xl font-bold text-slate-950">Produk</h1>
@@ -14,7 +14,8 @@
   </div>
 
   <div class="mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-    <table class="min-w-full divide-y divide-slate-200 text-sm">
+    <div class="overflow-x-auto">
+      <table class="min-w-[760px] divide-y divide-slate-200 text-sm">
       <thead class="bg-slate-50 text-left text-slate-600">
         <tr>
           <th class="px-5 py-4 font-semibold">Nama</th>
@@ -32,7 +33,7 @@
             <td class="px-5 py-4 text-slate-600">{{ ucfirst($product->status) }}</td>
             <td class="px-5 py-4 text-slate-600">{{ $product->is_featured ? 'Ya' : 'Tidak' }}</td>
             <td class="px-5 py-4 text-right">
-              <div class="inline-flex items-center gap-4">
+              <div class="admin-table-actions inline-flex items-center gap-4 whitespace-nowrap">
                 <a href="{{ route('admin.products.edit', $product) }}" class="font-semibold text-blue-600 hover:text-blue-700">Edit</a>
                 <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Hapus produk ini?');">
                   @csrf
@@ -49,5 +50,6 @@
         @endforelse
       </tbody>
     </table>
+    </div>
   </div>
 @endsection
