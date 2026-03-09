@@ -13,23 +13,23 @@ class PublicRouteAvailabilityTest extends TestCase
     public static function publicPageProvider(): array
     {
         return [
-            'home' => ['home'],
-            'about' => ['about'],
-            'services' => ['services'],
-            'products' => ['products.index'],
-            'internships' => ['internships.index'],
-            'careers' => ['careers.index'],
-            'career-detail' => ['careers.show'],
-            'career-form' => ['careers.applications.create'],
-            'contact' => ['contact'],
-            'publications' => ['publications.index'],
+            'home' => ['home', []],
+            'about' => ['about', []],
+            'services' => ['services', []],
+            'products' => ['products.index', []],
+            'internships' => ['internships.index', []],
+            'careers' => ['careers.index', []],
+            'career-detail' => ['careers.show', ['fullstack-developer']],
+            'career-form' => ['careers.applications.create', ['fullstack-developer']],
+            'contact' => ['contact', []],
+            'publications' => ['publications.index', []],
         ];
     }
 
     #[DataProvider('publicPageProvider')]
-    public function test_named_public_pages_are_available(string $routeName): void
+    public function test_named_public_pages_are_available(string $routeName, array $parameters): void
     {
-        $response = $this->get(route($routeName));
+        $response = $this->get(route($routeName, $parameters));
 
         $response->assertOk();
     }

@@ -59,6 +59,47 @@ class AdminAuthenticationTest extends TestCase
         $this->assertAuthenticatedAs($admin);
     }
 
+    public function test_non_admin_users_are_redirected_to_home_when_visiting_dashboard_alias(): void
+    {
+        $user = User::factory()->create([
+            'is_admin' => false,
+        ]);
+
+        $response = $this->actingAs($user)->get('/dashboard');
+
+        $response->assertRedirect(route('home'));
+    }
+
+    public function test_admin_login_is_throttled_after_too_many_failed_attempts(): void
+    {
+        $admin = User::factory()->create([
+            'email' => 'admin@example.com',
+            'password' => 'password',
+            'is_admin' => true,
+        ]);
+
+        foreach (range(1, 5) as $attempt) {
+            $response = $this->from(route('admin.login'))->post(route('admin.login.store'), [
+                'email' => $admin->email,
+                'password' => 'wrong-password',
+            ]);
+
+            $response->assertRedirect(route('admin.login'));
+            $response->assertSessionHasErrors('email');
+        }
+
+        $response = $this->from(route('admin.login'))->post(route('admin.login.store'), [
+            'email' => $admin->email,
+            'password' => 'wrong-password',
+        ]);
+
+        $response->assertRedirect(route('admin.login'));
+        $response->assertSessionHasErrors([
+            'email' => 'Terlalu banyak percobaan login. Silakan coba lagi dalam 60 detik.',
+        ]);
+        $this->assertGuest();
+    }
+
     public function test_non_admin_users_cannot_access_admin_routes(): void
     {
         $user = User::factory()->create([

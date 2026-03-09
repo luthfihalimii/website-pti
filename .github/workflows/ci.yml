@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Install frontend dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Prepare application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+          php artisan migrate --force
+          php artisan storage:link --force
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+
+      - name: Lint PHP
+        run: composer lint
+
+      - name: Lint frontend JS
+        run: bun run lint
+
+      - name: Build frontend assets
+        run: bun run build
+
+      - name: Verify route cache
+        run: php artisan route:cache
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+
+      - name: Run test suite
+        run: composer test
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite

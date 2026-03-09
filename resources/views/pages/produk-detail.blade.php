@@ -69,7 +69,7 @@
 
       <aside class="space-y-8">
         <div class="rounded-3xl border border-slate-200 bg-slate-50 p-8">
-          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Product Inquiry</p>
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">{{ __('Inquiry Produk') }}</p>
           <h2 class="mt-3 text-2xl font-bold text-slate-950">{{ __('Minta Demo Produk') }}</h2>
           <p class="mt-3 text-sm leading-7 text-slate-600">
             {{ __('Tinggalkan detail singkat kebutuhan Anda. Tim kami akan menghubungi Anda untuk demo atau diskusi lanjutan.') }}
@@ -94,11 +94,26 @@
 
           <form action="{{ route('products.inquiries.store', $product->slug) }}" method="POST" class="mt-6 space-y-4">
             @csrf
-            <input type="text" name="name" value="{{ old('name') }}" placeholder="{{ __('Nama Lengkap') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
-            <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('Email') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
-            <input type="text" name="phone" value="{{ old('phone') }}" placeholder="{{ __('Nomor Telepon') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
-            <input type="text" name="company" value="{{ old('company') }}" placeholder="{{ __('Perusahaan / Instansi') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
-            <textarea name="message" rows="5" placeholder="{{ __('Ceritakan kebutuhan Anda') }}" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>{{ old('message') }}</textarea>
+            <div>
+              <label for="product-inquiry-name" class="mb-2 block text-sm font-medium text-slate-700">{{ __('Nama Lengkap') }}</label>
+              <input id="product-inquiry-name" type="text" name="name" value="{{ old('name') }}" placeholder="{{ __('Nama Lengkap') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
+            </div>
+            <div>
+              <label for="product-inquiry-email" class="mb-2 block text-sm font-medium text-slate-700">{{ __('Email') }}</label>
+              <input id="product-inquiry-email" type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('Email') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
+            </div>
+            <div>
+              <label for="product-inquiry-phone" class="mb-2 block text-sm font-medium text-slate-700">{{ __('Nomor Telepon') }}</label>
+              <input id="product-inquiry-phone" type="text" name="phone" value="{{ old('phone') }}" placeholder="{{ __('Nomor Telepon') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
+            </div>
+            <div>
+              <label for="product-inquiry-company" class="mb-2 block text-sm font-medium text-slate-700">{{ __('Perusahaan / Instansi') }}</label>
+              <input id="product-inquiry-company" type="text" name="company" value="{{ old('company') }}" placeholder="{{ __('Perusahaan / Instansi') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
+            </div>
+            <div>
+              <label for="product-inquiry-message" class="mb-2 block text-sm font-medium text-slate-700">{{ __('Ceritakan kebutuhan Anda') }}</label>
+              <textarea id="product-inquiry-message" name="message" rows="5" placeholder="{{ __('Ceritakan kebutuhan Anda') }}" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>{{ old('message') }}</textarea>
+            </div>
             <button type="submit" class="inline-flex w-full items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
               {{ __('Kirim Permintaan Demo') }}
             </button>

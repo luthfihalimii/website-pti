@@ -15,12 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (serviceTabsRoot) {
     const validTabs = ['eprocurement', 'itconsultant', 'business', 'egovernment'];
-    const tabButtons = serviceTabsRoot.querySelectorAll('[data-services-tab]');
-    const tabPanels = document.querySelectorAll('[data-services-panel]');
+    const tabButtons = Array.from(serviceTabsRoot.querySelectorAll('[data-services-tab]'));
+    const tabPanels = Array.from(document.querySelectorAll('[data-services-panel]'));
 
     const switchServiceTab = (tabName) => {
       tabPanels.forEach((panel) => {
-        panel.classList.toggle('hidden', panel.dataset.servicesPanel !== tabName);
+        const isActive = panel.dataset.servicesPanel === tabName;
+
+        panel.classList.toggle('hidden', !isActive);
+        panel.hidden = !isActive;
+        panel.tabIndex = isActive ? 0 : -1;
       });
 
       tabButtons.forEach((button) => {
@@ -28,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         button.classList.toggle('active', isActive);
         button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        button.setAttribute('tabindex', isActive ? '0' : '-1');
       });
 
       history.replaceState(null, '', `#${tabName}`);
@@ -41,6 +46,40 @@ document.addEventListener('DOMContentLoaded', () => {
     tabButtons.forEach((button) => {
       button.addEventListener('click', () => {
         switchServiceTab(button.dataset.servicesTab);
+      });
+
+      button.addEventListener('keydown', (event) => {
+        const currentIndex = tabButtons.indexOf(button);
+        let targetIndex = currentIndex;
+
+        switch (event.key) {
+          case 'ArrowRight':
+          case 'ArrowDown':
+            targetIndex = (currentIndex + 1) % tabButtons.length;
+            break;
+          case 'ArrowLeft':
+          case 'ArrowUp':
+            targetIndex = (currentIndex - 1 + tabButtons.length) % tabButtons.length;
+            break;
+          case 'Home':
+            targetIndex = 0;
+            break;
+          case 'End':
+            targetIndex = tabButtons.length - 1;
+            break;
+          default:
+            return;
+        }
+
+        event.preventDefault();
+
+        const targetButton = tabButtons[targetIndex];
+        if (!targetButton) {
+          return;
+        }
+
+        switchServiceTab(targetButton.dataset.servicesTab);
+        targetButton.focus();
       });
     });
 

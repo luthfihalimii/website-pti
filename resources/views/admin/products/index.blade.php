@@ -3,15 +3,24 @@
 @section('title', 'Produk')
 
 @section('content')
-  <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-    <div>
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Products</p>
-      <h1 class="mt-2 text-3xl font-bold text-slate-950">Produk</h1>
+  <section class="rounded-[30px] border border-slate-200/80 bg-white p-6 shadow-sm">
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-blue-700">{{ __('Inventaris Katalog') }}</p>
+        <h1 class="mt-2 text-3xl font-semibold tracking-tight text-slate-950">Produk</h1>
+        <p class="mt-3 max-w-2xl text-sm leading-7 text-slate-600">Pantau status publish, kategori, dan prioritas tiap modul dari daftar produk yang lebih skalabel.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="rounded-2xl bg-slate-950 px-5 py-4 text-white shadow-lg shadow-slate-950/10">
+          <p class="text-[11px] uppercase tracking-[0.28em] text-blue-300">Total Produk</p>
+          <p class="mt-2 text-3xl font-semibold">{{ $products->total() }}</p>
+        </div>
+        <a href="{{ route('admin.products.create') }}" class="inline-flex h-12 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700">
+          Tambah Produk
+        </a>
+      </div>
     </div>
-    <a href="{{ route('admin.products.create') }}" class="inline-flex h-12 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700">
-      Tambah Produk
-    </a>
-  </div>
+  </section>
 
   <div class="mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
     <div class="overflow-x-auto">
@@ -21,7 +30,7 @@
           <th class="px-5 py-4 font-semibold">Nama</th>
           <th class="px-5 py-4 font-semibold">Kategori</th>
           <th class="px-5 py-4 font-semibold">Status</th>
-          <th class="px-5 py-4 font-semibold">Featured</th>
+          <th class="px-5 py-4 font-semibold">{{ __('Unggulan') }}</th>
           <th class="px-5 py-4 font-semibold"></th>
         </tr>
       </thead>
@@ -52,4 +61,10 @@
     </table>
     </div>
   </div>
+
+  @if ($products->hasPages())
+    <div class="mt-6">
+      {{ $products->links() }}
+    </div>
+  @endif
 @endsection

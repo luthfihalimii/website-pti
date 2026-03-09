@@ -7,7 +7,7 @@
   <section class="relative overflow-hidden bg-blue-950 text-white">
     <img src="{{ asset('assets/images/hero-pages.png') }}" alt="{{ __('Hero Produk') }}" class="absolute inset-0 h-full w-full object-cover opacity-20">
     <div class="relative mx-auto max-w-6xl px-6 py-20">
-      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-blue-200">Product Module</p>
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-blue-200">{{ __('Modul Produk') }}</p>
       <h1 class="mt-4 text-4xl font-bold md:text-6xl">{{ __('Katalog Produk') }}</h1>
       <p class="mt-4 max-w-3xl text-base leading-7 text-blue-50/90 md:text-lg">
         {{ __('Jelajahi solusi Piramidasoft untuk e-procurement, business system, e-government, dan transformasi digital organisasi.') }}
@@ -58,10 +58,10 @@
     <div class="mx-auto max-w-6xl px-6">
       <div class="mb-8 flex items-center justify-between gap-4">
         <div>
-          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Published Products</p>
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">{{ __('Produk Terpublikasi') }}</p>
           <h2 class="mt-2 text-3xl font-bold text-slate-950">{{ __('Semua Produk') }}</h2>
         </div>
-        <p class="text-sm text-slate-500">{{ __(':count produk ditemukan', ['count' => $products->count()]) }}</p>
+        <p class="text-sm text-slate-500">{{ __(':count produk ditemukan', ['count' => $products->total()]) }}</p>
       </div>
 
       @if ($products->isEmpty())
@@ -100,6 +100,12 @@
             </article>
           @endforeach
         </div>
+
+        @if ($products->hasPages())
+          <div class="mt-8">
+            {{ $products->links() }}
+          </div>
+        @endif
       @endif
     </div>
   </section>

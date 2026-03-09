@@ -26,6 +26,8 @@ class PublicEnglishLocalizationTest extends TestCase
         $servicesResponse->assertOk();
         $servicesResponse->assertSeeText('Services');
         $servicesResponse->assertSeeText('Related Product Categories');
+        $servicesResponse->assertSeeText('One Stop Solution for your E-Procurement Needs');
+        $servicesResponse->assertSeeText('Professional IT Consulting Services');
 
         $productsResponse = $this->withSession(['locale' => 'en'])->get(route('products.index'));
         $productsResponse->assertOk();
@@ -33,6 +35,7 @@ class PublicEnglishLocalizationTest extends TestCase
         $productsResponse->assertSeeText('Search Products');
         $productsResponse->assertSeeText('All categories');
         $productsResponse->assertSeeText('All Products');
+        $productsResponse->assertSeeText('Product Module');
 
         $contactResponse = $this->withSession(['locale' => 'en'])->get(route('contact'));
         $contactResponse->assertOk();

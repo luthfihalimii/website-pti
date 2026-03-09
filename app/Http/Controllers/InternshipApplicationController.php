@@ -6,6 +6,8 @@ use App\Http\Requests\StoreInternshipStepOneRequest;
 use App\Http\Requests\StoreInternshipStepTwoRequest;
 use App\Models\InternshipApplication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class InternshipApplicationController extends Controller
 {
@@ -46,13 +48,19 @@ class InternshipApplicationController extends Controller
         $validated = $request->validated();
         $cvPath = $request->file('cv')->store('internship-applications/cv', 'local');
 
-        InternshipApplication::create([
-            ...$stepOne,
-            ...collect($validated)->except('cv')->toArray(),
-            'cv_path' => $cvPath,
-            'cv_disk' => 'local',
-            'pernyataan' => $request->boolean('pernyataan'),
-        ]);
+        try {
+            InternshipApplication::create([
+                ...$stepOne,
+                ...collect($validated)->except('cv')->toArray(),
+                'cv_path' => $cvPath,
+                'cv_disk' => 'local',
+                'pernyataan' => $request->boolean('pernyataan'),
+            ]);
+        } catch (Throwable $exception) {
+            Storage::disk('local')->delete($cvPath);
+
+            throw $exception;
+        }
 
         $request->session()->forget('internship_application.step_one');
 

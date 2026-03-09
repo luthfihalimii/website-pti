@@ -64,6 +64,51 @@ class AdminJobApplicationManagementTest extends TestCase
         ]);
     }
 
+    public function test_job_application_download_returns_not_found_when_cv_file_is_missing(): void
+    {
+        Storage::fake('local');
+
+        $admin = User::factory()->create([
+            'is_admin' => true,
+        ]);
+
+        $application = JobApplication::query()->create($this->jobApplicationData([
+            'cv_path' => 'job-applications/cv/missing.pdf',
+            'status' => 'baru',
+        ]));
+
+        $response = $this->actingAs($admin)->get(route('admin.job-applications.download', $application));
+
+        $response->assertNotFound();
+    }
+
+    public function test_job_application_inbox_is_paginated(): void
+    {
+        $admin = User::factory()->create([
+            'is_admin' => true,
+        ]);
+
+        foreach (range(1, 16) as $index) {
+            $label = str_pad((string) $index, 2, '0', STR_PAD_LEFT);
+
+            JobApplication::query()->create($this->jobApplicationData([
+                'nama_lengkap' => 'Candidate '.$label,
+                'email' => 'candidate'.$label.'@example.com',
+            ]));
+        }
+
+        $firstPageResponse = $this->actingAs($admin)->get(route('admin.job-applications.index'));
+        $secondPageResponse = $this->actingAs($admin)->get(route('admin.job-applications.index', ['page' => 2]));
+
+        $firstPageResponse->assertOk();
+        $firstPageResponse->assertSeeText('Candidate 16');
+        $firstPageResponse->assertDontSeeText('Candidate 01');
+        $firstPageResponse->assertSee('?page=2', false);
+
+        $secondPageResponse->assertOk();
+        $secondPageResponse->assertSeeText('Candidate 01');
+    }
+
     private function jobApplicationData(array $overrides = []): array
     {
         return array_merge([

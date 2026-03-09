@@ -24,10 +24,10 @@ class DashboardController extends Controller
                 'job_applications' => JobApplication::count(),
                 'internship_applications' => InternshipApplication::count(),
             ],
-            'recentJobApplications' => JobApplication::query()->latest()->take(5)->get(),
-            'recentInternshipApplications' => InternshipApplication::query()->latest()->take(5)->get(),
-            'recentProductInquiries' => ProductInquiry::query()->with('product')->latest()->take(5)->get(),
-            'recentContactInquiries' => ContactInquiry::query()->latest()->take(10)->get(),
+            'recentJobApplications' => JobApplication::query()->latest('id')->take(5)->get(),
+            'recentInternshipApplications' => InternshipApplication::query()->latest('id')->take(5)->get(),
+            'recentProductInquiries' => ProductInquiry::query()->with('product')->latest('id')->take(5)->get(),
+            'recentContactInquiries' => ContactInquiry::query()->latest('id')->take(10)->get(),
         ]);
     }
 }

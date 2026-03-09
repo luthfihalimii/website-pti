@@ -10,7 +10,7 @@ class ProductInquiryController extends Controller
     public function index()
     {
         return view('admin.product-inquiries.index', [
-            'inquiries' => ProductInquiry::query()->with('product')->latest()->get(),
+            'inquiries' => ProductInquiry::query()->with('product')->latest('id')->paginate(15),
         ]);
     }
 

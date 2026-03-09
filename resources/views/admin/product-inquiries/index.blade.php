@@ -4,7 +4,7 @@
 
 @section('content')
   <div>
-    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Lead Inbox</p>
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">{{ __('Inbox Lead') }}</p>
     <h1 class="mt-2 text-3xl font-bold text-slate-950">Inquiry Produk</h1>
   </div>
 
@@ -48,4 +48,10 @@
     </table>
     </div>
   </div>
+
+  @if ($inquiries->hasPages())
+    <div class="mt-6">
+      {{ $inquiries->links() }}
+    </div>
+  @endif
 @endsection

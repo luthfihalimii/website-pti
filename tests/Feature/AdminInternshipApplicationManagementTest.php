@@ -64,6 +64,51 @@ class AdminInternshipApplicationManagementTest extends TestCase
         ]);
     }
 
+    public function test_internship_application_download_returns_not_found_when_cv_file_is_missing(): void
+    {
+        Storage::fake('local');
+
+        $admin = User::factory()->create([
+            'is_admin' => true,
+        ]);
+
+        $application = InternshipApplication::query()->create($this->internshipApplicationData([
+            'cv_path' => 'internship-applications/cv/missing.pdf',
+            'status' => 'baru',
+        ]));
+
+        $response = $this->actingAs($admin)->get(route('admin.internship-applications.download', $application));
+
+        $response->assertNotFound();
+    }
+
+    public function test_internship_application_inbox_is_paginated(): void
+    {
+        $admin = User::factory()->create([
+            'is_admin' => true,
+        ]);
+
+        foreach (range(1, 16) as $index) {
+            $label = str_pad((string) $index, 2, '0', STR_PAD_LEFT);
+
+            InternshipApplication::query()->create($this->internshipApplicationData([
+                'nama' => 'Intern '.$label,
+                'nisn' => str_pad((string) $index, 10, '0', STR_PAD_LEFT),
+            ]));
+        }
+
+        $firstPageResponse = $this->actingAs($admin)->get(route('admin.internship-applications.index'));
+        $secondPageResponse = $this->actingAs($admin)->get(route('admin.internship-applications.index', ['page' => 2]));
+
+        $firstPageResponse->assertOk();
+        $firstPageResponse->assertSeeText('Intern 16');
+        $firstPageResponse->assertDontSeeText('Intern 01');
+        $firstPageResponse->assertSee('?page=2', false);
+
+        $secondPageResponse->assertOk();
+        $secondPageResponse->assertSeeText('Intern 01');
+    }
+
     private function internshipApplicationData(array $overrides = []): array
     {
         return array_merge([

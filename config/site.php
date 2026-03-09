@@ -18,8 +18,8 @@ return [
         'linkedin' => 'Piramida Teknologi Informasi',
         'language' => 'Indonesia',
         'business_hours' => [
-            'weekday' => 'Weekday - Open',
-            'weekend' => 'Weekend - Close',
+            'weekday' => 'Hari kerja - Buka',
+            'weekend' => 'Akhir pekan - Tutup',
             'time' => '8 AM - 9 PM',
         ],
     ],

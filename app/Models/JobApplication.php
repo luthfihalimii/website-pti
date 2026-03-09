@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class JobApplication extends Model
 {
     public const STATUS_BARU = 'baru';
+
     public const STATUS_DIREVIEW = 'direview';
+
     public const STATUS_DIPANGGIL = 'dipanggil';
+
     public const STATUS_DITERIMA = 'diterima';
+
     public const STATUS_DITOLAK = 'ditolak';
 
     protected $fillable = [
@@ -28,6 +32,7 @@ class JobApplication extends Model
         'jurusan',
         'ipk',
         'posisi',
+        'vacancy_slug',
         'pengalaman_kerja',
         'keahlian_khusus',
         'cv_path',

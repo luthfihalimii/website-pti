@@ -74,8 +74,8 @@
                 <div class="flex items-center gap-2 px-4 py-3 border-r border-gray-200">
                   <img src="{{ asset('assets/icons/jam.svg') }}" class="w-4 h-4" alt="">
                   <div class="leading-tight font-semibold text-[14px]">
-                    <div>{{ __('Business') }}</div>
-                    <div>{{ __('Hours') }}</div>
+                    <div>{{ __('Jam') }}</div>
+                    <div>{{ __('Operasional') }}</div>
                   </div>
                 </div>
 

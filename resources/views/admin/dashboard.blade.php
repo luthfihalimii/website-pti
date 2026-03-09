@@ -16,7 +16,7 @@
     </div>
   </section>
 
-  <section class="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+  <section class="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
     <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <p class="text-xs font-medium tracking-wide text-slate-500">Kategori</p>
       <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{{ $stats['categories'] }}</p>
@@ -28,6 +28,10 @@
     <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <p class="text-xs font-medium tracking-wide text-slate-500">Inquiry Produk</p>
       <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{{ $stats['product_inquiries'] }}</p>
+    </article>
+    <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <p class="text-xs font-medium tracking-wide text-slate-500">Pesan Kontak</p>
+      <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{{ $stats['contact_inquiries'] }}</p>
     </article>
     <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <p class="text-xs font-medium tracking-wide text-slate-500">Lamaran Kerja</p>
@@ -112,9 +116,12 @@
           <h2 class="text-lg font-semibold tracking-tight text-slate-900">Pesan Kontak</h2>
           <p class="mt-1 text-sm text-slate-500">Pesan dari form kontak website.</p>
         </div>
-        <p class="mt-3 inline-flex w-fit self-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold tracking-wide text-slate-600 sm:mt-0 sm:self-auto">
-          {{ $stats['contact_inquiries'] }} pesan
-        </p>
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="{{ route('admin.contact-inquiries.index') }}" class="text-sm font-semibold text-slate-600 hover:text-slate-900">Lihat semua</a>
+          <p class="inline-flex w-fit rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold tracking-wide text-slate-600">
+            {{ $stats['contact_inquiries'] }} pesan
+          </p>
+        </div>
       </div>
 
       <div class="mt-5 space-y-3">

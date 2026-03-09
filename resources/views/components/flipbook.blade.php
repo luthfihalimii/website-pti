@@ -31,6 +31,7 @@
     <button class="flipbook-btn" onclick="zoomIn()">＋</button>
     <button class="flipbook-btn" onclick="fitWidth()">{{ __('Sesuai Lebar') }}</button>
 
+    <label class="sr-only" for="pageInput">{{ __('Nomor Halaman') }}</label>
     <input class="flipbook-page-input" id="pageInput" type="number" min="1" placeholder="{{ __('Halaman...') }}" />
     <button class="flipbook-btn" onclick="goToPage()">{{ __('Buka') }}</button>
   </div>

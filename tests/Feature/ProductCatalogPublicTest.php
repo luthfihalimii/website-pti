@@ -102,6 +102,37 @@ class ProductCatalogPublicTest extends TestCase
         $response->assertDontSee('Gov Portal');
     }
 
+    public function test_public_product_catalog_is_paginated(): void
+    {
+        $category = ProductCategory::factory()->create([
+            'name' => 'Business System',
+            'slug' => 'business-system',
+        ]);
+
+        foreach (range(1, 10) as $index) {
+            $label = str_pad((string) $index, 2, '0', STR_PAD_LEFT);
+
+            Product::factory()->create([
+                'product_category_id' => $category->id,
+                'name' => 'Product '.$label,
+                'slug' => 'product-'.$label,
+                'status' => 'published',
+                'sort_order' => $index,
+            ]);
+        }
+
+        $firstPageResponse = $this->get(route('products.index'));
+        $secondPageResponse = $this->get(route('products.index', ['page' => 2]));
+
+        $firstPageResponse->assertOk();
+        $firstPageResponse->assertSeeText('Product 01');
+        $firstPageResponse->assertDontSeeText('Product 10');
+        $firstPageResponse->assertSee('?page=2', false);
+
+        $secondPageResponse->assertOk();
+        $secondPageResponse->assertSeeText('Product 10');
+    }
+
     public function test_product_pages_use_current_host_storage_urls_for_public_files(): void
     {
         $category = ProductCategory::factory()->create();

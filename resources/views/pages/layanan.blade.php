@@ -28,14 +28,16 @@
 {{-- Tab Navigation --}}
 <div class="bg-white border-b border-[#DBDBDB] z-40" data-services-tabs>
   <div class="max-w-6xl mx-auto px-6">
-    <div class="flex gap-8 overflow-x-auto">
+    <div class="flex gap-8 overflow-x-auto" role="tablist" aria-label="{{ __('Layanan') }}">
       <button 
         id="tab-eprocurement"
         type="button"
         data-services-tab="eprocurement"
+        role="tab"
         aria-controls="content-eprocurement"
-        aria-selected="false"
-        class="services-tab-button py-4 px-2 text-sm md:text-base font-medium border-b-2 border-transparent hover:text-blue-600 transition-colors whitespace-nowrap"
+        aria-selected="true"
+        tabindex="0"
+        class="services-tab-button active py-4 px-2 text-sm md:text-base font-medium border-b-2 border-transparent hover:text-blue-600 transition-colors whitespace-nowrap"
       >
         {{ __('E-Procurement') }}
       </button>
@@ -43,8 +45,10 @@
         id="tab-itconsultant"
         type="button"
         data-services-tab="itconsultant"
+        role="tab"
         aria-controls="content-itconsultant"
         aria-selected="false"
+        tabindex="-1"
         class="services-tab-button py-4 px-2 text-sm md:text-base font-medium border-b-2 border-transparent hover:text-blue-600 transition-colors whitespace-nowrap"
       >
         {{ __('IT Consultant') }}
@@ -53,8 +57,10 @@
         id="tab-business"
         type="button"
         data-services-tab="business"
+        role="tab"
         aria-controls="content-business"
         aria-selected="false"
+        tabindex="-1"
         class="services-tab-button py-4 px-2 text-sm md:text-base font-medium border-b-2 border-transparent hover:text-blue-600 transition-colors whitespace-nowrap"
       >
         {{ __('Business System') }}
@@ -63,8 +69,10 @@
         id="tab-egovernment"
         type="button"
         data-services-tab="egovernment"
+        role="tab"
         aria-controls="content-egovernment"
         aria-selected="false"
+        tabindex="-1"
         class="services-tab-button py-4 px-2 text-sm md:text-base font-medium border-b-2 border-transparent hover:text-blue-600 transition-colors whitespace-nowrap"
       >
         {{ __('E-Government & Smart City') }}
@@ -78,7 +86,7 @@
   <div class="relative overflow-hidden">
     
     {{-- E-Procurement Content --}}
-    <div id="content-eprocurement" data-services-panel="eprocurement" class="services-tab-panel">
+    <div id="content-eprocurement" data-services-panel="eprocurement" role="tabpanel" aria-labelledby="tab-eprocurement" tabindex="0" class="services-tab-panel">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <div class="space-y-6">
           <div class="flex items-center gap-3">
@@ -87,7 +95,7 @@
           </div>
           
           <h2 class="text-3xl md:text-4xl font-bold text-slate-950">
-            One Stop Solution for your E-Procurement Needs
+            {{ __('Solusi Lengkap untuk Kebutuhan E-Procurement Anda') }}
           </h2>
           
           <p class="text-[15px] text-[#5e5b5b] leading-relaxed">
@@ -121,7 +129,7 @@
     </div>
 
     {{-- IT Consultant Content --}}
-    <div id="content-itconsultant" data-services-panel="itconsultant" class="services-tab-panel hidden">
+    <div id="content-itconsultant" data-services-panel="itconsultant" role="tabpanel" aria-labelledby="tab-itconsultant" tabindex="-1" class="services-tab-panel hidden" hidden>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <div class="space-y-6">
           <div class="flex items-center gap-3">
@@ -130,7 +138,7 @@
           </div>
           
           <h2 class="text-3xl md:text-4xl font-bold text-slate-950">
-            Professional IT Consulting Services
+            {{ __('Layanan Konsultasi IT Profesional') }}
           </h2>
           
           <p class="text-[15px] text-[#5e5b5b] leading-relaxed">
@@ -160,7 +168,7 @@
     </div>
 
     {{-- Business System Content --}}
-    <div id="content-business" data-services-panel="business" class="services-tab-panel hidden">
+    <div id="content-business" data-services-panel="business" role="tabpanel" aria-labelledby="tab-business" tabindex="-1" class="services-tab-panel hidden" hidden>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <div class="space-y-6">
           <div class="flex items-center gap-3">
@@ -169,7 +177,7 @@
           </div>
           
           <h2 class="text-3xl md:text-4xl font-bold text-slate-950">
-            Integrated Business Management System
+            {{ __('Sistem Manajemen Bisnis Terintegrasi') }}
           </h2>
           
           <p class="text-[15px] text-[#5e5b5b] leading-relaxed">
@@ -201,7 +209,7 @@
     </div>
 
     {{-- E-Government Content --}}
-    <div id="content-egovernment" data-services-panel="egovernment" class="services-tab-panel hidden">
+    <div id="content-egovernment" data-services-panel="egovernment" role="tabpanel" aria-labelledby="tab-egovernment" tabindex="-1" class="services-tab-panel hidden" hidden>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <div class="space-y-6">
           <div class="flex items-center gap-3">
@@ -210,7 +218,7 @@
           </div>
           
           <h2 class="text-3xl md:text-4xl font-bold text-slate-950">
-            Smart Solutions for Modern Government
+            {{ __('Solusi Cerdas untuk Pemerintahan Modern') }}
           </h2>
           
           <p class="text-[15px] text-[#5e5b5b] leading-relaxed">

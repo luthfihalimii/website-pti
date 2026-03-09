@@ -12,7 +12,10 @@ class CategoryController extends Controller
     public function index()
     {
         return view('admin.categories.index', [
-            'categories' => ProductCategory::query()->orderBy('sort_order')->orderBy('name')->get(),
+            'categories' => ProductCategory::query()
+                ->orderBy('sort_order')
+                ->orderBy('name')
+                ->paginate(15),
         ]);
     }
 
@@ -50,7 +53,18 @@ class CategoryController extends Controller
 
     public function destroy(ProductCategory $category)
     {
-        $category->delete();
+        $deletedCount = ProductCategory::query()
+            ->whereKey($category->id)
+            ->doesntHave('products')
+            ->delete();
+
+        if ($deletedCount === 0) {
+            return redirect()
+                ->route('admin.categories.index')
+                ->withErrors([
+                    'category' => 'Kategori ini masih digunakan oleh produk aktif di katalog.',
+                ]);
+        }
 
         return redirect()->route('admin.categories.index')->with('status', 'Kategori produk berhasil dihapus.');
     }

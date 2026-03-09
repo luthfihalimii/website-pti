@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class InternshipApplication extends Model
 {
     public const STATUS_BARU = 'baru';
+
     public const STATUS_DIREVIEW = 'direview';
+
     public const STATUS_DIPROSES = 'diproses';
+
     public const STATUS_DITERIMA = 'diterima';
+
     public const STATUS_DITOLAK = 'ditolak';
 
     protected $fillable = [

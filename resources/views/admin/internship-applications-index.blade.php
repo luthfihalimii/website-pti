@@ -6,13 +6,13 @@
   <section class="rounded-[30px] border border-slate-200/80 bg-white p-6 shadow-sm">
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
-        <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-violet-700">Internship Inbox</p>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-violet-700">{{ __('Inbox Magang') }}</p>
         <h1 class="mt-2 text-3xl font-semibold tracking-tight text-slate-950">Pendaftaran Magang</h1>
         <p class="mt-3 max-w-2xl text-sm leading-7 text-slate-600">Pantau siswa atau mahasiswa yang mendaftar magang, cek detail sekolah, dan review berkas secara cepat.</p>
       </div>
       <div class="rounded-2xl bg-slate-950 px-5 py-4 text-white shadow-lg shadow-slate-950/10">
         <p class="text-[11px] uppercase tracking-[0.28em] text-violet-300">Total Pendaftar</p>
-        <p class="mt-2 text-3xl font-semibold">{{ $applications->count() }}</p>
+        <p class="mt-2 text-3xl font-semibold">{{ $applications->total() }}</p>
       </div>
     </div>
   </section>
@@ -49,7 +49,7 @@
                     Detail
                   </a>
                   <a href="{{ route('admin.internship-applications.download', $application) }}" class="inline-flex rounded-xl bg-violet-50 px-4 py-2 text-xs font-semibold text-violet-800 ring-1 ring-violet-200 transition hover:bg-violet-100">
-                    Download CV
+                    {{ __('Unduh CV') }}
                   </a>
                   <form action="{{ route('admin.internship-applications.destroy', $application) }}" method="POST" onsubmit="return confirm('Hapus pendaftaran magang ini?');">
                     @csrf
@@ -70,4 +70,10 @@
       </table>
     </div>
   </section>
+
+  @if ($applications->hasPages())
+    <div class="mt-6">
+      {{ $applications->links() }}
+    </div>
+  @endif
 @endsection

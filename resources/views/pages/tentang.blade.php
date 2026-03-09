@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', __('Tentang Kami') . ' - Piramidasoft')
+@section('meta_description', __('Piramidasoft adalah perusahaan teknologi informasi yang menghadirkan solusi digital inovatif, efisien, dan relevan untuk kebutuhan bisnis modern.'))
 
 @section('content')
 {{-- Hero Section --}}

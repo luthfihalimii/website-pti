@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class CareerController extends Controller
 {
@@ -19,6 +20,7 @@ class CareerController extends Controller
         $vacancies = collect(config('site.careers.vacancies'))
             ->map(fn (array $vacancy) => [
                 ...$vacancy,
+                'slug' => $vacancy['slug'] ?? Str::slug($vacancy['title']),
                 'poster_url' => asset($vacancy['poster']),
             ])
             ->all();
@@ -28,27 +30,33 @@ class CareerController extends Controller
         ]);
     }
 
-    public function showVacancy()
+    public function showVacancy(string $slug)
     {
-        $vacancy = Arr::first(config('site.careers.vacancies'));
-
         return view('pages.detail-lowongan', [
-            'vacancy' => [
-                ...$vacancy,
-                'poster_url' => asset($vacancy['poster']),
-            ],
+            'vacancy' => $this->resolveVacancy($slug),
         ]);
     }
 
-    public function createApplication()
+    public function createApplication(string $slug)
     {
-        $vacancy = Arr::first(config('site.careers.vacancies'));
-
         return view('pages.form-lamaran', [
-            'vacancy' => [
-                ...$vacancy,
-                'poster_url' => asset($vacancy['poster']),
-            ],
+            'vacancy' => $this->resolveVacancy($slug),
         ]);
+    }
+
+    private function resolveVacancy(string $slug): array
+    {
+        $vacancy = Arr::first(
+            config('site.careers.vacancies', []),
+            fn (array $vacancy): bool => ($vacancy['slug'] ?? Str::slug($vacancy['title'])) === $slug,
+        );
+
+        abort_unless(is_array($vacancy), 404);
+
+        return [
+            ...$vacancy,
+            'slug' => $vacancy['slug'] ?? Str::slug($vacancy['title']),
+            'poster_url' => asset($vacancy['poster']),
+        ];
     }
 }

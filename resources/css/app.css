@@ -52,12 +52,16 @@
   box-sizing: border-box;
   appearance: none;
   -webkit-appearance: none;
-  outline: none;
 }
 
 .hero-wrap .hero-bullet.is-active {
   background: #fff;
   box-shadow: none;
+}
+
+.hero-wrap .hero-bullet:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.95);
+  outline-offset: 3px;
 }
 
 .hero-wrap .hero-tag-wrap {
@@ -407,21 +411,35 @@
   color: #2563eb;
   font-size: 1.7rem;
   line-height: 1;
-  cursor: default;
+  cursor: pointer;
   opacity: 0.95;
+  transition: color 180ms ease, opacity 180ms ease;
+}
+
+.client-arrow:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .client-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex;
   gap: 0.7rem 0.75rem;
-  justify-items: center;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.1rem 0.2rem 0.35rem;
+}
+
+.client-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .client-badge {
   margin: 0;
   text-align: center;
-  width: 100%;
+  flex: 0 0 90px;
   max-width: 90px;
 }
 
@@ -700,7 +718,10 @@
   }
 
   .client-grid {
+    display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
+    overflow: visible;
+    padding: 0;
   }
 }
 
@@ -944,6 +965,11 @@
   border-bottom-color: #2563eb;
 }
 
+.services-tab-button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 4px;
+}
+
 .services-tab-panel {
   animation: services-tab-slide-in 0.4s ease-out;
 }
@@ -1028,9 +1054,13 @@
   background: rgba(255, 255, 255, 0.18);
   color: #fff;
   padding: 0 10px;
-  outline: none;
   font-family: 'Poppins', sans-serif;
   font-size: 13px;
+}
+
+.flipbook-page-input:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.95);
+  outline-offset: 3px;
 }
 
 .flipbook-page-input::placeholder {

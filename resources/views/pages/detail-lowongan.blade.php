@@ -99,7 +99,7 @@
     </div>
 
     <div class="flex flex-wrap gap-4">
-      <a href="{{ route('careers.applications.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-md font-medium text-[14px] transition-colors inline-flex items-center gap-2">
+      <a href="{{ route('careers.applications.create', $vacancy['slug']) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-md font-medium text-[14px] transition-colors inline-flex items-center gap-2">
         {{ __('Lamar') }} →
       </a>
       <a href="{{ $vacancy['poster_url'] }}"

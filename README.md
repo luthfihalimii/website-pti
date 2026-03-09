@@ -38,6 +38,7 @@ bun install
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
+php artisan storage:link
 ```
 
 4. Jalankan development server:
@@ -56,7 +57,10 @@ bun run dev
 
 - `composer setup` untuk setup awal project.
 - `composer dev` untuk menjalankan server Laravel, worker, log tail, dan Vite.
+- `composer lint` untuk mengecek formatting PHP via Pint.
+- `bun run lint` untuk mengecek JavaScript frontend via ESLint.
 - `php artisan test` untuk menjalankan test suite.
+- `bun run check` untuk menjalankan lint frontend lalu memverifikasi asset tetap dapat dibuild.
 - `bun run build` untuk build asset production.
 
 ## Struktur Penting

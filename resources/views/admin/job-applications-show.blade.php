@@ -6,7 +6,7 @@
   <section class="rounded-[30px] border border-slate-200/80 bg-white p-6 shadow-sm">
     <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
       <div>
-        <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-700">Candidate Profile</p>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-700">{{ __('Profil Kandidat Singkat') }}</p>
         <h1 class="mt-2 text-3xl font-semibold tracking-tight text-slate-950">{{ $application->nama_lengkap }}</h1>
         <p class="mt-3 text-sm leading-7 text-slate-600">{{ $application->posisi }} · {{ $application->email }} · {{ $application->nomor_telepon }}</p>
       </div>
@@ -63,7 +63,7 @@
       <article class="rounded-[30px] border border-slate-200/80 bg-white p-6 shadow-sm">
         <h2 class="text-xl font-semibold text-slate-950">Aksi Cepat</h2>
         <a href="{{ route('admin.job-applications.download', $application) }}" class="mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-900">
-          Download CV
+          {{ __('Unduh CV') }}
         </a>
 
         <form action="{{ route('admin.job-applications.status.update', $application) }}" method="POST" class="mt-4 space-y-3">

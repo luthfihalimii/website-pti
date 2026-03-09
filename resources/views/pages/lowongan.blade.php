@@ -66,7 +66,7 @@
               {{ __($vacancy['summary']) }}
             </p>
 
-            <a href="{{ route('careers.show') }}" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-md font-medium text-[14px] transition-colors">
+            <a href="{{ route('careers.show', $vacancy['slug']) }}" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-md font-medium text-[14px] transition-colors">
               {{ __('Detail pekerjaan') }} →
             </a>
           </div>

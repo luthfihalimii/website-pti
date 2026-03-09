@@ -21,8 +21,14 @@
 
       <form action="{{ route('admin.login.store') }}" method="POST" class="mt-6 space-y-4">
         @csrf
-        <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('Email admin') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
-        <input type="password" name="password" placeholder="{{ __('Password') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
+        <div>
+          <label for="email" class="mb-2 block text-sm font-medium text-slate-700">{{ __('Email admin') }}</label>
+          <input id="email" type="email" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="{{ __('Email admin') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
+        </div>
+        <div>
+          <label for="password" class="mb-2 block text-sm font-medium text-slate-700">{{ __('Password') }}</label>
+          <input id="password" type="password" name="password" autocomplete="current-password" placeholder="{{ __('Password') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
+        </div>
         <button type="submit" class="inline-flex h-12 w-full items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700">
           {{ __('Masuk ke Admin') }}
         </button>

@@ -72,7 +72,7 @@
       </div>
     @endif
 
-    <form action="{{ route('careers.applications.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+    <form action="{{ route('careers.applications.store', $vacancy['slug']) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
       @csrf
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -163,7 +163,7 @@
 
       <div>
         <label for="posisi" class="block text-[14px] font-medium text-slate-700 mb-2">{{ __('Posisi yang Dilamar') }} <span class="text-red-500">*</span></label>
-        <input id="posisi" type="text" name="posisi" value="{{ old('posisi', $vacancy['title']) }}" placeholder="e.g., Fullstack Developer" required class="w-full px-4 py-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-600 focus:border-transparent text-[14px]" />
+        <input id="posisi" type="text" name="posisi" value="{{ old('posisi', $vacancy['title']) }}" readonly required class="w-full px-4 py-3 border border-slate-300 rounded-md bg-slate-50 text-[14px] text-slate-700 focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
       </div>
 
       <div>

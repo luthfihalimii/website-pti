@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateInternshipApplicationStatusRequest;
 use App\Models\InternshipApplication;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class InternshipApplicationController extends Controller
@@ -12,7 +13,7 @@ class InternshipApplicationController extends Controller
     public function index()
     {
         return view('admin.internship-applications-index', [
-            'applications' => InternshipApplication::query()->latest()->get(),
+            'applications' => InternshipApplication::query()->latest('id')->paginate(15),
             'statusOptions' => InternshipApplication::statuses(),
         ]);
     }
@@ -27,6 +28,13 @@ class InternshipApplicationController extends Controller
 
     public function download(InternshipApplication $internshipApplication)
     {
+        abort_unless(
+            $internshipApplication->cv_path
+                && $internshipApplication->cv_disk
+                && Storage::disk($internshipApplication->cv_disk)->exists($internshipApplication->cv_path),
+            404
+        );
+
         return Storage::disk($internshipApplication->cv_disk)->download(
             $internshipApplication->cv_path,
             basename($internshipApplication->cv_path)
@@ -46,11 +54,17 @@ class InternshipApplicationController extends Controller
 
     public function destroy(InternshipApplication $internshipApplication)
     {
-        if ($internshipApplication->cv_path && $internshipApplication->cv_disk) {
-            Storage::disk($internshipApplication->cv_disk)->delete($internshipApplication->cv_path);
-        }
+        $fileToDelete = $internshipApplication->cv_path && $internshipApplication->cv_disk
+            ? ['disk' => $internshipApplication->cv_disk, 'path' => $internshipApplication->cv_path]
+            : null;
 
-        $internshipApplication->delete();
+        DB::transaction(function () use ($internshipApplication): void {
+            $internshipApplication->delete();
+        });
+
+        if ($fileToDelete && Storage::disk($fileToDelete['disk'])->exists($fileToDelete['path'])) {
+            Storage::disk($fileToDelete['disk'])->delete($fileToDelete['path']);
+        }
 
         return redirect()
             ->route('admin.internship-applications.index')

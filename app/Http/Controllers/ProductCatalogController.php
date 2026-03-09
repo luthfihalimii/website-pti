@@ -30,7 +30,8 @@ class ProductCatalogController extends Controller
             ->orderByDesc('is_featured')
             ->orderBy('sort_order')
             ->orderBy('name')
-            ->get();
+            ->paginate(9)
+            ->withQueryString();
 
         return view('pages.produk', [
             'products' => $products,
@@ -49,6 +50,7 @@ class ProductCatalogController extends Controller
             ->firstOrFail();
 
         $relatedProducts = Product::query()
+            ->with('category')
             ->where('status', Product::STATUS_PUBLISHED)
             ->where('product_category_id', $product->product_category_id)
             ->whereKeyNot($product->id)

@@ -15,4 +15,3 @@ class TabletResponsiveLayoutTest extends TestCase
         $response->assertDontSee('text-[54px] md:text-[68px]', false);
     }
 }
-

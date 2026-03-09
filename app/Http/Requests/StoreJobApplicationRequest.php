@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreJobApplicationRequest extends FormRequest
 {
@@ -21,11 +24,11 @@ class StoreJobApplicationRequest extends FormRequest
             'alamat' => ['required', 'string', 'max:255'],
             'tempat_lahir' => ['required', 'string', 'max:255'],
             'tanggal_lahir' => ['required', 'date'],
-            'jenis_kelamin' => ['required', 'string', 'max:50'],
-            'agama' => ['required', 'string', 'max:50'],
-            'status_pernikahan' => ['required', 'string', 'max:50'],
-            'golongan_darah' => ['required', 'string', 'max:10'],
-            'pendidikan_terakhir' => ['required', 'string', 'max:50'],
+            'jenis_kelamin' => ['required', Rule::in(['Laki-laki', 'Perempuan'])],
+            'agama' => ['required', Rule::in(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'])],
+            'status_pernikahan' => ['required', Rule::in(['Belum Menikah', 'Menikah', 'Cerai'])],
+            'golongan_darah' => ['required', Rule::in(['A', 'B', 'AB', 'O'])],
+            'pendidikan_terakhir' => ['required', Rule::in(['SMA/SMK', 'D3', 'S1', 'S2', 'S3'])],
             'jurusan' => ['required', 'string', 'max:255'],
             'ipk' => ['required', 'string', 'max:20'],
             'posisi' => ['required', 'string', 'max:255'],
@@ -33,12 +36,26 @@ class StoreJobApplicationRequest extends FormRequest
             'keahlian_khusus' => ['required', 'string'],
             'cv' => ['required', 'file', 'mimetypes:application/pdf', 'max:2048'],
             'portofolio' => ['required', 'string', 'max:500'],
-            'sumber_informasi' => ['required', 'string', 'max:100'],
+            'sumber_informasi' => ['required', Rule::in(['Website Perusahaan', 'Media Sosial', 'Teman/Keluarga', 'Job Portal', 'Lainnya'])],
             'gaji_diharapkan' => ['required', 'string', 'max:100'],
             'mulai_bekerja' => ['required', 'date'],
             'pernyataan_1' => ['accepted'],
             'pernyataan_2' => ['accepted'],
             'pernyataan_3' => ['accepted'],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $vacancy = Arr::first(
+            config('site.careers.vacancies', []),
+            fn (array $vacancy): bool => ($vacancy['slug'] ?? Str::slug($vacancy['title'])) === $this->route('slug'),
+        );
+
+        if (is_array($vacancy)) {
+            $this->merge([
+                'posisi' => $vacancy['title'],
+            ]);
+        }
     }
 }

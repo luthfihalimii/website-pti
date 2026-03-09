@@ -131,8 +131,8 @@
       </header>
 
       <div class="client-board mt-8">
-        <button type="button" aria-label="{{ __('Sebelumnya') }}" class="client-arrow">&lt;</button>
-        <div class="client-grid">
+        <button type="button" aria-label="{{ __('Sebelumnya') }}" aria-controls="clientShowcaseTrack" class="client-arrow" data-client-arrow="prev">&lt;</button>
+        <div class="client-grid" id="clientShowcaseTrack" data-client-track>
           @foreach ($clients as $client)
             <figure class="client-badge">
               <div class="client-badge-shape">{{ $client['abbr'] }}</div>
@@ -140,7 +140,7 @@
             </figure>
           @endforeach
         </div>
-        <button type="button" aria-label="{{ __('Berikutnya') }}" class="client-arrow">&gt;</button>
+        <button type="button" aria-label="{{ __('Berikutnya') }}" aria-controls="clientShowcaseTrack" class="client-arrow" data-client-arrow="next">&gt;</button>
       </div>
     </div>
   </section>
@@ -155,8 +155,22 @@
       const title = root.querySelector('[data-product-title]');
       const summary = root.querySelector('[data-product-summary]');
       const link = root.querySelector('[data-product-link]');
+      const clientTrack = document.querySelector('[data-client-track]');
+      const clientPrev = document.querySelector('[data-client-arrow="prev"]');
+      const clientNext = document.querySelector('[data-client-arrow="next"]');
 
       if (!tabs.length || !image || !title || !summary || !link) return;
+
+      function renderSummary(paragraphs) {
+        summary.replaceChildren(
+          ...paragraphs.map((paragraph) => {
+            const paragraphElement = document.createElement('p');
+            paragraphElement.textContent = paragraph;
+
+            return paragraphElement;
+          })
+        );
+      }
 
       function renderFromTab(tabButton) {
         tabs.forEach((tab) => tab.classList.remove('is-active'));
@@ -171,10 +185,7 @@
         image.src = nextImage;
         image.alt = nextTitle;
         link.href = nextLink;
-
-        summary.innerHTML = nextSummary
-          .map((paragraph) => `<p>${paragraph}</p>`)
-          .join('');
+        renderSummary(Array.isArray(nextSummary) ? nextSummary : []);
       }
 
       tabs.forEach((tab) => {
@@ -182,6 +193,35 @@
           renderFromTab(this);
         });
       });
+
+      if (clientTrack && clientPrev && clientNext) {
+        const updateClientControls = () => {
+          const isOverflowing = clientTrack.scrollWidth > clientTrack.clientWidth + 1;
+          const atStart = clientTrack.scrollLeft <= 1;
+          const atEnd = clientTrack.scrollLeft + clientTrack.clientWidth >= clientTrack.scrollWidth - 1;
+
+          clientPrev.disabled = !isOverflowing || atStart;
+          clientNext.disabled = !isOverflowing || atEnd;
+        };
+
+        clientPrev.addEventListener('click', () => {
+          clientTrack.scrollBy({
+            left: -220,
+            behavior: 'smooth',
+          });
+        });
+
+        clientNext.addEventListener('click', () => {
+          clientTrack.scrollBy({
+            left: 220,
+            behavior: 'smooth',
+          });
+        });
+
+        clientTrack.addEventListener('scroll', updateClientControls, { passive: true });
+        window.addEventListener('resize', updateClientControls);
+        updateClientControls();
+      }
     })();
   </script>
 @endsection
