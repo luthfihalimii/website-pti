@@ -44,10 +44,10 @@
         <div>
           <h4 class="font-semibold text-lg">{{ __('Layanan') }}</h4>
           <ul class="mt-4 space-y-2 text-sm text-white/95 list-disc list-inside">
-            <li>E-Procurement</li>
-            <li>IT Consultant</li>
-            <li>Business System</li>
-            <li>E-Government &amp; Smart City</li>
+            <li><a href="{{ route('services') }}#eprocurement" class="hover:underline">{{ __('E-Procurement') }}</a></li>
+            <li><a href="{{ route('services') }}#itconsultant" class="hover:underline">{{ __('IT Consultant') }}</a></li>
+            <li><a href="{{ route('services') }}#business" class="hover:underline">{{ __('Business System') }}</a></li>
+            <li><a href="{{ route('services') }}#egovernment" class="hover:underline">{{ __('E-Government & Smart City') }}</a></li>
           </ul>
         </div>
 

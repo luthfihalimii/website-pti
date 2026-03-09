@@ -78,19 +78,19 @@ return [
             [
                 'title' => 'ERP BUSINESS SYSTEM',
                 'description' => 'Aplikasi untuk membantu perusahaan mengelola keuangan, gudang, inventaris, pembelian, penjualan, dan manufaktur.',
-                'image' => 'assets/images/ERP _ Bussines System.png',
+                'image' => 'assets/images/erp-business-system.png',
                 'icon' => 'BS',
             ],
             [
                 'title' => 'IT CONSULTANT',
                 'description' => 'Solusi terintegrasi lengkap untuk konsultasi, perancangan, penerapan, dan pemeliharaan produk teknologi perusahaan.',
-                'image' => 'assets/images/IT Consultant.png',
+                'image' => 'assets/images/it-consultant.png',
                 'icon' => 'IT',
             ],
             [
                 'title' => 'E-GOVERNMENT & SMART CITY',
                 'description' => 'Penerapan teknologi informasi untuk memperkuat hubungan pemerintah dengan masyarakat dan pemangku kepentingan lainnya.',
-                'image' => 'assets/images/E-Government .png',
+                'image' => 'assets/images/e-government.png',
                 'icon' => 'EG',
             ],
         ],

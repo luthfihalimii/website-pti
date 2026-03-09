@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (serviceTabsRoot) {
     const validTabs = ['eprocurement', 'itconsultant', 'business', 'egovernment'];
     const tabButtons = serviceTabsRoot.querySelectorAll('[data-services-tab]');
-    const tabPanels = serviceTabsRoot.querySelectorAll('[data-services-panel]');
+    const tabPanels = document.querySelectorAll('[data-services-panel]');
 
     const switchServiceTab = (tabName) => {
       tabPanels.forEach((panel) => {
