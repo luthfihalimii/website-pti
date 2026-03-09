@@ -17,6 +17,7 @@
           <th class="px-5 py-4 font-semibold">Email</th>
           <th class="px-5 py-4 font-semibold">Perusahaan</th>
           <th class="px-5 py-4 font-semibold">Pesan</th>
+          <th class="px-5 py-4 font-semibold text-right">Aksi</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-slate-200">
@@ -27,10 +28,17 @@
             <td class="px-5 py-4 text-slate-600">{{ $inquiry->email }}</td>
             <td class="px-5 py-4 text-slate-600">{{ $inquiry->company ?: '-' }}</td>
             <td class="px-5 py-4 text-slate-600">{{ $inquiry->message }}</td>
+            <td class="px-5 py-4 text-right">
+              <form action="{{ route('admin.product-inquiries.destroy', $inquiry) }}" method="POST" onsubmit="return confirm('Hapus inquiry ini?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="font-semibold text-red-600 hover:text-red-700">Hapus</button>
+              </form>
+            </td>
           </tr>
         @empty
           <tr>
-            <td colspan="5" class="px-5 py-12 text-center text-slate-500">Belum ada inquiry produk.</td>
+            <td colspan="6" class="px-5 py-12 text-center text-slate-500">Belum ada inquiry produk.</td>
           </tr>
         @endforelse
       </tbody>

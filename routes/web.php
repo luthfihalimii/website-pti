@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ContactInquiryController as AdminContactInquiryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\InternshipApplicationController as AdminInternshipApplicationController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
@@ -70,13 +71,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('categories', AdminCategoryController::class)->except(['show']);
         Route::resource('products', AdminProductController::class)->except(['show']);
         Route::get('/product-inquiries', [AdminProductInquiryController::class, 'index'])->name('product-inquiries.index');
+        Route::delete('/product-inquiries/{productInquiry}', [AdminProductInquiryController::class, 'destroy'])->name('product-inquiries.destroy');
+        Route::delete('/contact-inquiries/{contactInquiry}', [AdminContactInquiryController::class, 'destroy'])->name('contact-inquiries.destroy');
         Route::get('/job-applications', [AdminJobApplicationController::class, 'index'])->name('job-applications.index');
         Route::get('/job-applications/{jobApplication}', [AdminJobApplicationController::class, 'show'])->name('job-applications.show');
         Route::get('/job-applications/{jobApplication}/download', [AdminJobApplicationController::class, 'download'])->name('job-applications.download');
         Route::patch('/job-applications/{jobApplication}/status', [AdminJobApplicationController::class, 'updateStatus'])->name('job-applications.status.update');
+        Route::delete('/job-applications/{jobApplication}', [AdminJobApplicationController::class, 'destroy'])->name('job-applications.destroy');
         Route::get('/internship-applications', [AdminInternshipApplicationController::class, 'index'])->name('internship-applications.index');
         Route::get('/internship-applications/{internshipApplication}', [AdminInternshipApplicationController::class, 'show'])->name('internship-applications.show');
         Route::get('/internship-applications/{internshipApplication}/download', [AdminInternshipApplicationController::class, 'download'])->name('internship-applications.download');
         Route::patch('/internship-applications/{internshipApplication}/status', [AdminInternshipApplicationController::class, 'updateStatus'])->name('internship-applications.status.update');
+        Route::delete('/internship-applications/{internshipApplication}', [AdminInternshipApplicationController::class, 'destroy'])->name('internship-applications.destroy');
     });
 });

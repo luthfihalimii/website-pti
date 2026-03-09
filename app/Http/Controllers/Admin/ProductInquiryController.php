@@ -13,4 +13,13 @@ class ProductInquiryController extends Controller
             'inquiries' => ProductInquiry::query()->with('product')->latest()->get(),
         ]);
     }
+
+    public function destroy(ProductInquiry $productInquiry)
+    {
+        $productInquiry->delete();
+
+        return redirect()
+            ->route('admin.product-inquiries.index')
+            ->with('status', 'Inquiry produk berhasil dihapus.');
+    }
 }

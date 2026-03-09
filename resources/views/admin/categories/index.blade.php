@@ -32,7 +32,14 @@
             <td class="px-5 py-4 text-slate-600">{{ $category->sort_order }}</td>
             <td class="px-5 py-4 text-slate-600">{{ $category->is_active ? 'Aktif' : 'Nonaktif' }}</td>
             <td class="px-5 py-4 text-right">
-              <a href="{{ route('admin.categories.edit', $category) }}" class="font-semibold text-blue-600 hover:text-blue-700">Edit</a>
+              <div class="inline-flex items-center gap-4">
+                <a href="{{ route('admin.categories.edit', $category) }}" class="font-semibold text-blue-600 hover:text-blue-700">Edit</a>
+                <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Hapus kategori ini?');">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="font-semibold text-red-600 hover:text-red-700">Hapus</button>
+                </form>
+              </div>
             </td>
           </tr>
         @empty

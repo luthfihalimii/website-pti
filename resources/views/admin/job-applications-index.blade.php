@@ -51,6 +51,13 @@
                   <a href="{{ route('admin.job-applications.download', $application) }}" class="inline-flex rounded-xl bg-sky-50 px-4 py-2 text-xs font-semibold text-sky-800 ring-1 ring-sky-200 transition hover:bg-sky-100">
                     Download CV
                   </a>
+                  <form action="{{ route('admin.job-applications.destroy', $application) }}" method="POST" onsubmit="return confirm('Hapus lamaran kerja ini?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="inline-flex rounded-xl bg-red-50 px-4 py-2 text-xs font-semibold text-red-700 ring-1 ring-red-200 transition hover:bg-red-100">
+                      Hapus
+                    </button>
+                  </form>
                 </div>
               </td>
             </tr>

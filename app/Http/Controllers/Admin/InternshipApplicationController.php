@@ -43,4 +43,17 @@ class InternshipApplicationController extends Controller
             ->route('admin.internship-applications.show', $internshipApplication)
             ->with('status', 'Status pendaftaran magang berhasil diperbarui.');
     }
+
+    public function destroy(InternshipApplication $internshipApplication)
+    {
+        if ($internshipApplication->cv_path && $internshipApplication->cv_disk) {
+            Storage::disk($internshipApplication->cv_disk)->delete($internshipApplication->cv_path);
+        }
+
+        $internshipApplication->delete();
+
+        return redirect()
+            ->route('admin.internship-applications.index')
+            ->with('status', 'Pendaftaran magang berhasil dihapus.');
+    }
 }

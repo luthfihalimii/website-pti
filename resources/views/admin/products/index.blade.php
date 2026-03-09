@@ -32,7 +32,14 @@
             <td class="px-5 py-4 text-slate-600">{{ ucfirst($product->status) }}</td>
             <td class="px-5 py-4 text-slate-600">{{ $product->is_featured ? 'Ya' : 'Tidak' }}</td>
             <td class="px-5 py-4 text-right">
-              <a href="{{ route('admin.products.edit', $product) }}" class="font-semibold text-blue-600 hover:text-blue-700">Edit</a>
+              <div class="inline-flex items-center gap-4">
+                <a href="{{ route('admin.products.edit', $product) }}" class="font-semibold text-blue-600 hover:text-blue-700">Edit</a>
+                <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Hapus produk ini?');">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="font-semibold text-red-600 hover:text-red-700">Hapus</button>
+                </form>
+              </div>
             </td>
           </tr>
         @empty

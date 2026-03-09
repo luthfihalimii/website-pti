@@ -43,4 +43,17 @@ class JobApplicationController extends Controller
             ->route('admin.job-applications.show', $jobApplication)
             ->with('status', 'Status lamaran kerja berhasil diperbarui.');
     }
+
+    public function destroy(JobApplication $jobApplication)
+    {
+        if ($jobApplication->cv_path && $jobApplication->cv_disk) {
+            Storage::disk($jobApplication->cv_disk)->delete($jobApplication->cv_path);
+        }
+
+        $jobApplication->delete();
+
+        return redirect()
+            ->route('admin.job-applications.index')
+            ->with('status', 'Lamaran kerja berhasil dihapus.');
+    }
 }

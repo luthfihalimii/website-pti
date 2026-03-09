@@ -77,6 +77,14 @@
             Simpan Status
           </button>
         </form>
+
+        <form action="{{ route('admin.internship-applications.destroy', $application) }}" method="POST" class="mt-4" onsubmit="return confirm('Hapus pendaftaran magang ini?');">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="inline-flex w-full items-center justify-center rounded-2xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 ring-1 ring-red-200 transition hover:bg-red-100">
+            Hapus Pendaftaran
+          </button>
+        </form>
       </article>
 
       <article class="rounded-[30px] border border-slate-200/80 bg-white p-6 shadow-sm">
