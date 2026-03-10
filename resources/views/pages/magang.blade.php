@@ -250,33 +250,67 @@
 
 {{-- ================= CTA ================= --}}
 <section class="max-w-6xl mx-auto px-4 pb-20">
-    <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div>
-            <p class="text-blue-600 text-2xl md:text-3xl font-semibold tracking-widest">
-              SUDAH SIAP MAGANG DI PTI?
-            </p>
-            <h3 class="text-4xl font-extrabold mt-4">
-                MEMBENTUK MASA DEPAN <span class="text-blue-600">MAGANG DI PTI</span>
-            </h3>
-            <p class="text-gray-600 mt-4">
-                Dengan fokus pada peningkatan kualitas, pengembangan keterampilan, dan pemberdayaan.
-                PTI berupaya menciptakan lingkungan yang kondusif bagi peserta magang untuk tumbuh dan berkembang.
-            </p>
+  <div class="grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <p class="text-blue-600 text-2xl md:text-3xl font-semibold tracking-widest">
+        SUDAH SIAP MAGANG DI PTI?
+      </p>
+      <h3 class="text-4xl font-extrabold mt-4">
+        MEMBENTUK MASA DEPAN <span class="text-blue-600">MAGANG DI PTI</span>
+      </h3>
+      <p class="text-gray-600 mt-4">
+        Dengan fokus pada peningkatan kualitas, pengembangan keterampilan, dan pemberdayaan.
+        PTI berupaya menciptakan lingkungan yang kondusif bagi peserta magang untuk tumbuh dan berkembang.
+      </p>
+      
+      {{-- BUTTON DAFTAR --}}
+      <a href="{{ url('/magang/tahap-1') }}"
+      style="
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+        margin-top:24px;
+        background:#2563EB;
+        color:white;
+        padding:12px 32px;
+        border-radius:10px;
+        text-decoration:none;
+        font-weight:600;
+        cursor:pointer;
+        transition:0.2s;
+        "
+        onmouseover="this.style.background='#1D4ED8'"
+        onmouseout="this.style.background='#2563EB'">
+              
+        Daftar
+              
+        <svg xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none">
+              
+          <path d="M5 12H19"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"/>
 
-            {{-- Tombol ke Tahap 1 --}}
-            <a href="{{ url('/magang/tahap-1') }}"
-               class="inline-block mt-6 bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700">
-                Daftar →
-            </a>
-        </div>
-
-         {{-- RIGHT IMAGE --}}
-        <div class="flex justify-center">
-            <img src="{{ asset('assets/images/Magang.png') }}"
-                 alt="Magang"
-                 class="max-w-md w-full">
-        </div>
+          <path d="M13 6L19 12L13 18"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+        </svg>
+      </a>
     </div>
+
+    {{-- RIGHT IMAGE --}}
+    <div class="flex justify-center">
+      <img src="{{ asset('assets/images/Magang.png') }}"
+      alt="Magang"       
+      class="max-w-md w-full">
+    </div>
+  </div>
 </section>
 
 @endsection
