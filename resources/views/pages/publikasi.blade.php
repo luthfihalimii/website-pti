@@ -16,11 +16,12 @@
       <h1 class="text-4xl sm:text-5xl lg:text-[64px] font-extrabold drop-shadow-lg leading-none">
         {{ __('Publikasi') }}
       </h1>
-<div class="mt-3 flex items-center gap-2 text-base md:text-[18px] font-semibold text-white/95">
-  <a href="/" class="hover:underline">{{ __('Home') }}</a>
-  <span class="opacity-70">–</span>
-  <span class="opacity-90">{{ __('Publikasi') }}</span>
-</div>
+      <div class="mt-3 flex items-center gap-2 text-base md:text-[18px] font-semibold opacity-95">
+        <span>{{ __('Home') }}</span>
+        <span class="opacity-80">–</span>
+        <span>{{ __('Publikasi') }}</span>
+      </div>
+    </div>
   </section>
 
   {{-- CARD AREA --}}

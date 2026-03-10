@@ -19,10 +19,7 @@
       </h1>
 
       <p class="mt-3 text-[14px] md:text-[15px] font-semibold text-white/95">
-      <p class="mt-3 text-[14px] md:text-[15px] font-semibold text-white/95">
-        <a href="/" class="hover:underline">{{ __('Home') }}</a>
-        &nbsp;–&nbsp;
-        {{ __('Lowongan pekerjaan') }}
+        {{ __('Home') }} &nbsp;–&nbsp; {{ __('Lowongan pekerjaan') }}
       </p>
     </div>
 </section>
