@@ -23,7 +23,10 @@
       </h1>
 
       <p class="mt-3 text-[14px] md:text-[15px] font-semibold text-white/95">
-        {{ __('Home') }} &nbsp;–&nbsp; {{ __('Tentang kami') }}
+  <a href="/" class="hover:underline">{{ __('Home') }}</a>
+  &nbsp;–&nbsp;
+  <span>{{ __('Tentang kami') }}</span>
+</p>
       </p>
     </div>
   </section>

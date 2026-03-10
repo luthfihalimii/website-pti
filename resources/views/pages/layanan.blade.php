@@ -17,11 +17,11 @@
       {{ __('Layanan') }}
     </h1>
     
-    <div class="flex items-center gap-2 text-base sm:text-lg lg:text-[21px] font-semibold">
-      <span>{{ __('Home') }}</span>
-      <div class="w-3 h-[3px] bg-white"></div>
-      <span>{{ __('Layanan') }}</span>
-    </div>
+<div class="flex items-center gap-2 text-base sm:text-lg lg:text-[21px] font-semibold">
+  <a href="/" class="hover:underline">{{ __('Home') }}</a>
+  <div class="w-3 h-[3px] bg-white"></div>
+  <span>{{ __('Layanan') }}</span>
+</div>
   </div>
 </section>
 
