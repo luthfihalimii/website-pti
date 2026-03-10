@@ -69,7 +69,6 @@
   
     {{-- BOX NOTIFIKASI --}}
     <div style="display:flex; justify-content:center; align-items:center; padding:40px 0;">
-    
         <div style="
         width:100%;
         min-height:70vh;
@@ -88,78 +87,76 @@
         ">
         
         <!-- ICON -->
-         <div style="
-        width:70px;
-        height:70px;
-        margin:0 auto 20px;
-        border-radius:50%;
-        background:linear-gradient(90deg,#6EA8FE,#4F8AD9);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        box-shadow:0 0 18px rgba(79,138,217,0.55);
-        ">
+        <div style="
+            width:70px;
+            height:70px;
+            margin:0 auto 20px;
+            border-radius:50%;
+            background:linear-gradient(90deg,#6EA8FE,#4F8AD9);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            box-shadow:0 0 18px rgba(79,138,217,0.55);
+            ">
         
-        <svg xmlns="http://www.w3.org/2000/svg"
-            width="42"
-            height="42"
-            viewBox="0 0 24 24"
-            fill="none">
-        <path
-            d="M6 12.5L10 16L18 8"
-            stroke="white"
-            stroke-width="3.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"/>
-        </svg>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                width="42"
+                height="42"
+                viewBox="0 0 24 24"
+                fill="none">
+            <path
+                d="M6 12.5L10 16L18 8"
+                stroke="white"
+                stroke-width="3.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+            </svg>
+        </div>
+    
+        <!-- JUDUL -->
+        <h2 style="
+            font-size:24px;
+            font-weight:800;
+            margin-bottom:10px;
+            color:#111827;
+            ">
+            Pendaftaran Berhasil!
+        </h2>
+    
+        <!-- DESKRIPSI -->
+        <p style="
+            color:#6B7280;
+            font-size:14px;
+            line-height:1.6;
+            margin-bottom:28px;
+            ">
+            Terima kasih telah mengirimkan formulir magang.  
+            Tim kami akan melakukan proses seleksi dan hasil  
+            akan dikirim melalui email Anda.
+        </p>
+
+        <!-- BUTTON -->
+        <a href="/" style="
+            display:inline-flex;
+            align-items:center;
+            gap:12px;
+            background:linear-gradient(90deg,#6EA8FE,#4F8AD9);
+            color:#fff;
+            font-size:20px;
+            font-weight:700;
+            padding:14px 30px;
+            border-radius:10px;
+            text-decoration:none;
+            box-shadow:0 8px 18px rgba(0,0,0,0.15);
+            ">
+            Pergi ke beranda
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12H19" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                <path d="M13 6L19 12L13 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+        </div>
     </div>
-    
-    <!-- JUDUL -->
-    <h2 style="
-        font-size:24px;
-        font-weight:800;
-        margin-bottom:10px;
-        color:#111827;
-        ">
-        Pendaftaran Berhasil!
-    </h2>
-    
-    <!-- DESKRIPSI -->
-    <p style="
-        color:#6B7280;
-        font-size:14px;
-        line-height:1.6;
-        margin-bottom:28px;
-        ">
-        Terima kasih telah mengirimkan formulir magang.  
-        Tim kami akan melakukan proses seleksi dan hasil  
-        akan dikirim melalui email Anda.
-    </p>
-
-    <!-- BUTTON -->
-    <a href="/" style="
-        display:inline-flex;
-        align-items:center;
-        gap:12px;
-        background:linear-gradient(90deg,#6EA8FE,#4F8AD9);
-        color:#fff;
-        font-size:20px;
-        font-weight:700;
-        padding:14px 30px;
-        border-radius:10px;
-        text-decoration:none;
-        box-shadow:0 8px 18px rgba(0,0,0,0.15);
-        ">
-        Pergi ke beranda
-        
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M5 12H19" stroke="white" stroke-width="3" stroke-linecap="round"/>
-            <path d="M13 6L19 12L13 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </a>
-</div>
-</div>
-
 </div>
 
 @endsection
