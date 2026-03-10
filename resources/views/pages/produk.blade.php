@@ -144,8 +144,12 @@
     <div class="product-page-hero-overlay"></div>
     <div class="product-page-hero-content">
       <h1>Produk</h1>
-      <p>Home <span>-</span> Produk</p>
-    </div>
+      <p>
+        <a href="/" class="hover:underline">Home</a>
+        <span>-</span>
+        Produk
+      </p>
+</div>
   </section>
 
   <section class="product-page-catalog">

@@ -15,11 +15,11 @@
       <h1 class="text-5xl md:text-[64px] font-extrabold drop-shadow-lg leading-none">
         Publikasi
       </h1>
-      <div class="mt-3 flex items-center gap-2 text-base md:text-[18px] font-semibold opacity-95">
-        <span>Home</span>
-        <span class="opacity-80">–</span>
-        <span>Publikasi</span>
-      </div>
+      <div class="mt-3 flex items-center gap-2 text-base md:text-[18px] font-semibold text-white/95">
+      <a href="/" class="hover:underline">Home</a>
+      <span class="opacity-70">–</span>
+      <span class="opacity-90">Publikasi</span>
+    </div>
     </div>
   </section>
 

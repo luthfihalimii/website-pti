@@ -22,8 +22,10 @@
       </h1>
 
       <p class="mt-3 text-[14px] md:text-[15px] font-semibold text-white/95">
-        Home &nbsp;–&nbsp; Lowongan pekerjaan
-      </p>
+      <a href="/" class="hover:underline">Home</a>
+      &nbsp;–&nbsp;
+      Lowongan pekerjaan
+    </p>
     </div>
 </section>
 

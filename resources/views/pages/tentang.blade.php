@@ -22,7 +22,9 @@
       </h1>
 
       <p class="mt-3 text-[14px] md:text-[15px] font-semibold text-white/95">
-        Home &nbsp;–&nbsp; Tentang kami
+        <a href="/" class="hover:underline">Home</a>
+        &nbsp;–&nbsp;
+        <span>Tentang kami</span>
       </p>
     </div>
   </section>

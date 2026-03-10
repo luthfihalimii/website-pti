@@ -17,10 +17,10 @@
     </h1>
     
     <div class="flex items-center gap-2 text-lg md:text-[21px] font-semibold">
-      <span>Home</span>
-      <div class="w-3 h-[3px] bg-white"></div>
-      <span>Layanan</span>
-    </div>
+    <a href="/" class="hover:underline">Home</a>
+    <div class="w-3 h-[3px] bg-white"></div>
+    <span>Layanan</span>
+  </div>
   </div>
 </section>
 
