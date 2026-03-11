@@ -222,4 +222,36 @@ document.addEventListener('DOMContentLoaded', () => {
       closeAdminSidebar();
     });
   }
+
+  const clientSwiperElement = document.querySelector('.clientSwiper');
+
+  if (clientSwiperElement && typeof window.Swiper === 'function') {
+    const clientSwiper = new window.Swiper('.clientSwiper', {
+      loop: true,
+      speed: 1200,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      slidesPerView: 1,
+    });
+
+    let moveTimeout;
+
+    clientSwiperElement.addEventListener('mousemove', (event) => {
+      clearTimeout(moveTimeout);
+
+      moveTimeout = setTimeout(() => {
+        const width = clientSwiperElement.offsetWidth;
+        const mouseX = event.offsetX;
+
+        if (mouseX < width / 2) {
+          clientSwiper.slidePrev();
+          return;
+        }
+
+        clientSwiper.slideNext();
+      }, 600);
+    });
+  }
 });

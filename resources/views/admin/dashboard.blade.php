@@ -10,8 +10,13 @@
         <h1 class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-[2.2rem]">Ringkasan Operasional Harian</h1>
         <p class="mt-3 text-sm leading-7 text-slate-600 sm:text-base">Monitor lead, kandidat, dan pipeline produk dengan tampilan yang ringkas dan mudah dibaca.</p>
       </div>
-      <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-        Terakhir diperbarui: {{ now()->format('d M Y, H:i') }}
+      <div class="space-y-3">
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+          Terakhir diperbarui: {{ now()->format('d M Y, H:i') }}
+        </div>
+        <a href="{{ route('admin.vacancies.create') }}" class="inline-flex h-11 items-center justify-center rounded-xl bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700">
+          Tambah Lowongan
+        </a>
       </div>
     </div>
   </section>
@@ -40,6 +45,10 @@
     <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <p class="text-xs font-medium tracking-wide text-slate-500">Pendaftaran Magang</p>
       <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{{ $stats['internship_applications'] }}</p>
+    </article>
+    <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <p class="text-xs font-medium tracking-wide text-slate-500">Lowongan Aktif/Tersimpan</p>
+      <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{{ $stats['vacancies'] }}</p>
     </article>
   </section>
 

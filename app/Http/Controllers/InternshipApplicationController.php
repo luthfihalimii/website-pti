@@ -64,8 +64,6 @@ class InternshipApplicationController extends Controller
 
         $request->session()->forget('internship_application.step_one');
 
-        return redirect()
-            ->route('internships.steps.one')
-            ->with('internship_status', __('Pendaftaran magang berhasil dikirim. Kami akan menghubungi Anda setelah proses review.'));
+        return redirect()->route('magang.selesai');
     }
 }

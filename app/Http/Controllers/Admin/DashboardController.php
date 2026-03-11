@@ -9,6 +9,7 @@ use App\Models\JobApplication;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductInquiry;
+use App\Models\Vacancy;
 
 class DashboardController extends Controller
 {
@@ -23,6 +24,7 @@ class DashboardController extends Controller
                 'contact_inquiries' => ContactInquiry::count(),
                 'job_applications' => JobApplication::count(),
                 'internship_applications' => InternshipApplication::count(),
+                'vacancies' => Vacancy::count(),
             ],
             'recentJobApplications' => JobApplication::query()->latest('id')->take(5)->get(),
             'recentInternshipApplications' => InternshipApplication::query()->latest('id')->take(5)->get(),
