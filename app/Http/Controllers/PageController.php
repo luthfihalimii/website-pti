@@ -21,7 +21,6 @@ class PageController extends Controller
             ->published()
             ->where('is_featured', true)
             ->orderBy('sort_order')
-            ->limit(5)
             ->get()
             ->map(fn (Product $product) => [
                 'tab' => $product->name,
@@ -32,18 +31,23 @@ class PageController extends Controller
                     $product->excerpt ?: Str::limit(strip_tags($product->description), 180),
                 ],
                 'link' => route('products.show', $product->slug),
-            ])
-            ->all();
+            ]);
 
-        if ($products === []) {
-            $products = collect(config('site.home.featured_products'))
+        if ($products->count() < 5) {
+            $fallbackProducts = collect(config('site.home.featured_products'))
                 ->map(fn (array $product) => [
                     ...$product,
                     'image' => asset($product['image']),
                     'link' => $product['link'] ?? route('products.index'),
                 ])
-                ->all();
+                ->reject(fn (array $fallbackProduct) => $products->contains(
+                    fn (array $product): bool => Str::lower($product['tab']) === Str::lower($fallbackProduct['tab'])
+                ));
+
+            $products = $products->concat($fallbackProducts)->take(5);
         }
+
+        $products = $products->values()->all();
 
         $clients = collect(config('site.home.clients'))
             ->map(fn (array $client) => [

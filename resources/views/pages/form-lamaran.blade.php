@@ -48,7 +48,7 @@
       </div>
       <div class="w-48 h-48">
         <img
-          src="{{ asset('assets/images/Magang.png') }}"
+          src="{{ asset('assets/images/magang.png') }}"
           alt="{{ __('Form Illustration') }}"
           class="w-full h-full object-contain"
         />

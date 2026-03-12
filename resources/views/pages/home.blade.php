@@ -104,21 +104,25 @@
         </div>
       </article>
 
-      <div class="product-tabs mt-7">
-        @foreach ($products as $index => $product)
-          <button
-            type="button"
-            class="product-tab {{ $index === 0 ? 'is-active' : '' }}"
-            data-product-tab="{{ $index }}"
-            data-product-title="{{ __($product['title']) }}"
-            data-product-image="{{ $product['image'] }}"
-            data-product-link="{{ $product['link'] }}"
-            data-product-summary='@json(array_map(static fn ($paragraph) => __($paragraph), $product['summary']))'
-          >
-            <img src="{{ $product['image'] }}" alt="{{ __($product['tab']) }}">
-            <span>{!! nl2br(e(__($product['tab_mobile']))) !!}</span>
-          </button>
-        @endforeach
+      <div class="product-tabs-board mt-7">
+        <button type="button" aria-label="{{ __('Sebelumnya') }}" aria-controls="homeProductTabsTrack" class="product-arrow" data-product-arrow="prev">&lt;</button>
+        <div class="product-tabs" id="homeProductTabsTrack" data-product-track>
+          @foreach ($products as $index => $product)
+            <button
+              type="button"
+              class="product-tab {{ $index === 0 ? 'is-active' : '' }}"
+              data-product-tab="{{ $index }}"
+              data-product-title="{{ __($product['title']) }}"
+              data-product-image="{{ $product['image'] }}"
+              data-product-link="{{ $product['link'] }}"
+              data-product-summary='@json(array_map(static fn ($paragraph) => __($paragraph), $product['summary']))'
+            >
+              <img src="{{ $product['image'] }}" alt="{{ __($product['tab']) }}">
+              <span>{!! nl2br(e(__($product['tab_mobile']))) !!}</span>
+            </button>
+          @endforeach
+        </div>
+        <button type="button" aria-label="{{ __('Berikutnya') }}" aria-controls="homeProductTabsTrack" class="product-arrow" data-product-arrow="next">&gt;</button>
       </div>
     </div>
   </section>
@@ -161,6 +165,9 @@
       const title = root.querySelector('[data-product-title]');
       const summary = root.querySelector('[data-product-summary]');
       const link = root.querySelector('[data-product-link]');
+      const productTrack = root.querySelector('[data-product-track]');
+      const productPrev = root.querySelector('[data-product-arrow="prev"]');
+      const productNext = root.querySelector('[data-product-arrow="next"]');
       const clientTrack = document.querySelector('[data-client-track]');
       const clientPrev = document.querySelector('[data-client-arrow="prev"]');
       const clientNext = document.querySelector('[data-client-arrow="next"]');
@@ -192,6 +199,12 @@
         image.alt = nextTitle;
         link.href = nextLink;
         renderSummary(Array.isArray(nextSummary) ? nextSummary : []);
+
+        tabButton.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'nearest',
+          block: 'nearest',
+        });
       }
 
       tabs.forEach((tab) => {
@@ -199,6 +212,35 @@
           renderFromTab(this);
         });
       });
+
+      if (productTrack && productPrev && productNext) {
+        const updateProductControls = () => {
+          const isOverflowing = productTrack.scrollWidth > productTrack.clientWidth + 1;
+          const atStart = productTrack.scrollLeft <= 1;
+          const atEnd = productTrack.scrollLeft + productTrack.clientWidth >= productTrack.scrollWidth - 1;
+
+          productPrev.disabled = !isOverflowing || atStart;
+          productNext.disabled = !isOverflowing || atEnd;
+        };
+
+        productPrev.addEventListener('click', () => {
+          productTrack.scrollBy({
+            left: -Math.max(220, Math.round(productTrack.clientWidth * 0.75)),
+            behavior: 'smooth',
+          });
+        });
+
+        productNext.addEventListener('click', () => {
+          productTrack.scrollBy({
+            left: Math.max(220, Math.round(productTrack.clientWidth * 0.75)),
+            behavior: 'smooth',
+          });
+        });
+
+        productTrack.addEventListener('scroll', updateProductControls, { passive: true });
+        window.addEventListener('resize', updateProductControls);
+        updateProductControls();
+      }
 
       if (clientTrack && clientPrev && clientNext) {
         const updateClientControls = () => {

@@ -111,7 +111,7 @@ return [
                 'tab' => 'HRIS/HRMS',
                 'tab_mobile' => 'HRIS/HRMS',
                 'title' => 'HRIS / HRMS',
-                'image' => 'assets/images/Latar Belakang Divisi.png',
+                'image' => 'assets/images/latar-belakang-divisi.png',
                 'summary' => [
                     'Sistem manajemen SDM terintegrasi untuk personalia, absensi, cuti, payroll, hingga evaluasi kinerja.',
                     'Mempermudah workflow HR berbasis data dan menyiapkan laporan operasional secara real-time.',
@@ -133,7 +133,7 @@ return [
                 'tab' => 'eGovernment',
                 'tab_mobile' => 'eGovernment',
                 'title' => 'E-GOVERNMENT',
-                'image' => 'assets/images/E-Government .png',
+                'image' => 'assets/images/e-government.png',
                 'summary' => [
                     'Solusi digital pemerintahan untuk mempercepat pelayanan publik dan meningkatkan transparansi pengelolaan data.',
                     'Mencakup layanan perizinan, pengaduan, dashboard kinerja, hingga integrasi lintas perangkat daerah.',
@@ -144,7 +144,7 @@ return [
                 'tab' => 'Insight Gov',
                 'tab_mobile' => 'Insight Gov',
                 'title' => 'INSIGHT GOV',
-                'image' => 'assets/images/E-Government .png',
+                'image' => 'assets/images/e-government.png',
                 'summary' => [
                     'Dashboard analitik pemerintahan untuk membantu pimpinan memantau KPI, tren pelayanan, dan performa organisasi.',
                     'Visualisasi data disusun agar mudah dipahami untuk mendukung pengambilan keputusan yang cepat dan tepat.',
@@ -195,7 +195,7 @@ return [
             [
                 'name' => 'HRIS/HRMS',
                 'description' => 'Aplikasi perusahaan untuk mengelola informasi sumber daya manusia perusahaan.',
-                'image' => 'assets/images/Latar Belakang Divisi.png',
+                'image' => 'assets/images/latar-belakang-divisi.png',
                 'category' => 'Business System',
                 'category_key' => 'business-system',
                 'url' => null,
@@ -219,7 +219,7 @@ return [
             [
                 'name' => 'Aplikasi Potensi dan Peluang Investasi',
                 'description' => 'Aplikasi informasi potensi dan peluang investasi yang menyajikan prospektus lengkap serta terbaru.',
-                'image' => 'assets/images/E-Government .png',
+                'image' => 'assets/images/e-government.png',
                 'category' => 'E-Government & Smart City',
                 'category_key' => 'e-government-smart-city',
                 'url' => null,
@@ -227,7 +227,7 @@ return [
             [
                 'name' => 'Aplikasi Pengadaan Unit Pelayanan',
                 'description' => 'Aplikasi pengadaan yang mempermudah proses lelang dan administrasi barang maupun jasa secara efisien.',
-                'image' => 'assets/images/IT Support.png',
+                'image' => 'assets/images/it-support.png',
                 'category' => 'E-Procurement',
                 'category_key' => 'e-procurement',
                 'url' => null,
@@ -235,7 +235,7 @@ return [
             [
                 'name' => 'Contractor Safety Management System (CSMS)',
                 'description' => 'Aplikasi pengelolaan keselamatan kerja kontraktor untuk memastikan kepatuhan terhadap standar K3 perusahaan.',
-                'image' => 'assets/images/ERP _ Bussines System.png',
+                'image' => 'assets/images/erp-business-system.png',
                 'category' => 'Business System',
                 'category_key' => 'business-system',
                 'url' => null,
@@ -243,7 +243,7 @@ return [
             [
                 'name' => 'Rusunawa - Billing',
                 'description' => 'Aplikasi pengelolaan penghuni dan penagihan sewa rusunawa yang terintegrasi untuk administrasi dan pelaporan.',
-                'image' => 'assets/images/About me.png',
+                'image' => 'assets/images/about-me.png',
                 'category' => 'E-Government & Smart City',
                 'category_key' => 'e-government-smart-city',
                 'url' => null,
@@ -251,7 +251,7 @@ return [
             [
                 'name' => 'Aplikasi Geographical Information System (APGIS)',
                 'description' => 'Sistem informasi geografis untuk mengelola dan menyajikan data spasial secara terintegrasi.',
-                'image' => 'assets/images/E-Government .png',
+                'image' => 'assets/images/e-government.png',
                 'category' => 'E-Government & Smart City',
                 'category_key' => 'e-government-smart-city',
                 'url' => null,
@@ -259,7 +259,7 @@ return [
             [
                 'name' => 'Business Intelligence (BI)',
                 'description' => 'Aplikasi pengolahan dan penyajian data terintegrasi untuk monitoring kinerja dan pengambilan keputusan.',
-                'image' => 'assets/images/PTI.png',
+                'image' => 'assets/images/pti.png',
                 'category' => 'Business System',
                 'category_key' => 'business-system',
                 'url' => null,
@@ -267,7 +267,7 @@ return [
             [
                 'name' => 'Data Management and Dashboard (e-Government)',
                 'description' => 'Aplikasi pengelolaan dan integrasi data terstruktur dengan dashboard visual untuk monitoring dan pelaporan.',
-                'image' => 'assets/images/E-Government .png',
+                'image' => 'assets/images/e-government.png',
                 'category' => 'E-Government & Smart City',
                 'category_key' => 'e-government-smart-city',
                 'url' => null,
@@ -299,7 +299,7 @@ return [
             [
                 'name' => 'PostgreSQL Premium Maintenance Support',
                 'description' => 'Layanan pemeliharaan dan dukungan PostgreSQL yang mencakup instalasi, keamanan, backup, dan pemulihan.',
-                'image' => 'assets/images/IT Consultant.png',
+                'image' => 'assets/images/it-consultant.png',
                 'category' => 'IT Consultant',
                 'category_key' => 'it-consultant',
                 'url' => null,
@@ -307,7 +307,7 @@ return [
             [
                 'name' => 'Insight GOV',
                 'description' => 'Aplikasi pengelolaan data terintegrasi yang menggabungkan data warehouse, business intelligence, dan open data.',
-                'image' => 'assets/images/E-Government .png',
+                'image' => 'assets/images/e-government.png',
                 'category' => 'E-Government & Smart City',
                 'category_key' => 'e-government-smart-city',
                 'url' => null,

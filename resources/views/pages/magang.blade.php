@@ -5,30 +5,7 @@
 @section('content')
 
 @php
-    $img = fn ($file) => asset('assets/images/' . rawurlencode($file));
-
-    $divisi = [
-        [
-            'title' => 'Web Development',
-            'desc'  => 'Siswa magang belajar membangun dan mengelola website secara langsung sesuai standar industri.',
-            'img'   => 'Web Development.png',
-        ],
-        [
-            'title' => 'Mobile Development',
-            'desc'  => 'Siswa magang belajar mengembangkan aplikasi mobile yang fungsional dan siap digunakan.',
-            'img'   => 'Mobile Development.png',
-        ],
-        [
-            'title' => 'UI/UX Designer',
-            'desc'  => 'Siswa magang belajar merancang tampilan dan pengalaman pengguna yang intuitif serta menarik.',
-            'img'   => 'UI_UX Designer.png',
-        ],
-        [
-            'title' => 'IT Support',
-            'desc'  => 'Siswa magang belajar menangani instalasi, troubleshooting, dan pemeliharaan sistem IT.',
-            'img'   => 'IT Support.png',
-        ],
-    ];
+    $divisi = config('site.internships.divisions', []);
 @endphp
 
 
@@ -78,7 +55,7 @@
 
   {{-- Background image --}}
   <img
-    src="{{ asset('assets/images/Latar Belakang Divisi.png') }}"
+    src="{{ asset('assets/images/latar-belakang-divisi.png') }}"
     alt="Latar belakang divisi"
     class="absolute inset-0 w-full h-full object-cover"
   >
@@ -102,7 +79,7 @@
 
           {{-- icon --}}
           <img
-            src="{{ asset('assets/images/' . rawurlencode($d['img'])) }}"
+            src="{{ asset('assets/images/' . $d['img']) }}"
             alt="{{ $d['title'] }}"
             class="w-20 h-20 object-contain mt-1"
           >
@@ -306,7 +283,7 @@
 
     {{-- RIGHT IMAGE --}}
     <div class="flex justify-center">
-      <img src="{{ asset('assets/images/Magang.png') }}"
+      <img src="{{ asset('assets/images/magang.png') }}"
       alt="Magang"       
       class="max-w-md w-full">
     </div>
