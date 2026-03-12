@@ -5,6 +5,12 @@
 @section('content')
 @php($stepOneData = $stepOneData ?? [])
 
+<style>
+  input[type="radio"] {
+    accent-color:#2563EB;
+  }
+</style>
+
 <section style="position:relative; width:100%; height:253px; overflow:hidden;">
   <img
     src="{{ asset('assets/images/hero-pages.png') }}"

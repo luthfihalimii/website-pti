@@ -8,6 +8,10 @@
 @endphp
 
 <style>
+  input[type="radio"] {
+    accent-color:#2563EB;
+  }
+
   .magang-date-input::-webkit-calendar-picker-indicator {
     opacity: 0;
     position: absolute;
