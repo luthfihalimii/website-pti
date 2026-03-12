@@ -20,7 +20,7 @@ return [
         'business_hours' => [
             'weekday' => 'Hari kerja - Buka',
             'weekend' => 'Akhir pekan - Tutup',
-            'time' => '8 AM - 9 PM',
+            'time' => '9am-5pm',
         ],
     ],
 
@@ -357,22 +357,22 @@ return [
             [
                 'title' => 'Web Development',
                 'desc' => 'Siswa magang belajar membangun dan mengelola website secara langsung sesuai standar industri.',
-                'img' => 'Web Development.png',
+                'img' => 'web-development.png',
             ],
             [
                 'title' => 'Mobile Development',
                 'desc' => 'Siswa magang belajar mengembangkan aplikasi mobile yang fungsional dan siap digunakan.',
-                'img' => 'Mobile Development.png',
+                'img' => 'mobile-development.png',
             ],
             [
                 'title' => 'UI/UX Designer',
                 'desc' => 'Siswa magang belajar merancang tampilan dan pengalaman pengguna yang intuitif serta menarik.',
-                'img' => 'UI_UX Designer.png',
+                'img' => 'ui-ux-designer.png',
             ],
             [
                 'title' => 'IT Support',
                 'desc' => 'Siswa magang belajar menangani instalasi, troubleshooting, dan pemeliharaan sistem IT.',
-                'img' => 'IT Support.png',
+                'img' => 'it-support.png',
             ],
         ],
         'benefits' => [

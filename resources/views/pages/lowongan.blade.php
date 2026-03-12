@@ -19,7 +19,7 @@
       </h1>
 
       <p class="mt-3 text-[14px] md:text-[15px] font-semibold text-white/95">
-        {{ __('Home') }} &nbsp;–&nbsp; {{ __('Lowongan pekerjaan') }}
+        {{ __('Home') }} &nbsp;&ndash;&nbsp; {{ __('Lowongan pekerjaan') }}
       </p>
     </div>
 </section>
@@ -40,39 +40,64 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      @foreach ($vacancies as $vacancy)
-        <article class="bg-white rounded-lg shadow-md overflow-hidden border border-slate-200 hover:shadow-xl transition-shadow">
-          <div class="h-[200px] overflow-hidden">
-            <img
-              src="{{ $vacancy['poster_url'] }}"
-              alt="{{ $vacancy['title'] }}"
-              class="w-full h-full object-cover"
-            />
-          </div>
-
-          <div class="p-6">
-            <div class="mb-4">
-              <div class="flex items-center gap-2 mb-2">
-                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                <h4 class="font-bold text-blue-600 text-[16px]">{{ __('KUALIFIKASI') }}</h4>
-              </div>
+    @if (count($vacancies) > 0)
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        @foreach ($vacancies as $vacancy)
+          <article class="bg-white rounded-lg shadow-md overflow-hidden border border-slate-200 hover:shadow-xl transition-shadow">
+            <div class="h-[200px] overflow-hidden">
+              <img
+                src="{{ $vacancy['poster_url'] }}"
+                alt="{{ $vacancy['title'] }}"
+                class="w-full h-full object-cover"
+              />
             </div>
 
-            <h5 class="font-semibold text-slate-950 mb-2 text-[14px]">{{ $vacancy['title'] }}</h5>
-            <p class="text-[13px] text-slate-600 mb-6 leading-relaxed">
-              {{ __($vacancy['summary']) }}
-            </p>
+            <div class="p-6">
+              <div class="mb-4">
+                <div class="flex items-center gap-2 mb-2">
+                  <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <h4 class="font-bold text-blue-600 text-[16px]">{{ __('KUALIFIKASI') }}</h4>
+                </div>
+              </div>
 
-            <a href="{{ route('careers.show', $vacancy['slug']) }}" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-md font-medium text-[14px] transition-colors">
-              {{ __('Detail pekerjaan') }} →
+              <h5 class="font-semibold text-slate-950 mb-2 text-[14px]">{{ $vacancy['title'] }}</h5>
+              <p class="text-[13px] text-slate-600 mb-6 leading-relaxed">
+                {{ __($vacancy['summary']) }}
+              </p>
+
+              <a href="{{ route('careers.show', $vacancy['slug']) }}" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-md font-medium text-[14px] transition-colors">
+                {{ __('Detail pekerjaan') }} &rarr;
+              </a>
+            </div>
+          </article>
+        @endforeach
+      </div>
+    @else
+      <div class="flex justify-center">
+        <article class="w-full max-w-4xl rounded-2xl border border-blue-100 bg-blue-50/70 p-8 text-center">
+          <div class="mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 9.75h4.5m-4.5 3h4.5M5.25 6.75A2.25 2.25 0 017.5 4.5h6.19a2.25 2.25 0 011.59.66l2.56 2.56a2.25 2.25 0 01.66 1.59v6.19a2.25 2.25 0 01-2.25 2.25H7.5a2.25 2.25 0 01-2.25-2.25V6.75z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-blue-700">{{ __('Belum ada lowongan tersedia') }}</h3>
+          <p class="mx-auto mt-2 max-w-2xl text-sm text-slate-600">
+            {{ __('Saat ini belum ada lowongan yang tersedia.') }}
+            {{ __('Silakan cek kembali dalam waktu dekat atau hubungi kami untuk informasi rekrutmen terbaru.') }}
+          </p>
+          <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <a href="{{ route('internships.index') }}" class="inline-flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700">
+              {{ __('Lihat Program Magang') }}
+            </a>
+            <a href="{{ route('contact') }}" class="inline-flex items-center justify-center rounded-md border border-blue-200 bg-white px-5 py-2.5 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-50">
+              {{ __('Hubungi Kami') }}
             </a>
           </div>
         </article>
-      @endforeach
-    </div>
+      </div>
+    @endif
   </div>
 </section>
 @endsection
