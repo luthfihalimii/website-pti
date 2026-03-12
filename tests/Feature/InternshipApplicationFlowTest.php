@@ -58,7 +58,8 @@ class InternshipApplicationFlowTest extends TestCase
             'pernyataan' => '1',
         ]);
 
-        $stepTwoResponse->assertRedirect(route('magang.selesai'));
+        $stepTwoResponse->assertRedirect(route('internships.steps.one'));
+        $stepTwoResponse->assertSessionHas('internship_status');
         $stepTwoResponse->assertSessionMissing('internship_application.step_one');
 
         $this->assertDatabaseHas('internship_applications', [
