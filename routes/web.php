@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\InternshipApplicationController as AdminInternshi
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductInquiryController as AdminProductInquiryController;
+use App\Http\Controllers\Admin\VacancyController as AdminVacancyController;
 use App\Http\Controllers\AdminEntryRedirectController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ContactController;
@@ -50,6 +51,10 @@ Route::post('/magang/selesai', function () {
     return redirect()->route('magang.selesai');
 });
 Route::get('/lowongan', [CareerController::class, 'vacancies'])->name('careers.index');
+Route::get('/lowongan/detail', [CareerController::class, 'showVacancy'])->name('careers.show.default');
+Route::get('/lowongan/form', [CareerController::class, 'createApplication'])->name('careers.applications.create.default');
+Route::get('/lowongan/{slug}/detail', [CareerController::class, 'showVacancy'])->name('careers.show.slug');
+Route::get('/lowongan/{slug}/formulir', [CareerController::class, 'createApplication'])->name('careers.applications.create.slug');
 Route::get('/lowongan/{slug}', [CareerController::class, 'showVacancy'])->name('careers.show');
 Route::get('/lowongan/{slug}/form', [CareerController::class, 'createApplication'])->name('careers.applications.create');
 Route::post('/lowongan/{slug}/form', [JobApplicationController::class, 'store'])
@@ -73,6 +78,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', [AdminLoginController::class, 'destroy'])->name('logout');
         Route::resource('categories', AdminCategoryController::class)->except(['show']);
         Route::resource('products', AdminProductController::class)->except(['show']);
+        Route::resource('vacancies', AdminVacancyController::class)->except(['show']);
         Route::get('/product-inquiries', [AdminProductInquiryController::class, 'index'])->name('product-inquiries.index');
         Route::delete('/product-inquiries/{productInquiry}', [AdminProductInquiryController::class, 'destroy'])->name('product-inquiries.destroy');
         Route::get('/contact-inquiries', [AdminContactInquiryController::class, 'index'])->name('contact-inquiries.index');

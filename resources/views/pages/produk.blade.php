@@ -4,7 +4,6 @@
 @section('meta_description', __('Katalog produk Piramidasoft yang mencakup business system, e-procurement, e-government, dan smart city.'))
 
 @section('content')
-<<<<<<< HEAD
   <section class="relative overflow-hidden bg-blue-950 text-white">
     <img src="{{ asset('assets/images/hero-pages.png') }}" alt="{{ __('Hero Produk') }}" class="absolute inset-0 h-full w-full object-cover opacity-20">
     <div class="relative mx-auto max-w-6xl px-6 py-20">
@@ -14,155 +13,6 @@
         {{ __('Jelajahi solusi Piramidasoft untuk e-procurement, business system, e-government, dan transformasi digital organisasi.') }}
       </p>
     </div>
-=======
-  @php
-    $products = [
-        [
-            'name' => 'HRIS/HRMS',
-            'description' => 'Aplikasi perusahaan yang dibuat untuk mengelola informasi sumber daya manusia perusahaan.',
-            'image' => asset('assets/images/Latar Belakang Divisi.png'),
-            'category' => 'Business System',
-            'category_key' => 'business-system',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Presensi / Time Attendance',
-            'description' => 'Aplikasi presensi yang mudah, cepat, dan akurat untuk berbagai perusahaan serta instansi pemerintah.',
-            'image' => asset('assets/images/E-Procurement.png'),
-            'category' => 'Business System',
-            'category_key' => 'business-system',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Virtual Tour',
-            'description' => 'Aplikasi interaktif berbasis 360° untuk menampilkan simulasi lokasi secara nyata guna mendukung penyampaian informasi dan promosi tanpa kunjungan langsung.',
-            'image' => asset('assets/images/hero-pages.png'),
-            'category' => 'E-Government & Smart City',
-            'category_key' => 'e-government-smart-city',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Aplikasi Potensi dan Peluang Investasi',
-            'description' => 'Aplikasi penyedia informasi potensi dan peluang investasi yang menyajikan prospektus secara lengkap dan terbaru serta mendukung komunikasi antara investor dan pemangku kepentingan.',
-            'image' => asset('assets/images/E-Government .png'),
-            'category' => 'E-Government & Smart City',
-            'category_key' => 'e-government-smart-city',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Aplikasi Pengadaan Unit Pelayanan',
-            'description' => 'Aplikasi sistem informasi pengadaan yang mempermudah proses lelang dan administrasi barang maupun jasa secara efisien dan terdokumentasi.',
-            'image' => asset('assets/images/IT Support.png'),
-            'category' => 'E-Procurement',
-            'category_key' => 'e-procurement',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Contractor Safety Management System (CSMS)',
-            'description' => 'Aplikasi pengelolaan keselamatan kerja kontraktor untuk memastikan kepatuhan terhadap standar K3 perusahaan dan mendukung lingkungan kerja yang aman.',
-            'image' => asset('assets/images/ERP _ Bussines System.png'),
-            'category' => 'Business System',
-            'category_key' => 'business-system',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Rusunawa - Billing',
-            'description' => 'Aplikasi pengelolaan penghuni dan penagihan sewa Rusunawa yang terintegrasi untuk mendukung proses administrasi dan pelaporan secara efektif.',
-            'image' => asset('assets/images/About me.png'),
-            'category' => 'E-Government & Smart City',
-            'category_key' => 'e-government-smart-city',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Aplikasi Geographical Information System (APGIS)',
-            'description' => 'Aplikasi sistem informasi geografis yang mengelola dan menyajikan data spasial secara terintegrasi guna mendukung perencanaan dan pengambilan keputusan.',
-            'image' => asset('assets/images/E-Government .png'),
-            'category' => 'E-Government & Smart City',
-            'category_key' => 'e-government-smart-city',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Business Intelligence (BI)',
-            'description' => 'Aplikasi pengolahan dan penyajian data terintegrasi yang membantu perusahaan memonitor kinerja, menganalisis informasi strategis, dan mendukung pengambilan keputusan secara lebih efektif.',
-            'image' => asset('assets/images/PTI.png'),
-            'category' => 'Business System',
-            'category_key' => 'business-system',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Data Management and Dashboard (e-Government)',
-            'description' => 'Aplikasi pengelolaan dan integrasi data terstruktur yang dilengkapi dashboard visual untuk mendukung monitoring kinerja, pelaporan, dan pengambilan keputusan di lingkungan pemerintahan.',
-            'image' => asset('assets/images/E-Government .png'),
-            'category' => 'E-Government & Smart City',
-            'category_key' => 'e-government-smart-city',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Tendering',
-            'description' => 'Aplikasi pengelolaan proses pengadaan melalui tender maupun penunjukan langsung yang mendukung seluruh tahapan seleksi vendor secara online, aman, dan terdokumentasi.',
-            'image' => asset('assets/images/E-Procurement.png'),
-            'category' => 'E-Procurement',
-            'category_key' => 'e-procurement',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Purchasing',
-            'description' => 'Aplikasi pengelolaan pembelian melalui katalog produk yang memudahkan proses pemesanan, negosiasi, hingga penerbitan draft Purchase Order secara terintegrasi.',
-            'image' => asset('assets/images/E-Procurement.png'),
-            'category' => 'E-Procurement',
-            'category_key' => 'e-procurement',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Procurement Planning',
-            'description' => 'Aplikasi perencanaan pengadaan yang mengelola penyusunan paket pekerjaan, rincian anggaran, jadwal pelaksanaan, dan proses persetujuan secara terstruktur dan terintegrasi.',
-            'image' => asset('assets/images/E-Procurement.png'),
-            'category' => 'E-Procurement',
-            'category_key' => 'e-procurement',
-            'url' => '#',
-        ],
-        [
-            'name' => 'PostgreSQL Premium Maintenance Support',
-            'description' => 'Aplikasi layanan pemeliharaan dan dukungan PostgreSQL yang mencakup instalasi, optimalisasi, keamanan, backup, serta pemulihan guna memastikan ketersediaan dan performa database tetap optimal.',
-            'image' => asset('assets/images/IT Consultant.png'),
-            'category' => 'IT Consultant',
-            'category_key' => 'it-consultant',
-            'url' => '#',
-        ],
-        [
-            'name' => 'Insight GOV',
-            'description' => 'Aplikasi pengelolaan data terintegrasi yang menggabungkan data warehouse, business intelligence, dan open data untuk mendukung analisis, visualisasi, serta publikasi informasi secara akurat dan terkini.',
-            'image' => asset('assets/images/E-Government .png'),
-            'category' => 'E-Government & Smart City',
-            'category_key' => 'e-government-smart-city',
-            'url' => '#',
-        ],
-    ];
-
-    $categories = [
-        ['label' => 'Business System', 'key' => 'business-system'],
-        ['label' => 'E-Procurement', 'key' => 'e-procurement'],
-        ['label' => 'E-Government & Smart City', 'key' => 'e-government-smart-city'],
-        ['label' => 'IT Consultant', 'key' => 'it-consultant'],
-    ];
-  @endphp
-
-  <section class="product-page-hero">
-    <img
-      src="{{ asset('assets/images/hero-pages.png') }}"
-      alt="Hero Produk"
-      class="product-page-hero-image"
-    >
-    <div class="product-page-hero-overlay"></div>
-    <div class="product-page-hero-content">
-      <h1>Produk</h1>
-      <p>
-        <a href="/" class="hover:underline">Home</a>
-        <span>-</span>
-        Produk
-      </p>
-</div>
->>>>>>> redesign-pti
   </section>
 
   <section class="bg-slate-50 py-10">
@@ -187,7 +37,7 @@
           >
             <option value="">{{ __('Semua kategori') }}</option>
             @foreach ($categories as $category)
-              <option value="{{ $category->slug }}" @selected($selectedCategory === $category->slug)>{{ __($category->name) }}</option>
+              <option value="{{ data_get($category, 'slug') }}" @selected($selectedCategory === data_get($category, 'slug'))>{{ __(data_get($category, 'name')) }}</option>
             @endforeach
           </select>
         </label>
@@ -235,7 +85,7 @@
 
               <div class="flex flex-1 flex-col space-y-4 p-6">
                 <div class="space-y-2">
-                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">{{ __($product->category->name) }}</p>
+                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">{{ $product->category->name ?? __('Tanpa Kategori') }}</p>
                   <h3 class="text-2xl font-bold text-slate-950">{{ $product->name }}</h3>
                   <p class="text-sm leading-7 text-slate-600">
                     {{ $product->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($product->description), 140) }}

@@ -82,7 +82,7 @@
             <div
               id="career-menu"
               data-nav-careers-menu
-              class="absolute left-0 top-[120%] hidden min-w-[210px] rounded-xl border border-[#DBDBDB] bg-white/90 py-2 shadow-lg backdrop-blur-md"
+              class="absolute left-0 top-full z-50 hidden min-w-[210px] rounded-xl border border-[#DBDBDB] bg-white/95 py-2 shadow-lg backdrop-blur-md"
             >
               <a class="block px-4 py-2 hover:bg-slate-50/50 hover:text-blue-600 {{ $isActive('internships.*') }}" href="{{ route('internships.index') }}">{{ __('messages.nav.internships') }}</a>
               <a class="block px-4 py-2 hover:bg-slate-50/50 hover:text-blue-600 {{ $isActive('careers.*') }}" href="{{ route('careers.index') }}">{{ __('messages.nav.vacancies') }}</a>

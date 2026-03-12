@@ -135,14 +135,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (careerNav && careerToggle && careerMenu) {
+    let closeMenuTimer;
+
     const openMenu = () => {
+      window.clearTimeout(closeMenuTimer);
       careerMenu.classList.remove('hidden');
       careerToggle.setAttribute('aria-expanded', 'true');
     };
 
     const closeMenu = () => {
+      window.clearTimeout(closeMenuTimer);
       careerMenu.classList.add('hidden');
       careerToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    const scheduleCloseMenu = () => {
+      window.clearTimeout(closeMenuTimer);
+      closeMenuTimer = window.setTimeout(closeMenu, 140);
     };
 
     careerToggle.addEventListener('click', () => {
@@ -157,7 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     careerNav.addEventListener('mouseenter', openMenu);
-    careerNav.addEventListener('mouseleave', closeMenu);
+    careerNav.addEventListener('mouseleave', scheduleCloseMenu);
+    careerMenu.addEventListener('mouseenter', openMenu);
+    careerMenu.addEventListener('mouseleave', scheduleCloseMenu);
 
     careerNav.addEventListener('focusout', (event) => {
       if (event.relatedTarget instanceof Node && careerNav.contains(event.relatedTarget)) {

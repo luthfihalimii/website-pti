@@ -45,10 +45,17 @@ class PageController extends Controller
                 ->all();
         }
 
+        $clients = collect(config('site.home.clients'))
+            ->map(fn (array $client) => [
+                ...$client,
+                'logo' => isset($client['logo']) ? asset($client['logo']) : null,
+            ])
+            ->all();
+
         return view('pages.home', [
             'services' => $services,
             'products' => $products,
-            'clients' => config('site.home.clients'),
+            'clients' => $clients,
         ]);
     }
 

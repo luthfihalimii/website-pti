@@ -135,8 +135,14 @@
         <div class="client-grid" id="clientShowcaseTrack" data-client-track>
           @foreach ($clients as $client)
             <figure class="client-badge">
-              <div class="client-badge-shape">{{ $client['abbr'] }}</div>
-              <figcaption>{{ $client['name'] }}</figcaption>
+              <div class="client-badge-shape">
+                @if (!empty($client['logo']))
+                  <img src="{{ $client['logo'] }}" alt="{{ $client['name'] }}">
+                @else
+                  <span>{{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr($client['name'], 0, 2)) }}</span>
+                @endif
+              </div>
+              <figcaption>{{ __($client['name']) }}</figcaption>
             </figure>
           @endforeach
         </div>
@@ -206,14 +212,14 @@
 
         clientPrev.addEventListener('click', () => {
           clientTrack.scrollBy({
-            left: -220,
+            left: -Math.max(220, Math.round(clientTrack.clientWidth * 0.8)),
             behavior: 'smooth',
           });
         });
 
         clientNext.addEventListener('click', () => {
           clientTrack.scrollBy({
-            left: 220,
+            left: Math.max(220, Math.round(clientTrack.clientWidth * 0.8)),
             behavior: 'smooth',
           });
         });

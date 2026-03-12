@@ -3,12 +3,14 @@
 @section('title', 'Magang Tahap 1 - Piramidasoft')
 
 @section('content')
+@php($stepOneData = $stepOneData ?? [])
 
-{{-- HERO --}}
 <section style="position:relative; width:100%; height:253px; overflow:hidden;">
-  <img src="{{ asset('assets/images/hero-pages.png') }}"
-       alt="Hero"
-       style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;">
+  <img
+    src="{{ asset('assets/images/hero-pages.png') }}"
+    alt="Hero"
+    style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;"
+  >
   <div style="position:absolute; inset:0; background:rgba(37,99,235,.55); z-index:1;"></div>
 
   <div style="position:relative; z-index:2; height:253px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff;">
@@ -21,13 +23,8 @@
   </div>
 </section>
 
-{{-- CONTENT WRAP --}}
 <div style="max-width:1200px; margin:0 auto; padding:40px 20px; background:#fff;">
-
-  {{-- STEPPER --}}
   <div style="display:flex;align-items:center;gap:18px;margin-bottom:26px;flex-wrap:nowrap;white-space:nowrap;">
-    
-    <!-- Tahap 1 (aktif) -->
     <div style="display:flex;align-items:center;gap:10px;">
       <div style="width:46px;height:46px;border-radius:10px;background:#2563EB;display:flex;align-items:center;justify-content:center;">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#fff">
@@ -36,10 +33,9 @@
       </div>
       <span style="font-size:18px;font-weight:700;color:#2563EB;">Tahap 1</span>
     </div>
-    <!-- Arrow 1 (biru) -->
-    <span style="font-size:28px;font-weight:600;color:#2563EB;line-height:1;">›</span>
-    
-    <!-- Tahap 2 -->
+
+    <span style="font-size:28px;font-weight:600;color:#C5C5C5;line-height:1;">&rsaquo;</span>
+
     <div style="display:flex;align-items:center;gap:10px;">
       <div style="width:46px;height:46px;border-radius:10px;background:#93C5FD;display:flex;align-items:center;justify-content:center;">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff">
@@ -48,10 +44,9 @@
       </div>
       <span style="font-size:18px;font-weight:700;color:#9CA3AF;">Tahap 2</span>
     </div>
-    <!-- Arrow 2 (abu) -->
-     <span style="font-size:28px;font-weight:600;color:#C5C5C5;line-height:1;">›</span>
-    
-    <!-- Selesai -->
+
+    <span style="font-size:28px;font-weight:600;color:#C5C5C5;line-height:1;">&rsaquo;</span>
+
     <div style="display:flex;align-items:center;gap:10px;">
       <div style="width:46px;height:46px;border-radius:10px;background:#93C5FD;display:flex;align-items:center;justify-content:center;">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff">
@@ -61,132 +56,177 @@
       </div>
       <span style="font-size:18px;font-weight:700;color:#9CA3AF;">Selesai</span>
     </div>
-    <!-- Arrow 3 (abu) -->
-    <span style="font-size:28px;font-weight:600;color:#C5C5C5;">›</span>
   </div>
 
-  {{-- FORM GRID --}}
-  <form method="GET" action="/magang/tahap-2">
+  @if (session('internship_error'))
+    <div style="margin-bottom:20px; border:1px solid #fecaca; background:#fef2f2; color:#991b1b; padding:12px 14px; border-radius:10px;">
+      {{ session('internship_error') }}
+    </div>
+  @endif
+
+  @if (session('internship_status'))
+    <div style="margin-bottom:20px; border:1px solid #bbf7d0; background:#f0fdf4; color:#166534; padding:12px 14px; border-radius:10px;">
+      {{ session('internship_status') }}
+    </div>
+  @endif
+
+  @if ($errors->any())
+    <div style="margin-bottom:20px; border:1px solid #fecaca; background:#fef2f2; color:#991b1b; padding:12px 14px; border-radius:10px;">
+      <strong>Periksa kembali data yang diisi.</strong>
+    </div>
+  @endif
+
+  <form method="POST" action="{{ route('internships.steps.one.store') }}">
     @csrf
 
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:22px 40px;">
-
-      {{-- Nama Lengkap --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">Nama Lengkap</div>
-        <input type="text" placeholder="Nama Lengkap"
-        style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;">
+        <input
+          type="text"
+          name="nama"
+          value="{{ old('nama', $stepOneData['nama'] ?? '') }}"
+          required
+          placeholder="Nama Lengkap"
+          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;"
+        >
+        @error('nama') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
-      {{-- NISN/NIM --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">NISN/NIM</div>
-        <input type="text" placeholder="NISN/NIM"
-        style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;">
+        <input
+          type="text"
+          name="nisn"
+          value="{{ old('nisn', $stepOneData['nisn'] ?? '') }}"
+          required
+          placeholder="NISN/NIM"
+          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;"
+        >
+        @error('nisn') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
-      {{-- Tempat Lahir --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">Tempat Lahir</div>
-        <input type="text" placeholder="Tempat Lahir"
-        style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;">
+        <input
+          type="text"
+          name="tempat_lahir"
+          value="{{ old('tempat_lahir', $stepOneData['tempat_lahir'] ?? '') }}"
+          required
+          placeholder="Tempat Lahir"
+          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;"
+        >
+        @error('tempat_lahir') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
-      {{-- Tanggal Lahir --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">Tanggal Lahir</div>
-        <div style="position:relative;">
-          <input type="text" placeholder="hh/bb/tttt"
-          onfocus="this.type='date'"
-          onblur="if(!this.value)this.type='text'"
-          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 46px 0 18px; outline:none;">
-          <span style="position:absolute; right:14px; top:50%; transform:translateY(-50%); color:#111827;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v13a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1Zm12 8H5v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10ZM6 6a1 1 0 0 0-1 1v1h14V7a1 1 0 0 0-1-1H6Z"/>
-            </svg>
-          </span>
-        </div>
+        <input
+          type="date"
+          name="tanggal_lahir"
+          value="{{ old('tanggal_lahir', $stepOneData['tanggal_lahir'] ?? '') }}"
+          required
+          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;"
+        >
+        @error('tanggal_lahir') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
-      {{-- Text (radio) --}}
       <div>
-        <div style="font-weight:700; margin-bottom:10px;">Text</div>
-        <div style="display:flex; align-items:center; gap:26px; height:48px; color:#6B7280;">
+        <div style="font-weight:700; margin-bottom:10px;">Jenis Kelamin</div>
+        <div style="display:flex; align-items:center; gap:26px; min-height:48px; color:#111827;">
           <label style="display:flex; align-items:center; gap:8px;">
-            <input type="radio" name="jk" style="width:18px; height:18px;"> Laki-laki
+            <input type="radio" name="jk" value="Laki-laki" {{ old('jk', $stepOneData['jk'] ?? '') === 'Laki-laki' ? 'checked' : '' }} required>
+            Laki-laki
           </label>
           <label style="display:flex; align-items:center; gap:8px;">
-            <input type="radio" name="jk" style="width:18px; height:18px;"> Perempuan
+            <input type="radio" name="jk" value="Perempuan" {{ old('jk', $stepOneData['jk'] ?? '') === 'Perempuan' ? 'checked' : '' }} required>
+            Perempuan
           </label>
         </div>
+        @error('jk') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
       <div></div>
 
-      {{-- Alamat --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">Alamat</div>
-        <textarea rows="4"
-        style="width:100%; border:1px solid #9CA3AF; border-radius:10px; padding:14px 18px; outline:none; resize:none;"></textarea>
+        <textarea
+          name="alamat"
+          rows="4"
+          required
+          style="width:100%; border:1px solid #9CA3AF; border-radius:10px; padding:14px 18px; outline:none; resize:none;"
+        >{{ old('alamat', $stepOneData['alamat'] ?? '') }}</textarea>
+        @error('alamat') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
-      {{-- No. Telp --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">No. Telp</div>
-        <input type="text" placeholder="0812345678"
-        style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;">
+        <input
+          type="text"
+          name="telp"
+          value="{{ old('telp', $stepOneData['telp'] ?? '') }}"
+          required
+          placeholder="0812345678"
+          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;"
+        >
+        @error('telp') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
-      {{-- Kelas --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">Kelas</div>
-        <select id="kelasSelect"
-          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; color:#9CA3AF;"
-          onchange="ubahWarnaKelas()">
-        
-          <option value="" disabled selected>Kelas</option>
-          <option>X</option>
-          <option>XI</option>
-          <option>XII</option>
-          <option>D3</option>
-          <option>S1</option>
-          <option>S2</option>
+        <select
+          name="kelas"
+          required
+          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px;"
+        >
+          <option value="" disabled {{ old('kelas', $stepOneData['kelas'] ?? '') ? '' : 'selected' }}>Pilih Kelas</option>
+          @foreach (['X', 'XI', 'XII', 'D3', 'S1'] as $kelas)
+            <option value="{{ $kelas }}" {{ old('kelas', $stepOneData['kelas'] ?? '') === $kelas ? 'selected' : '' }}>{{ $kelas }}</option>
+          @endforeach
         </select>
+        @error('kelas') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
-      <script>
-      function ubahWarnaKelas(){
-        var select = document.getElementById("kelasSelect");
-        if(select.value !== ""){
-          select.style.color = "#111827"; // jadi hitam setelah dipilih
-          }
-        }
-      </script>
-
-      {{-- Sekolah/Universitas --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">Sekolah/Universitas</div>
-        <input type="text" placeholder="Sekolah/Universitas"
-        style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;">
+        <input
+          type="text"
+          name="sekolah"
+          value="{{ old('sekolah', $stepOneData['sekolah'] ?? '') }}"
+          required
+          placeholder="Sekolah/Universitas"
+          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;"
+        >
+        @error('sekolah') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
-      {{-- Alamat Sekolah/Universitas --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">Alamat Sekolah/Universitas</div>
-        <textarea rows="4"
-        style="width:100%; border:1px solid #9CA3AF; border-radius:10px; padding:14px 18px; outline:none; resize:none;"></textarea>
+        <textarea
+          name="alamat_sekolah"
+          rows="4"
+          required
+          style="width:100%; border:1px solid #9CA3AF; border-radius:10px; padding:14px 18px; outline:none; resize:none;"
+        >{{ old('alamat_sekolah', $stepOneData['alamat_sekolah'] ?? '') }}</textarea>
+        @error('alamat_sekolah') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
 
-      {{-- No. Telp. Sekolah/Universitas --}}
       <div>
         <div style="font-weight:700; margin-bottom:10px;">No. Telp. Sekolah/Universitas</div>
-        <input type="text" placeholder="0812345678"
-        style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;">
+        <input
+          type="text"
+          name="telp_sekolah"
+          value="{{ old('telp_sekolah', $stepOneData['telp_sekolah'] ?? '') }}"
+          required
+          placeholder="0311234567"
+          style="width:100%; height:48px; border:1px solid #9CA3AF; border-radius:10px; padding:0 18px; outline:none;"
+        >
+        @error('telp_sekolah') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
     </div>
 
-      {{-- BUTTON SELANJUTNYA --}}
-      <a href="{{ url('/magang/tahap-2') }}"
+    <button
+      type="submit"
       style="
         display:inline-flex;
         align-items:center;
@@ -196,36 +236,17 @@
         color:white;
         padding:12px 32px;
         border-radius:10px;
-        text-decoration:none;
         font-weight:600;
+        border:none;
         cursor:pointer;
-        transition:0.2s;
-        "
-        onmouseover="this.style.background='#1D4ED8'"
-        onmouseout="this.style.background='#2563EB'">
-
-        Selanjutnya
-      
-        <svg xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none">
-
-        <path d="M5 12H19"
-          stroke="white"
-          stroke-width="3"
-          stroke-linecap="round"/>
-
-        <path d="M13 6L19 12L13 18"
-          stroke="white"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div>
+      "
+    >
+      Selanjutnya
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12H19" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <path d="M13 6L19 12L13 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   </form>
 </div>
-
 @endsection

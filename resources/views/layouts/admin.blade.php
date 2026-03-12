@@ -33,6 +33,9 @@
             <a href="{{ route('admin.internship-applications.index') }}" class="{{ request()->routeIs('admin.internship-applications.*') ? 'bg-white text-slate-950 shadow-lg shadow-sky-500/10' : 'text-slate-300 hover:bg-white/8 hover:text-white' }} block rounded-2xl px-4 py-3 font-medium transition">
               Pendaftaran Magang
             </a>
+            <a href="{{ route('admin.vacancies.index') }}" class="{{ request()->routeIs('admin.vacancies.*') ? 'bg-white text-slate-950 shadow-lg shadow-sky-500/10' : 'text-slate-300 hover:bg-white/8 hover:text-white' }} block rounded-2xl px-4 py-3 font-medium transition">
+              Lowongan Pekerjaan
+            </a>
           </div>
 
           <div class="space-y-2">
