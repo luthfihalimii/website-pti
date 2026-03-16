@@ -10,10 +10,10 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         User::query()->updateOrCreate(
-            ['email' => 'admin@piramidasoft.local'],
+            ['email' => 'admin@piramidasoft.com'],
             [
-                'name' => 'Piramidasoft Admin',
-                'password' => 'password',
+                'name' => 'Piramida Admin',
+                'password' => 'PyFpepVPSugPhXpfiult',
                 'is_admin' => true,
             ]
         );
