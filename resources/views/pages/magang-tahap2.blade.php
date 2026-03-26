@@ -235,7 +235,7 @@
           </span>
         </div>
         <div style="font-size:12px; margin-top:6px; color:#6B7280;">
-          (Format File PDF)
+          (Format File PDF, Maksimum 2 MB)
         </div>
         @error('cv') <div style="margin-top:6px;color:#dc2626;font-size:13px;">{{ $message }}</div> @enderror
       </div>
