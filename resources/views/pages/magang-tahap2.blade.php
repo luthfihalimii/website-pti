@@ -242,8 +242,18 @@
 
       <script>
       document.getElementById("cvFile").addEventListener("change", function(){
-        const fileName = this.files.length ? this.files[0].name : "No file chosen";
-        document.getElementById("fileName").textContent = fileName;
+        const file = this.files[0];
+
+        if (file) {
+          if (file.size > 2 * 1024 * 1024) {
+            alert("Ukuran file maksimal 2 MB");
+            this.value = "";
+            document.getElementById("fileName").textContent = "No file chosen";
+            return;
+          }
+
+          document.getElementById("fileName").textContent = file.name;
+        }
       });
       </script>
 
