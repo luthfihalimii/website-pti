@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logos', function (Blueprint $table) {
-            $table->id();
-            $table->string('type'); // pti, footer, client
-            $table->string('path');
+        Schema::table('logos', function (Blueprint $table) {
+            $table->string('name')->nullable();      // nama client/logo
+            $table->string('type');                  // pti, client, footer
+            $table->string('path');                  // path file
+            $table->integer('order')->nullable();    // urutan untuk footer
+            $table->boolean('active')->default(true); // aktif atau draft
             $table->timestamps();
         });
     }

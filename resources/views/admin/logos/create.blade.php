@@ -24,25 +24,31 @@
       </div>
     @endif
 
-    {{-- FORM --}}
+    {{-- FORM TAMBAH LOGO --}}
     <form action="{{ route('admin.logos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
       @csrf
 
-      {{-- TYPE --}}
+      {{-- TIPE LOGO --}}
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Tipe Logo</label>
         <select name="type" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:ring focus:ring-blue-200">
-          <option value="pti">Logo Navbar</option>
-        <option value="footer">Logo Footer</option>
-        <option value="client" selected>Logo Client</option>
+          <option value="pti">Logo Navbar (PTI)</option>
+          <option value="client" selected>Logo Client</option>
         </select>
       </div>
 
-      {{-- FILE --}}
+      {{-- NAMA CLIENT --}}
+      <div id="client-name-field">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Nama Client</label>
+        <input type="text" name="name" placeholder="Nama Client" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm">
+        <p class="text-xs text-slate-500 mt-1">Hanya untuk logo client</p>
+      </div>
+
+      {{-- UPLOAD FILE --}}
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Upload Logo</label>
         <input type="file" name="logo" accept="image/*"
-               class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-white">
+               class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-white" required>
         <p class="text-xs text-slate-500 mt-1">Format: PNG, JPG, JPEG, SVG (max 2MB)</p>
       </div>
 
@@ -63,4 +69,21 @@
   </div>
 
 </div>
+
+{{-- SCRIPT: Hanya tampilkan field Nama Client kalau type = client --}}
+<script>
+  const typeSelect = document.querySelector('select[name="type"]');
+  const clientNameField = document.getElementById('client-name-field');
+
+  function toggleClientName() {
+    if (typeSelect.value === 'client') {
+      clientNameField.style.display = 'block';
+    } else {
+      clientNameField.style.display = 'none';
+    }
+  }
+
+  typeSelect.addEventListener('change', toggleClientName);
+  toggleClientName(); // inisialisasi saat halaman load
+</script>
 @endsection

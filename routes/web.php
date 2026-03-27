@@ -22,10 +22,12 @@ use App\Http\Controllers\PublicationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LogoController;
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('logos', LogoController::class);
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('logos', [LogoController::class, 'index'])->name('logos.index');
+    Route::post('logos', [LogoController::class, 'store'])->name('logos.store');
+    Route::put('logos/{logo}', [LogoController::class, 'update'])->name('logos.update');
+    Route::delete('logos/{logo}', [LogoController::class, 'destroy'])->name('logos.destroy');
 });
-Route::resource('logos', LogoController::class)->except(['show', 'edit']);
 
 Route::post('/locale', [LocaleController::class, 'update'])->name('locale.switch');
 
