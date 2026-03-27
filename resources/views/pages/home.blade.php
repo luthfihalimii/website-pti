@@ -126,34 +126,49 @@
       </div>
     </div>
   </section>
+@php
+  $clientLogos = \App\Models\Logo::where('type', 'client')->latest()->get();
+@endphp
 
-  <section class="home-section bg-[#ECEFF4] pb-16 md:pb-20">
-    <div class="mx-auto w-[92%] max-w-[1200px]">
-      <header class="text-center">
-        <h2 class="home-heading">{{ __('Klien Kami') }}</h2>
-        <p class="home-subheading">{{ __('Berikut adalah perusahaan maupun instansi yang pernah bekerjasama dengan kami') }}</p>
-      </header>
+<section class="home-section bg-[#ECEFF4] pb-16 md:pb-20">
+  <div class="mx-auto w-[92%] max-w-[1200px]">
+    
+    <header class="text-center">
+      <h2 class="home-heading">{{ __('Klien Kami') }}</h2>
+      <p class="home-subheading">
+        {{ __('Berikut adalah perusahaan maupun instansi yang pernah bekerjasama dengan kami') }}
+      </p>
+    </header>
 
-      <div class="client-board mt-8">
-        <button type="button" aria-label="{{ __('Sebelumnya') }}" aria-controls="clientShowcaseTrack" class="client-arrow" data-client-arrow="prev">&lt;</button>
-        <div class="client-grid" id="clientShowcaseTrack" data-client-track>
-          @foreach ($clients as $client)
-            <figure class="client-badge">
-              <div class="client-badge-shape">
-                @if (!empty($client['logo']))
-                  <img src="{{ $client['logo'] }}" alt="{{ $client['name'] }}">
-                @else
-                  <span>{{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr($client['name'], 0, 2)) }}</span>
-                @endif
-              </div>
-              <figcaption>{{ __($client['name']) }}</figcaption>
-            </figure>
-          @endforeach
-        </div>
-        <button type="button" aria-label="{{ __('Berikutnya') }}" aria-controls="clientShowcaseTrack" class="client-arrow" data-client-arrow="next">&gt;</button>
+    <div class="client-board mt-8">
+      <button type="button" class="client-arrow" data-client-arrow="prev">&lt;</button>
+
+      <div class="client-grid" data-client-track>
+        @forelse ($clientLogos as $client)
+          <figure class="client-badge">
+            <div class="client-badge-shape">
+              <img 
+                src="{{ asset('storage/' . $client->path) }}" 
+                alt="Client Logo"
+                class="h-12 object-contain"
+              >
+            </div>
+            <figcaption class="text-sm mt-2 text-center text-slate-600">
+              Client
+            </figcaption>
+          </figure>
+        @empty
+          <p class="text-center text-slate-500 col-span-full">
+            Belum ada logo client
+          </p>
+        @endforelse
       </div>
+
+      <button type="button" class="client-arrow" data-client-arrow="next">&gt;</button>
     </div>
-  </section>
+
+  </div>
+</section>
 
   <script>
     (function () {
