@@ -5,40 +5,48 @@
     <div class="max-w-6xl mx-auto">
       <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
 
-        <!-- KIRI -->
-        <div>
-          <div class="inline-flex items-center gap-3 bg-white/95 text-gray-800 rounded-lg px-4 py-3">
-            <img src="{{ asset('assets/logo/logo.svg') }}" class="h-9 w-auto" alt="Piramidasoft">
-            <span class="font-semibold tracking-wide">{{ strtoupper(config('site.company.name')) }}</span>
-          </div>
+    <!-- KIRI -->
+    <div>
+      @php
+      $logoFooter = \App\Models\Logo::where('type', 'footer')->latest()->first();
+      @endphp
 
-          <p class="mt-5 text-sm leading-relaxed text-white/90 max-w-md">
-            {{ __(config('site.company.description')) }}
-          </p>
+      <div class="inline-flex items-center gap-3 bg-white/95 text-gray-800 rounded-lg px-4 py-3">
+        <img class="h-9 w-auto"
+            src="{{ $logoFooter ? asset('storage/' . $logoFooter->path) : asset('assets/logo/logo.svg') }}"
+            alt="Piramidasoft">
+        <span class="font-semibold tracking-wide">
+          {{ strtoupper(config('site.company.name')) }}
+        </span>
+      </div>
 
-          <ul class="mt-8 space-y-3 text-sm text-white/95">
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('assets/icons/place.svg') }}" class="w-5 h-5" alt="">
-              <span>{{ config('site.company.address') }}</span>
-            </li>
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('assets/icons/mail.svg') }}" class="w-5 h-5" alt="">
-              <span>{{ config('site.company.primary_email') }}</span>
-            </li>
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('assets/icons/telp.svg') }}" class="w-5 h-5" alt="">
-              <span>{{ config('site.company.phone') }}</span>
-            </li>
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('assets/icons/whatsapp.svg') }}" class="w-5 h-5" alt="">
-              <span>{{ config('site.company.whatsapp') }}</span>
-            </li>
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('assets/icons/linkedin.svg') }}" class="w-5 h-5" alt="">
-              <span>{{ config('site.company.linkedin') }}</span>
-            </li>
-          </ul>
-        </div>
+      <p class="mt-5 text-sm leading-relaxed text-white/90 max-w-md">
+        {{ __(config('site.company.description')) }}
+      </p>
+
+      <ul class="mt-8 space-y-3 text-sm text-white/95">
+        <li class="flex items-center gap-3">
+          <img src="{{ asset('assets/icons/place.svg') }}" class="w-5 h-5" alt="">
+          <span>{{ config('site.company.address') }}</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <img src="{{ asset('assets/icons/mail.svg') }}" class="w-5 h-5" alt="">
+          <span>{{ config('site.company.primary_email') }}</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <img src="{{ asset('assets/icons/telp.svg') }}" class="w-5 h-5" alt="">
+          <span>{{ config('site.company.phone') }}</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <img src="{{ asset('assets/icons/whatsapp.svg') }}" class="w-5 h-5" alt="">
+          <span>{{ config('site.company.whatsapp') }}</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <img src="{{ asset('assets/icons/linkedin.svg') }}" class="w-5 h-5" alt="">
+          <span>{{ config('site.company.linkedin') }}</span>
+        </li>
+      </ul>
+    </div>
 
         <!-- TENGAH -->
         <div>

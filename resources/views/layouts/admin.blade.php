@@ -50,7 +50,15 @@
               Inquiry Produk
             </a>
           </div>
-
+          <div class="space-y-2">
+            <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">Pengaturan</p>
+            
+            <a href="{{ route('admin.logos.index') }}"
+              class="{{ request()->routeIs('admin.logos.*') ? 'bg-white text-slate-950' : 'text-slate-300 hover:bg-white/8 hover:text-white' }}
+              block rounded-2xl px-4 py-3 font-medium transition">
+              Logo Website
+            </a>
+          </div>
           <div class="space-y-2">
             <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">{{ __('Kontak') }}</p>
             <a href="{{ route('admin.contact-inquiries.index') }}" class="{{ request()->routeIs('admin.contact-inquiries.*') ? 'bg-white text-slate-950 shadow-lg shadow-sky-500/10' : 'text-slate-300 hover:bg-white/8 hover:text-white' }} block rounded-2xl px-4 py-3 font-medium transition">

@@ -5,9 +5,12 @@
   $localeButtonClass = fn($locale) => $currentLocale === $locale
       ? 'rounded-md bg-white/20 px-2 py-1 text-white'
       : 'rounded-md px-2 py-1 text-white/75 hover:bg-white/10 hover:text-white';
+
+  $logoPti = \App\Models\Logo::where('type', 'pti')->latest()->first();
 @endphp
 
 <header class="sticky top-0 z-50">
+
   {{-- TOPBAR --}}
   <div class="hidden bg-blue-600/70 text-white text-[13px] sm:block">
     <div class="mx-auto flex w-[92%] max-w-[1200px] items-center justify-between gap-3 py-2">
@@ -43,8 +46,11 @@
   <div class="border-b border-[#DBDBDB]/40 bg-white/80 backdrop-blur">
     <div class="mx-auto w-[92%] max-w-[1200px] py-3">
       <div class="flex items-center justify-between gap-4">
+
         <a href="{{ route('home') }}" class="flex items-center gap-2 text-slate-950">
-          <img class="h-8 w-auto" src="{{ asset('assets/logo/logo.svg') }}" alt="Piramidasoft">
+          <img class="h-8 w-auto"
+               src="{{ $logoPti ? asset('storage/' . $logoPti->path) : asset('assets/logo/logo.svg') }}"
+               alt="Piramidasoft">
           <span class="font-bold tracking-wide text-[16px]">PIRAMIDASOFT</span>
         </a>
 

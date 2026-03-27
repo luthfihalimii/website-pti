@@ -20,6 +20,11 @@ use App\Http\Controllers\ProductCatalogController;
 use App\Http\Controllers\ProductInquiryController;
 use App\Http\Controllers\PublicationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\LogoController;
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('logos', LogoController::class);
+});
 
 Route::post('/locale', [LocaleController::class, 'update'])->name('locale.switch');
 
