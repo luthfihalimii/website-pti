@@ -11,14 +11,18 @@ class LogoController extends Controller
 {
     public function index()
     {
-        return view('admin.logos.index', [
-            'pti' => Logo::where('type', 'pti')->first(),
-            'clients' => Logo::where('type', 'client')->latest()->get(),
-            'footers' => Logo::where('type', 'footer')->latest()->get(),
-        ]);
+        $pti     = Logo::where('type','pti')->latest()->first();
+        $clients = Logo::where('type','client')->latest()->get();
+        $footer  = Logo::where('type','footer')->latest()->first();
+
+        return view('admin.logos.index', compact('pti','clients','footer'));
     }
 
-    // Simpan logo baru
+    public function create()
+    {
+        return view('admin.logos.create');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -27,28 +31,17 @@ class LogoController extends Controller
             'name' => 'nullable|string|max:255',
         ]);
 
-        // Hapus logo lama jika tipe PTI
-        if ($request->type === 'pti') {
-            $old = Logo::where('type', 'pti')->first();
-            if ($old) {
-                Storage::disk('public')->delete($old->path);
-                $old->delete();
-            }
-        }
-
-        $path = $request->file('logo')->store('logos', 'public');
+        $path = $request->file('logo')->store('logos','public');
 
         Logo::create([
             'type' => $request->type,
-            'path' => $path,
             'name' => $request->name,
+            'path' => $path,
         ]);
 
-        return redirect()->route('admin.logos.index')
-            ->with('success', 'Logo/Icon berhasil ditambahkan');
+        return redirect()->route('admin.logos.index')->with('success','Logo berhasil diupload!');
     }
 
-    // Update logo atau nama
     public function update(Request $request, Logo $logo)
     {
         $request->validate([
@@ -57,27 +50,27 @@ class LogoController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            Storage::disk('public')->delete($logo->path);
-            $logo->path = $request->file('logo')->store('logos', 'public');
+            if ($logo->path && Storage::disk('public')->exists($logo->path)) {
+                Storage::disk('public')->delete($logo->path);
+            }
+            $path = $request->file('logo')->store('logos','public');
+            $logo->path = $path;
         }
 
-        if ($request->name) {
-            $logo->name = $request->name;
-        }
-
+        $logo->name = $request->name ?? $logo->name;
         $logo->save();
 
-        return redirect()->route('admin.logos.index')
-            ->with('success', 'Logo/Icon berhasil diperbarui');
+        return redirect()->route('admin.logos.index')->with('success','Logo berhasil diperbarui!');
     }
 
-    // Hapus logo/icon
     public function destroy(Logo $logo)
     {
-        Storage::disk('public')->delete($logo->path);
+        if ($logo->path && Storage::disk('public')->exists($logo->path)) {
+            Storage::disk('public')->delete($logo->path);
+        }
+
         $logo->delete();
 
-        return redirect()->route('admin.logos.index')
-            ->with('success', 'Logo/Icon berhasil dihapus');
+        return redirect()->route('admin.logos.index')->with('success','Logo berhasil dihapus!');
     }
 }

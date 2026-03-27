@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Logo extends Model
 {
-    protected $fillable = ['type', 'path'];
+    use HasFactory;
+
+    protected $fillable = ['type', 'path', 'name'];
 }
