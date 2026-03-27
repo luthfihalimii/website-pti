@@ -10,8 +10,11 @@ class LogoController extends Controller
 {
     public function index()
     {
-        $logos = Logo::latest()->get(); // biar urut terbaru
-        return view('admin.logos.index', compact('logos'));
+        return view('admin.logos.index', [
+            'pti' => Logo::where('type', 'pti')->first(),
+            'footer' => Logo::where('type', 'footer')->first(),
+            'clients' => Logo::where('type', 'client')->latest()->get(),
+        ]);
     }
 
     public function create()
@@ -20,25 +23,54 @@ class LogoController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'type' => 'required|in:pti,footer,client',
-        'logo' => 'required|image|mimes:png,jpg,jpeg,svg|max:2048',
-    ]);
-    
-    if ($request->type !== 'client') {
-        Logo::where('type', $request->type)->delete();
+    {
+        $request->validate([
+            'type' => 'required|in:pti,footer,client',
+            'logo' => 'required|image|mimes:png,jpg,jpeg,svg|max:2048',
+        ]);
+
+        // kalau bukan client → replace
+        if ($request->type !== 'client') {
+            $old = Logo::where('type', $request->type)->first();
+            if ($old) {
+                \Storage::disk('public')->delete($old->path);
+                $old->delete();
+            }
+        }
+
+        $path = $request->file('logo')->store('logos', 'public');
+
+        Logo::create([
+            'type' => $request->type,
+            'path' => $path,
+        ]);
+
+        return redirect()->route('admin.logos.index')
+            ->with('success', 'Logo berhasil ditambahkan');
     }
 
-    $path = $request->file('logo')->store('logos', 'public');
+    public function update(Request $request, Logo $logo)
+    {
+        $request->validate([
+            'logo' => 'required|image|mimes:png,jpg,jpeg,svg|max:2048',
+        ]);
 
-    Logo::create([
-        'type' => $request->type,
-        'path' => $path,
-    ]);
+        \Storage::disk('public')->delete($logo->path);
 
-    return redirect()->route('admin.logos.index')
-                     ->with('success', 'Logo berhasil ditambahkan');
-}
-    
+        $path = $request->file('logo')->store('logos', 'public');
+
+        $logo->update([
+            'path' => $path,
+        ]);
+
+        return back()->with('success', 'Logo berhasil diupdate');
+    }
+
+    public function destroy(Logo $logo)
+    {
+        \Storage::disk('public')->delete($logo->path);
+        $logo->delete();
+
+        return back()->with('success', 'Logo berhasil dihapus');
+    }
 }

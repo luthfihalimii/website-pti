@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\LogoController;
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('logos', LogoController::class);
 });
+Route::resource('logos', LogoController::class)->except(['show', 'edit']);
 
 Route::post('/locale', [LocaleController::class, 'update'])->name('locale.switch');
 
