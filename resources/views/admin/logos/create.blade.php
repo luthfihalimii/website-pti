@@ -1,59 +1,60 @@
-@extends('layouts.admin')
+<script>
+const logoInput = document.getElementById('logoInput');
+const previewContainer = document.getElementById('previewContainer');
+const logoType = document.getElementById('logoType');
+const nameContainer = document.getElementById('nameContainer');
+const nameInputs = document.getElementById('nameInputs');
 
-@section('title', 'Tambah Logo')
+logoInput.addEventListener('change', function () {
+    previewContainer.innerHTML = '';
+    nameInputs.innerHTML = '';
 
-@section('content')
-<div class="max-w-2xl mx-auto">
+    const files = Array.from(this.files);
 
-  <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    files.forEach((file, index) => {
+        const reader = new FileReader();
 
-    <div class="mb-6">
-      <h1 class="text-xl font-semibold text-slate-900">Tambah Logo</h1>
-      <p class="text-sm text-slate-500 mt-1">Upload logo untuk navbar, footer, atau client</p>
-    </div>
+        reader.onload = function (e) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex flex-col gap-2';
 
-    {{-- Error --}}
-    @if ($errors->any())
-      <div class="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
-        <ul class="list-disc list-inside">
-          @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.className = 'h-24 w-24 object-contain border rounded p-2 bg-white';
 
-    {{-- Form Upload --}}
-    <form action="{{ route('admin.logos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
-      @csrf
+            wrapper.appendChild(img);
+            previewContainer.appendChild(wrapper);
+        };
 
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1">Tipe Logo</label>
-        <select name="type" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:ring focus:ring-blue-200">
-          <option value="pti">Logo Navbar</option>
-          <option value="client" selected>Logo Client</option>
-          <option value="footer">Logo Footer</option>
-        </select>
-      </div>
+        reader.readAsDataURL(file);
 
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1">Nama (jika tipe Client atau Footer)</label>
-        <input type="text" name="name" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:ring focus:ring-blue-200" placeholder="Nama Client / Footer">
-      </div>
+        if (logoType.value !== 'pti') {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'name[]';
+            input.placeholder = 'Nama untuk ' + file.name;
+            input.className = 'w-full rounded-xl border border-slate-300 px-3 py-2 text-sm';
 
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1">Upload Logo</label>
-        <input type="file" name="logo" accept="image/*" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-white">
-        <p class="text-xs text-slate-500 mt-1">Format: PNG, JPG, JPEG, SVG (max 2MB)</p>
-      </div>
+            nameInputs.appendChild(input);
+        }
+    });
+});
 
-      <div class="flex items-center justify-between">
-        <a href="{{ route('admin.logos.index') }}" class="text-sm text-slate-500 hover:text-slate-700">← Kembali</a>
-        <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition">Upload Logo</button>
-      </div>
+logoType.addEventListener('change', function () {
+    if (this.value === 'pti') {
+        nameContainer.style.display = 'none';
+        logoInput.multiple = false;
+        nameInputs.innerHTML = '';
+    } else {
+        nameContainer.style.display = 'block';
+        logoInput.multiple = true;
+    }
+});
 
-    </form>
-  </div>
-
-</div>
-@endsection
+window.addEventListener('load', function () {
+    if (logoType.value === 'pti') {
+        nameContainer.style.display = 'none';
+        logoInput.multiple = false;
+    }
+});
+</script>

@@ -14,7 +14,7 @@ class LogoController extends Controller
     {
         $pti     = Logo::where('type','pti')->latest()->first(); // navbar 1
         $clients = Logo::where('type','client')->latest()->get();
-        $footers = Logo::where('type','footer')->latest()->get(); // bisa banyak
+        $footers = Logo::where('type','like','footer_%')->latest()->get(); // footer bisa banyak icon
 
         return view('admin.logos.index', compact('pti','clients','footers'));
     }
@@ -39,7 +39,7 @@ class LogoController extends Controller
         Logo::create([
             'type' => $request->type,
             'name' => $request->name,
-            'path' => $path,
+            'path' => 'storage/' . $path,
         ]);
 
         return redirect()->route('admin.logos.index')->with('success','Logo berhasil diupload!');
@@ -55,11 +55,15 @@ class LogoController extends Controller
 
         // Hapus file lama jika ada
         if ($request->hasFile('logo')) {
-            if ($logo->path && Storage::disk('public')->exists($logo->path)) {
-                Storage::disk('public')->delete($logo->path);
+            if ($logo->path) {
+                $filePath = str_replace('storage/', '', $logo->path);
+                if (Storage::disk('public')->exists($filePath)) {
+                    Storage::disk('public')->delete($filePath);
+                }
             }
+
             $path = $request->file('logo')->store('logos','public');
-            $logo->path = $path;
+            $logo->path = 'storage/' . $path;
         }
 
         $logo->name = $request->name ?? $logo->name;
@@ -71,8 +75,11 @@ class LogoController extends Controller
     // Hapus logo
     public function destroy(Logo $logo)
     {
-        if ($logo->path && Storage::disk('public')->exists($logo->path)) {
-            Storage::disk('public')->delete($logo->path);
+        if ($logo->path) {
+            $filePath = str_replace('storage/', '', $logo->path);
+            if (Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
+            }
         }
 
         $logo->delete();
