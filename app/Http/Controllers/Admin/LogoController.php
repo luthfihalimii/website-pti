@@ -9,20 +9,23 @@ use Illuminate\Support\Facades\Storage;
 
 class LogoController extends Controller
 {
+    // Tampilkan semua logo
     public function index()
     {
-        $pti     = Logo::where('type','pti')->latest()->first();
+        $pti     = Logo::where('type','pti')->latest()->first(); // navbar 1
         $clients = Logo::where('type','client')->latest()->get();
-        $footer  = Logo::where('type','footer')->latest()->first();
+        $footers = Logo::where('type','footer')->latest()->get(); // bisa banyak
 
-        return view('admin.logos.index', compact('pti','clients','footer'));
+        return view('admin.logos.index', compact('pti','clients','footers'));
     }
 
+    // Halaman tambah logo
     public function create()
     {
         return view('admin.logos.create');
     }
 
+    // Simpan logo baru
     public function store(Request $request)
     {
         $request->validate([
@@ -42,6 +45,7 @@ class LogoController extends Controller
         return redirect()->route('admin.logos.index')->with('success','Logo berhasil diupload!');
     }
 
+    // Update logo
     public function update(Request $request, Logo $logo)
     {
         $request->validate([
@@ -49,6 +53,7 @@ class LogoController extends Controller
             'name' => 'nullable|string|max:255',
         ]);
 
+        // Hapus file lama jika ada
         if ($request->hasFile('logo')) {
             if ($logo->path && Storage::disk('public')->exists($logo->path)) {
                 Storage::disk('public')->delete($logo->path);
@@ -63,6 +68,7 @@ class LogoController extends Controller
         return redirect()->route('admin.logos.index')->with('success','Logo berhasil diperbarui!');
     }
 
+    // Hapus logo
     public function destroy(Logo $logo)
     {
         if ($logo->path && Storage::disk('public')->exists($logo->path)) {
@@ -71,6 +77,6 @@ class LogoController extends Controller
 
         $logo->delete();
 
-        return redirect()->route('admin.logos.index')->with('success','Logo berhasil dihapus!');
+        return redirect()->back()->with('success','Logo berhasil dihapus!');
     }
 }

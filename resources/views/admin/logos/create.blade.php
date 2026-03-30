@@ -12,6 +12,7 @@
       <p class="text-sm text-slate-500 mt-1">Upload logo untuk navbar, footer, atau client</p>
     </div>
 
+    {{-- Error --}}
     @if ($errors->any())
       <div class="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
         <ul class="list-disc list-inside">
@@ -22,6 +23,7 @@
       </div>
     @endif
 
+    {{-- Form Upload --}}
     <form action="{{ route('admin.logos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
       @csrf
 
@@ -35,8 +37,8 @@
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1">Nama Client (jika tipe Client)</label>
-        <input type="text" name="name" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:ring focus:ring-blue-200" placeholder="Nama Client">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Nama (jika tipe Client atau Footer)</label>
+        <input type="text" name="name" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:ring focus:ring-blue-200" placeholder="Nama Client / Footer">
       </div>
 
       <div>

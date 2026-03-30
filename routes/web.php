@@ -20,17 +20,19 @@ use App\Http\Controllers\ProductCatalogController;
 use App\Http\Controllers\ProductInquiryController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\Admin\FooterController;
 use Illuminate\Support\Facades\Route;
+
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
-
-    // Logo management
-    Route::get('logos', [LogoController::class, 'index'])->name('logos.index');          // List semua logo
-    Route::get('logos/create', [LogoController::class, 'create'])->name('logos.create'); // Form tambah logo
-    Route::post('logos', [LogoController::class, 'store'])->name('logos.store');         // Simpan logo baru
-    Route::get('logos/{logo}/edit', [LogoController::class, 'edit'])->name('logos.edit'); // Form edit logo
-    Route::put('logos/{logo}', [LogoController::class, 'update'])->name('logos.update'); // Update logo
-    Route::delete('logos/{logo}', [LogoController::class, 'destroy'])->name('logos.destroy'); // Hapus logo
-
+    Route::get('logos', [LogoController::class, 'index'])->name('logos.index');          
+    Route::get('logos/create', [LogoController::class, 'create'])->name('logos.create'); 
+    Route::post('logos', [LogoController::class, 'store'])->name('logos.store');         
+    Route::get('logos/{logo}/edit', [LogoController::class, 'edit'])->name('logos.edit'); 
+    Route::put('logos/{logo}', [LogoController::class, 'update'])->name('logos.update'); 
+    Route::delete('logos/{logo}', [LogoController::class, 'destroy'])->name('logos.destroy'); 
+    Route::get('footer', [FooterController::class, 'index'])->name('footer.index');
+    Route::post('footer/upload', [FooterController::class, 'upload'])->name('footer.upload');
+    Route::delete('footer/{id}', [FooterController::class, 'destroy'])->name('footer.destroy');
 });
 
 Route::post('/locale', [LocaleController::class, 'update'])->name('locale.switch');

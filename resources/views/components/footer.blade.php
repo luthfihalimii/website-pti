@@ -1,52 +1,48 @@
 <footer class="text-white">
-  <div
-    class="footer-gradient px-6 py-10"
-  >
+  <div class="footer-gradient px-6 py-10">
     <div class="max-w-6xl mx-auto">
       <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
 
-    <!-- KIRI -->
-    <div>
-      @php
-      $logoFooter = \App\Models\Logo::where('type', 'footer')->latest()->first();
-      @endphp
+        <!-- KIRI -->
+        <div>
+          @php
+            $footerLogos = \App\Models\Logo::where('type','like','footer_%')->get()->keyBy('type');
+          @endphp
 
-      <div class="inline-flex items-center gap-3 bg-white/95 text-gray-800 rounded-lg px-4 py-3">
-        <img class="h-9 w-auto"
-            src="{{ $logoFooter ? asset('storage/' . $logoFooter->path) : asset('assets/logo/logo.svg') }}"
-            alt="Piramidasoft">
-        <span class="font-semibold tracking-wide">
-          {{ strtoupper(config('site.company.name')) }}
-        </span>
-      </div>
+          <div class="inline-flex items-center gap-3 bg-white/95 text-gray-800 rounded-lg px-4 py-3">
+            <img class="h-9 w-auto"
+              src="{{ $footerLogos['footer_logo_pti']->path ?? asset('assets/logo/logo.svg') }}"
+              alt="Piramidasoft">
+            <span class="font-semibold tracking-wide">{{ strtoupper(config('site.company.name')) }}</span>
+          </div>
 
-      <p class="mt-5 text-sm leading-relaxed text-white/90 max-w-md">
-        {{ __(config('site.company.description')) }}
-      </p>
+          <p class="mt-5 text-sm leading-relaxed text-white/90 max-w-md">
+            {{ __(config('site.company.description')) }}
+          </p>
 
-      <ul class="mt-8 space-y-3 text-sm text-white/95">
-        <li class="flex items-center gap-3">
-          <img src="{{ asset('assets/icons/place.svg') }}" class="w-5 h-5" alt="">
-          <span>{{ config('site.company.address') }}</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <img src="{{ asset('assets/icons/mail.svg') }}" class="w-5 h-5" alt="">
-          <span>{{ config('site.company.primary_email') }}</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <img src="{{ asset('assets/icons/telp.svg') }}" class="w-5 h-5" alt="">
-          <span>{{ config('site.company.phone') }}</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <img src="{{ asset('assets/icons/whatsapp.svg') }}" class="w-5 h-5" alt="">
-          <span>{{ config('site.company.whatsapp') }}</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <img src="{{ asset('assets/icons/linkedin.svg') }}" class="w-5 h-5" alt="">
-          <span>{{ config('site.company.linkedin') }}</span>
-        </li>
-      </ul>
-    </div>
+          <ul class="mt-8 space-y-3 text-sm text-white/95">
+            <li class="flex items-center gap-3">
+              <img src="{{ $footerLogos['footer_map_icon']->path ?? asset('assets/icons/place.svg') }}" class="w-5 h-5" alt="">
+              <span>{{ config('site.company.address') }}</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <img src="{{ $footerLogos['footer_email_icon']->path ?? asset('assets/icons/mail.svg') }}" class="w-5 h-5" alt="">
+              <span>{{ config('site.company.primary_email') }}</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <img src="{{ $footerLogos['footer_phone_icon']->path ?? asset('assets/icons/telp.svg') }}" class="w-5 h-5" alt="">
+              <span>{{ config('site.company.phone') }}</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <img src="{{ $footerLogos['footer_whatsapp_icon']->path ?? asset('assets/icons/whatsapp.svg') }}" class="w-5 h-5" alt="">
+              <span>{{ config('site.company.whatsapp') }}</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <img src="{{ $footerLogos['footer_linkedin_icon']->path ?? asset('assets/icons/linkedin.svg') }}" class="w-5 h-5" alt="">
+              <span>{{ config('site.company.linkedin') }}</span>
+            </li>
+          </ul>
+        </div>
 
         <!-- TENGAH -->
         <div>
@@ -80,7 +76,7 @@
 
                 <!-- LEFT -->
                 <div class="flex items-center gap-2 px-4 py-3 border-r border-gray-200">
-                  <img src="{{ asset('assets/icons/jam.svg') }}" class="w-4 h-4" alt="">
+                  <img src="{{ $footerLogos['footer_clock_icon']->path ?? asset('assets/icons/jam.svg') }}" class="w-4 h-4" alt="">
                   <div class="leading-tight font-semibold text-[14px]">
                     <div>{{ __('Jam') }}</div>
                     <div>{{ __('Operasional') }}</div>
@@ -103,6 +99,7 @@
           </div>
 
         </div>
+
       </div>
 
       <div class="mt-10 border-t border-white/30"></div>
