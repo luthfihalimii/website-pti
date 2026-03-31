@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="p-6 space-y-6">
+
     <div>
         <h1 class="text-2xl font-semibold text-slate-800">Footer Management</h1>
         <p class="text-sm text-slate-500 mt-1">
@@ -9,6 +10,7 @@
         </p>
     </div>
 
+    {{-- ALERT --}}
     @if(session('success'))
         <div class="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
             {{ session('success') }}
@@ -25,7 +27,9 @@
         </div>
     @endif
 
+    {{-- GRID --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
         @foreach([
             'footer_logo_pti'      => 'Logo PTI',
             'footer_map_icon'      => 'Icon Map',
@@ -40,8 +44,9 @@
                 $logo = $logos->firstWhere('type', $type);
             @endphp
 
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm flex flex-col">
-                
+            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm flex flex-col hover:shadow-md transition">
+
+                {{-- HEADER --}}
                 <div class="mb-4">
                     <h3 class="text-sm font-semibold text-slate-800">
                         {{ $label }}
@@ -51,24 +56,21 @@
                     </p>
                 </div>
 
+                {{-- PREVIEW --}}
                 <div class="mb-4 flex justify-center">
                     <div class="w-24 h-24 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden">
-                        
+
                         @if($logo && $logo->path)
                             <img
                                 id="preview-{{ $type }}"
                                 src="{{ asset('storage/' . $logo->path) }}"
-                                alt="{{ $type }}"
                                 class="max-w-[72px] max-h-[72px] object-contain"
                             >
                         @else
                             <img
                                 id="preview-{{ $type }}"
-                                src=""
-                                alt="{{ $type }}"
                                 class="hidden max-w-[72px] max-h-[72px] object-contain"
                             >
-
                             <span
                                 id="placeholder-{{ $type }}"
                                 class="text-[11px] text-slate-400 text-center px-2"
@@ -76,9 +78,11 @@
                                 Belum ada logo
                             </span>
                         @endif
+
                     </div>
                 </div>
 
+                {{-- FORM --}}
                 <form
                     action="{{ route('admin.footer.upload') }}"
                     method="POST"
@@ -86,21 +90,27 @@
                     class="space-y-3 mt-auto"
                 >
                     @csrf
-
                     <input type="hidden" name="type" value="{{ $type }}">
 
-                    <input
-                        type="file"
-                        name="logo"
-                        accept=".png,.jpg,.jpeg,.svg"
-                        class="block w-full text-xs text-slate-600
-                               file:mr-3 file:rounded-lg file:border-0
-                               file:bg-slate-100 file:px-3 file:py-2
-                               file:text-xs file:font-medium
-                               file:text-slate-700 hover:file:bg-slate-200"
-                        onchange="previewLogo(this, '{{ $type }}')"
-                    >
+                    {{-- CUSTOM FILE INPUT --}}
+                    <div class="flex items-center gap-2">
+                        <label class="cursor-pointer rounded-lg bg-slate-800 px-3 py-2 text-xs text-white hover:bg-slate-900 transition">
+                            Pilih File
+                            <input
+                                type="file"
+                                name="logo"
+                                class="hidden"
+                                accept=".png,.jpg,.jpeg,.svg"
+                                onchange="handleFile(this, '{{ $type }}')"
+                            >
+                        </label>
 
+                        <span id="file-{{ $type }}" class="text-xs text-slate-500">
+                            Belum ada file
+                        </span>
+                    </div>
+
+                    {{-- BUTTON --}}
                     <button
                         type="submit"
                         class="w-full rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
@@ -109,33 +119,56 @@
                     </button>
                 </form>
 
+                {{-- DELETE --}}
                 @if($logo)
                     <form
                         action="{{ route('admin.footer.destroy', $logo->id) }}"
                         method="POST"
                         class="mt-2"
+                        onsubmit="return confirm('Yakin ingin menghapus logo ini?')"
                     >
                         @csrf
                         @method('DELETE')
 
                         <button
                             type="submit"
-                            onclick="return confirm('Yakin ingin menghapus logo ini?')"
                             class="w-full rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition"
                         >
                             Hapus
                         </button>
                     </form>
                 @endif
+
             </div>
         @endforeach
+
     </div>
 </div>
 
+{{-- ================= JS ================= --}}
 <script>
-function previewLogo(input, type) {
+function handleFile(input, type) {
     const file = input.files[0];
 
+    if (!file) return;
+
+    // VALIDASI
+    const allowed = ['image/png','image/jpeg','image/jpg','image/svg+xml'];
+    if (!allowed.includes(file.type)) {
+        alert('File harus berupa gambar (PNG, JPG, SVG)');
+        input.value = '';
+        return;
+    }
+
+    // tampilkan nama file
+    document.getElementById('file-' + type).innerText = file.name;
+
+    // preview
+    previewLogo(input, type);
+}
+
+function previewLogo(input, type) {
+    const file = input.files[0];
     if (!file) return;
 
     const preview = document.getElementById('preview-' + type);
@@ -155,4 +188,5 @@ function previewLogo(input, type) {
     reader.readAsDataURL(file);
 }
 </script>
+
 @endsection
