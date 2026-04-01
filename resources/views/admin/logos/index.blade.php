@@ -26,33 +26,43 @@
     <div class="rounded-3xl border bg-white p-6 shadow-sm">
         <h2 class="text-xl font-semibold mb-4">Logo Navbar (PTI)</h2>
 
-        @if($pti)
         <div class="flex flex-col lg:flex-row gap-5 items-center">
 
-            <img id="preview-pti"
-                src="{{ asset('storage/'.$pti->path) }}"
-                class="h-24 w-24 object-contain border rounded-xl bg-slate-50 p-2">
+            <div class="flex justify-center items-center h-24 w-24 border rounded-xl bg-slate-50 p-2">
+                @if($pti)
+                    <img src="{{ asset($pti->path) }}" class="h-20 w-20 object-contain" alt="Logo PTI">
+                @else
+                    <span class="text-sm text-slate-400">Belum ada logo</span>
+                @endif
+            </div>
 
-            <form action="{{ route('admin.logos.update',$pti) }}" method="POST" enctype="multipart/form-data" class="space-y-2">
-                @csrf @method('PUT')
+            <form action="{{ route('admin.logos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-3 w-full">
+                @csrf
+                <input type="hidden" name="type" value="pti">
 
-                <input type="file" name="logo"
-                    onchange="handleFile(this,'preview-pti','file-pti')"
-                    class="block w-full text-sm text-slate-600
-                    file:mr-3 file:rounded-xl file:border-0
-                    file:bg-slate-800 file:px-4 file:py-2
-                    file:text-sm file:font-medium file:text-white
-                    hover:file:bg-slate-900 cursor-pointer">
+                <div class="flex items-center border rounded-xl px-3 py-2 bg-white">
+                    <label for="logo-pti" class="bg-gray-200 px-3 py-1 rounded cursor-pointer text-sm">
+                        Choose File
+                    </label>
 
-                <span id="file-pti" class="text-xs text-slate-500">Belum ada file</span>
+                    <input
+                        id="logo-pti"
+                        type="file"
+                        name="logo"
+                        style="position:absolute; left:-9999px;"
+                        onchange="document.getElementById('file-name').innerText = this.files[0] ? this.files[0].name : 'No file chosen'">
 
-                <button class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm">
-                    Ganti Logo
+                    <span id="file-name" class="ml-3 text-sm text-gray-500">
+                        No file chosen
+                    </span>
+                </div>
+
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm">
+                    + Tambah
                 </button>
             </form>
 
         </div>
-        @endif
     </div>
 
     {{-- ================= CLIENT ================= --}}
