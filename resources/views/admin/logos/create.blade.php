@@ -1,141 +1,84 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Logo')
+@section('title','Tambah Logo')
 
 @section('content')
-<div class="max-w-3xl mx-auto">
+<div class="max-w-xl mx-auto p-6">
 
-    <div class="bg-white p-6 rounded-3xl shadow border">
-        <h2 class="text-xl font-semibold mb-6">Tambah Logo</h2>
+<div class="bg-white p-6 rounded-2xl shadow border">
 
-        <form action="{{ route('admin.logos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
-            @csrf
+<h2 class="font-semibold mb-4 text-slate-800">Tambah Logo</h2>
 
-            {{-- TYPE --}}
-            <div>
-                <label class="text-sm font-medium">Jenis Logo</label>
-                <select id="logoType" name="type" class="w-full border px-3 py-2 rounded-xl mt-1">
-                    <option value="client">Logo Client</option>
-                    <option value="pti">Logo PTI</option>
-                </select>
-            </div>
+<form action="{{ route('admin.logos.store') }}" method="POST" enctype="multipart/form-data">
+@csrf
 
-            {{-- FILE --}}
-            <div>
-                <label class="text-sm font-medium">Upload Logo</label>
+{{-- TYPE --}}
+<select name="type" id="type"
+    class="w-full border border-slate-300 px-3 py-2 rounded-xl mb-3 text-slate-700">
+    <option value="pti">Navbar</option>
+    <option value="client">Client</option>
+</select>
 
-                <input id="logoInput" type="file" name="logo[]" multiple
-                    class="mt-2 block w-full text-sm text-slate-600
-                    file:mr-3 file:rounded-xl file:border-0
-                    file:bg-slate-800 file:px-4 file:py-2
-                    file:text-sm file:font-medium file:text-white
-                    hover:file:bg-slate-900 cursor-pointer">
+{{-- NAME --}}
+<div id="nameField">
+<input type="text" name="name" placeholder="Nama Client"
+    class="w-full border border-slate-300 px-3 py-2 rounded-xl mb-3 text-slate-700">
+</div>
 
-                <span id="fileName" class="text-xs text-slate-500 mt-1 block">
-                    Belum ada file
-                </span>
-            </div>
+{{-- FILE --}}
+<label class="flex items-center justify-center gap-3 cursor-pointer
+    bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition">
+    
+    📁 Pilih File
+    <input type="file" name="logo" hidden onchange="preview(event)">
+</label>
 
-            {{-- PREVIEW --}}
-            <div id="previewContainer" class="grid grid-cols-3 gap-3"></div>
+<p id="fileName" class="text-sm text-slate-600 mt-2 text-center">
+    Belum ada file dipilih
+</p>
 
-            {{-- NAMA CLIENT --}}
-            <div id="nameContainer">
-                <label class="text-sm font-medium">Nama Client</label>
+<img id="preview" class="h-24 mx-auto mt-3 hidden rounded-xl border p-2 bg-slate-50">
 
-                <div id="nameInputs" class="space-y-2 mt-2">
-                    {{-- DEFAULT INPUT BIAR GA KOSONG --}}
-                    <input type="text" name="name[]"
-                        placeholder="Masukkan nama client"
-                        class="w-full border px-3 py-2 rounded-xl text-sm">
-                </div>
-            </div>
+<button class="bg-blue-600 hover:bg-blue-700 text-white w-full py-2 rounded-xl mt-4 font-medium transition">
+    Simpan
+</button>
 
-            <button class="bg-blue-600 text-white px-4 py-2 rounded-xl">
-                Simpan
-            </button>
-        </form>
-    </div>
+</form>
 
+</div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+const type = document.getElementById('type');
+const nameField = document.getElementById('nameField');
 
-    const logoInput = document.getElementById('logoInput');
-    const previewContainer = document.getElementById('previewContainer');
-    const logoType = document.getElementById('logoType');
-    const nameContainer = document.getElementById('nameContainer');
-    const nameInputs = document.getElementById('nameInputs');
-    const fileName = document.getElementById('fileName');
+// default hide kalau navbar
+if(type.value === 'pti'){
+    nameField.style.display = 'none';
+}
 
-    function generateNameInputs(files) {
-        nameInputs.innerHTML = '';
-
-        files.forEach((file, index) => {
-            nameInputs.innerHTML += `
-                <input type="text" name="name[]"
-                placeholder="Nama client ${index + 1}"
-                class="w-full border px-3 py-2 rounded-xl text-sm">
-            `;
-        });
-    }
-
-    logoInput.addEventListener('change', function () {
-
-        previewContainer.innerHTML = '';
-
-        const files = Array.from(this.files);
-
-        fileName.innerText = files.length
-            ? files.map(f => f.name).join(', ')
-            : 'Belum ada file';
-
-        // generate input nama
-        if (logoType.value === 'client') {
-            generateNameInputs(files);
-        }
-
-        files.forEach((file) => {
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                previewContainer.innerHTML += `
-                    <img src="${e.target.result}" class="h-24 w-24 object-contain border rounded bg-white p-2">
-                `;
-            };
-
-            reader.readAsDataURL(file);
-        });
-    });
-
-    logoType.addEventListener('change', function () {
-
-        if (this.value === 'pti') {
-            nameContainer.style.display = 'none';
-            logoInput.multiple = false;
-
-            // reset input
-            nameInputs.innerHTML = `
-                <input type="text" name="name[]"
-                placeholder="Masukkan nama client"
-                class="w-full border px-3 py-2 rounded-xl text-sm">
-            `;
-
-        } else {
-            nameContainer.style.display = 'block';
-            logoInput.multiple = true;
-        }
-    });
-
-    // INIT STATE
-    if (logoType.value === 'client') {
-        nameContainer.style.display = 'block';
+type.addEventListener('change', () => {
+    if(type.value === 'client'){
+        nameField.style.display = 'block';
     } else {
-        nameContainer.style.display = 'none';
+        nameField.style.display = 'none';
     }
-
 });
-</script>
 
+function preview(e){
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // tampilkan nama file
+    document.getElementById('fileName').innerText = file.name;
+
+    const reader = new FileReader();
+    reader.onload = function(e){
+        const img = document.getElementById('preview');
+        img.src = e.target.result;
+        img.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+}
+</script>
 @endsection

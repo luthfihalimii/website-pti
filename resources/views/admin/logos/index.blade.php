@@ -3,18 +3,18 @@
 @section('title', 'Logo Management')
 
 @section('content')
-<div class="space-y-10">
+<div class="space-y-8 p-6">
 
     {{-- ALERT --}}
     @if(session('success'))
-        <div class="rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+        <div class="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
             {{ session('success') }}
         </div>
     @endif
 
     @if($errors->any())
-        <div class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            <ul class="list-disc list-inside space-y-1">
+        <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <ul class="list-disc list-inside">
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -23,31 +23,31 @@
     @endif
 
     {{-- ================= NAVBAR ================= --}}
-    <div class="rounded-3xl border bg-white p-6 shadow-sm">
-        <h2 class="text-xl font-semibold mb-4">Logo Navbar (PTI)</h2>
+    <div class="bg-white border rounded-2xl p-6 shadow-sm">
+        <h2 class="text-lg font-semibold text-slate-800 mb-4">Logo Navbar</h2>
 
         @if($pti)
-        <div class="flex flex-col lg:flex-row gap-5 items-center">
+        <div class="flex flex-col md:flex-row items-center gap-6">
 
             <img id="preview-pti"
                 src="{{ asset('storage/'.$pti->path) }}"
                 class="h-24 w-24 object-contain border rounded-xl bg-slate-50 p-2">
 
-            <form action="{{ route('admin.logos.update',$pti) }}" method="POST" enctype="multipart/form-data" class="space-y-2">
+            <form action="{{ route('admin.logos.update',$pti) }}" method="POST" enctype="multipart/form-data" class="space-y-3 w-full md:w-auto">
                 @csrf @method('PUT')
 
-                <input type="file" name="logo"
-                    onchange="handleFile(this,'preview-pti','file-pti')"
-                    class="block w-full text-sm text-slate-600
-                    file:mr-3 file:rounded-xl file:border-0
-                    file:bg-slate-800 file:px-4 file:py-2
-                    file:text-sm file:font-medium file:text-white
-                    hover:file:bg-slate-900 cursor-pointer">
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <span class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+                        Pilih File
+                    </span>
+                    <span id="file-pti" class="text-sm text-slate-600">Belum ada file</span>
 
-                <span id="file-pti" class="text-xs text-slate-500">Belum ada file</span>
+                    <input type="file" name="logo" hidden
+                        onchange="handleFile(this,'preview-pti','file-pti')">
+                </label>
 
-                <button class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm">
-                    Ganti Logo
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+                    Update Logo
                 </button>
             </form>
 
@@ -55,63 +55,77 @@
         @endif
     </div>
 
-    {{-- ================= CLIENT ================= --}}
-    <div class="rounded-3xl border bg-white p-6 shadow-sm">
 
-        <div class="flex justify-between mb-4">
-            <h2 class="text-xl font-semibold">Logo Client</h2>
+    {{-- ================= CLIENT ================= --}}
+    <div class="bg-white border rounded-2xl p-6 shadow-sm">
+
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold text-slate-800">Logo Client</h2>
 
             <a href="{{ route('admin.logos.create') }}"
-                class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm">
+                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
                 + Tambah
             </a>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-2 gap-5">
         @foreach($clients as $c)
-            <div class="border p-4 rounded-xl hover:shadow transition">
+            <div class="border rounded-xl p-4 bg-slate-50 space-y-3">
 
+                {{-- PREVIEW --}}
                 <img id="preview-{{ $c->id }}"
                     src="{{ asset('storage/'.$c->path) }}"
-                    class="h-20 mx-auto object-contain mb-3">
+                    class="h-20 mx-auto object-contain">
 
-                <form action="{{ route('admin.logos.update',$c) }}" method="POST" enctype="multipart/form-data">
+                {{-- FORM UPDATE --}}
+                <form action="{{ route('admin.logos.update',$c) }}" method="POST" enctype="multipart/form-data" class="space-y-2">
                     @csrf @method('PUT')
 
                     <input type="text" name="name" value="{{ $c->name }}"
-                        class="w-full border px-3 py-2 rounded-xl text-sm mb-2">
+                        class="w-full border px-3 py-2 rounded-lg text-sm text-slate-700">
 
-                    <input type="file"
-                        onchange="handleFile(this,'preview-{{ $c->id }}','file-{{ $c->id }}')"
-                        class="block w-full text-xs text-slate-600
-                        file:mr-3 file:rounded-xl file:border-0
-                        file:bg-slate-800 file:px-3 file:py-2
-                        file:text-xs file:font-medium file:text-white
-                        hover:file:bg-slate-900 cursor-pointer">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <span class="bg-blue-600 text-white px-3 py-2 rounded-lg text-xs">
+                            Pilih File
+                        </span>
+                        <span id="file-{{ $c->id }}" class="text-xs text-slate-600"></span>
 
-                    <span id="file-{{ $c->id }}" class="text-xs text-slate-500"></span>
+                        <input type="file" name="logo" hidden
+                            onchange="handleFile(this,'preview-{{ $c->id }}','file-{{ $c->id }}')">
+                    </label>
 
-                    <button class="bg-blue-600 text-white px-3 py-1 rounded mt-3 w-full text-sm">
-                        Update
-                    </button>
+                    {{-- 🔥 BUTTON SEJAJAR --}}
+                    <div class="flex gap-2">
+
+                        <button type="submit"
+                            class="w-1/2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">
+                            Update
+                        </button>
                 </form>
 
-                <form action="{{ route('admin.logos.destroy',$c) }}" method="POST" class="mt-2">
-                    @csrf @method('DELETE')
-                    <button class="bg-red-600 text-white px-3 py-1 rounded w-full text-sm">
-                        Hapus
-                    </button>
-                </form>
+                        {{-- HAPUS (BIRU SESUAI REQUEST) --}}
+                        <form action="{{ route('admin.logos.destroy',$c) }}" method="POST" class="w-1/2">
+                            @csrf @method('DELETE')
+
+                            <button type="submit"
+                                onclick="return confirm('Yakin hapus logo ini?')"
+                                class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm">
+                                Hapus
+                            </button>
+                        </form>
+
+                    </div>
 
             </div>
         @endforeach
         </div>
     </div>
 
-    {{-- ================= FOOTER ================= --}}
-    <div class="rounded-3xl border bg-white p-6 shadow-sm">
 
-        <h2 class="text-xl font-semibold mb-5">Logo Footer</h2>
+    {{-- ================= FOOTER ================= --}}
+    <div class="bg-white border rounded-2xl p-6 shadow-sm">
+
+        <h2 class="text-lg font-semibold text-slate-800 mb-4">Logo Footer</h2>
 
         @php
         $footerTypes = [
@@ -130,45 +144,45 @@
         @foreach($footerTypes as $type=>$label)
         @php $logo = $footers->firstWhere('type',$type); @endphp
 
-        <div class="border rounded-2xl p-4 flex flex-col hover:shadow transition">
+        <div class="border rounded-xl p-4 bg-slate-50 space-y-3">
 
-            <p class="text-sm font-semibold">{{ $label }}</p>
-            <p class="text-xs text-slate-400 mb-3">{{ $type }}</p>
+            <p class="text-sm font-semibold text-slate-800">{{ $label }}</p>
 
-            <div class="flex justify-center mb-3">
+            <div class="flex justify-center">
                 <img id="preview-{{ $type }}"
                     src="{{ $logo ? asset('storage/'.$logo->path) : '' }}"
-                    class="h-16 object-contain {{ !$logo ? 'hidden':'' }}">
+                    class="h-14 object-contain {{ !$logo ? 'hidden':'' }}">
             </div>
 
             <span id="placeholder-{{ $type }}"
-                class="text-xs text-center text-slate-400 mb-3 {{ $logo ? 'hidden':'' }}">
-                No Icon
+                class="text-xs text-center text-slate-500 {{ $logo ? 'hidden':'' }}">
+                Belum ada icon
             </span>
 
-            <form action="{{ route('admin.footer.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-2 mt-auto">
+            <form action="{{ route('admin.footer.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-2">
                 @csrf
                 <input type="hidden" name="type" value="{{ $type }}">
 
-                <input type="file"
-                    onchange="handleFile(this,'preview-{{ $type }}','file-{{ $type }}')"
-                    class="block w-full text-xs text-slate-600
-                    file:mr-3 file:rounded-xl file:border-0
-                    file:bg-slate-800 file:px-3 file:py-2
-                    file:text-xs file:font-medium file:text-white
-                    hover:file:bg-slate-900 cursor-pointer">
+                <label class="flex items-center justify-between cursor-pointer">
+                    <span class="bg-blue-600 text-white px-3 py-2 rounded-lg text-xs">
+                        Pilih File
+                    </span>
+                    <span id="file-{{ $type }}" class="text-xs text-slate-600"></span>
 
-                <span id="file-{{ $type }}" class="text-xs text-slate-500 text-center"></span>
+                    <input type="file" name="logo" hidden
+                        onchange="handleFile(this,'preview-{{ $type }}','file-{{ $type }}')">
+                </label>
 
-                <button class="bg-blue-600 text-white w-full py-2 rounded text-sm">
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">
                     Upload
                 </button>
             </form>
 
             @if($logo)
-            <form action="{{ route('admin.footer.destroy',$logo->id) }}" method="POST" class="mt-2">
+            <form action="{{ route('admin.footer.destroy',$logo->id) }}" method="POST">
                 @csrf @method('DELETE')
-                <button class="bg-red-600 text-white w-full py-2 rounded text-sm">
+                <button onclick="return confirm('Yakin hapus icon ini?')"
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm">
                     Hapus
                 </button>
             </form>
@@ -193,8 +207,10 @@ function handleFile(input, previewId, textId) {
     const reader = new FileReader();
     reader.onload = function(e){
         const preview = document.getElementById(previewId);
-        preview.src = e.target.result;
-        preview.classList.remove('hidden');
+        if(preview){
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+        }
 
         const placeholder = document.getElementById('placeholder-' + previewId.replace('preview-',''));
         if (placeholder) placeholder.classList.add('hidden');
