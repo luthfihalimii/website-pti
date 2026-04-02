@@ -5,50 +5,85 @@
 @section('content')
 <div class="p-6 space-y-6">
 
-    <h1 class="text-xl font-semibold text-slate-800">Footer Logo</h1>
+    <h1 class="text-xl font-semibold text-slate-800 mb-4">Footer Logo</h1>
 
-    {{-- KALAU DATA KOSONG --}}
-    @if($logos->isEmpty())
-        <div class="text-center text-slate-500 text-sm py-10 border rounded-xl bg-white">
-            Belum ada logo footer
-        </div>
-    @endif
+    @php
+        $footerTypes = [
+            'footer_logo_pti'=>'Logo PTI',
+            'footer_map_icon'=>'Icon Map',
+            'footer_email_icon'=>'Icon Email',
+            'footer_phone_icon'=>'Icon Phone',
+            'footer_whatsapp_icon'=>'Icon WhatsApp',
+            'footer_linkedin_icon'=>'Icon LinkedIn',
+            'footer_clock_icon'=>'Icon Clock',
+        ];
+    @endphp
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+    <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-5">
 
-        @foreach($logos as $logo)
-        <div class="border rounded-xl p-4 bg-white shadow-sm hover:shadow-md transition">
+    @foreach($footerTypes as $type=>$label)
+        @php $logo = $footers->firstWhere('type', $type); @endphp
 
-            {{-- TYPE --}}
-            <p class="text-sm font-medium text-slate-700 mb-2 text-center">
-                {{ $logo->type }}
-            </p>
+        <div class="border rounded-xl p-4 bg-slate-50 space-y-3">
+            <p class="text-sm font-semibold text-slate-800">{{ $label }}</p>
 
-            {{-- IMAGE --}}
-            <div class="flex justify-center mb-3">
-                <img 
-                    src="{{ asset('storage/'.$logo->path) }}"
-                    class="h-16 object-contain"
-                    onerror="this.onerror=null;this.src='/no-image.png';"
-                >
+            <div class="flex justify-center mb-2">
+                <img id="preview-{{ $type }}"
+                    src="{{ $logo && $logo->path ? asset('storage/'.$logo->path) : asset('no-image.png') }}"
+                    class="h-14 object-contain {{ $logo && $logo->path ? '' : 'opacity-50' }}">
             </div>
 
-            {{-- DELETE --}}
-            <form action="{{ route('admin.footer.destroy',$logo->id) }}" method="POST"
-                  onsubmit="return confirm('Yakin ingin menghapus logo ini?')">
-                @csrf 
-                @method('DELETE')
+            <form action="{{ route('admin.footer.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-2">
+                @csrf
+                <input type="hidden" name="type" value="{{ $type }}">
 
-                <button
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm transition">
-                    Hapus
+                <label class="flex items-center justify-between cursor-pointer">
+                    <span class="bg-blue-600 text-white px-3 py-2 rounded-lg text-xs">
+                        Pilih File
+                    </span>
+                    <span id="file-{{ $type }}" class="text-xs text-slate-600"></span>
+
+                    <input type="file" name="logo" hidden
+                        onchange="handleFile(this,'preview-{{ $type }}','file-{{ $type }}')">
+                </label>
+
+                <button class="w-full bg-blue-600 text-white py-2 rounded-lg text-sm">
+                    Upload
                 </button>
             </form>
 
+            @if($logo)
+            <form action="{{ route('admin.footer.destroy', $logo->id) }}" method="POST">
+                @csrf @method('DELETE')
+                <button onclick="return confirm('Yakin hapus icon ini?')"
+                    class="w-full bg-red-500 text-white py-2 rounded-lg text-sm">
+                    Hapus
+                </button>
+            </form>
+            @endif
+
         </div>
-        @endforeach
+    @endforeach
 
     </div>
-
 </div>
+
+<script>
+function handleFile(input, previewId, textId) {
+    const file = input.files[0];
+    if (!file) return;
+
+    document.getElementById(textId).innerText = file.name;
+
+    const reader = new FileReader();
+    reader.onload = function(e){
+        const preview = document.getElementById(previewId);
+        if(preview){
+            preview.src = e.target.result;
+            preview.classList.remove('opacity-50');
+        }
+    };
+    reader.readAsDataURL(file);
+}
+</script>
 @endsection

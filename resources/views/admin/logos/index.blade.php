@@ -126,27 +126,31 @@
     </div>
 
 
-    {{-- ================= FOOTER ================= --}}
-    <div class="bg-white border rounded-2xl p-6 shadow-sm">
+  {{-- ================= FOOTER ================= --}}
+<div class="bg-white border rounded-2xl p-6 shadow-sm">
 
-        <h2 class="text-lg font-semibold text-slate-800 mb-4">Logo Footer</h2>
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">Logo Footer</h2>
 
+    @php
+    $footerTypes = [
+        'footer_logo_pti'=>'Logo PTI',
+        'footer_map_icon'=>'Icon Map',
+        'footer_email_icon'=>'Icon Email',
+        'footer_phone_icon'=>'Icon Phone',
+        'footer_whatsapp_icon'=>'Icon WhatsApp',
+        'footer_linkedin_icon'=>'Icon LinkedIn',
+        'footer_clock_icon'=>'Icon Clock',
+    ];
+    @endphp
+
+    <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-5">
+
+    @foreach($footerTypes as $type=>$label)
         @php
-        $footerTypes = [
-            'footer_logo_pti'=>'Logo PTI',
-            'footer_map_icon'=>'Icon Map',
-            'footer_email_icon'=>'Icon Email',
-            'footer_phone_icon'=>'Icon Phone',
-            'footer_whatsapp_icon'=>'Icon WhatsApp',
-            'footer_linkedin_icon'=>'Icon LinkedIn',
-            'footer_clock_icon'=>'Icon Clock',
-        ];
+            $logo = $footers->firstWhere('type', $type);
+            $imagePath = $logo ? storage_path('app/public/'.$logo->path) : null;
+            $imageExists = $imagePath && file_exists($imagePath);
         @endphp
-
-        <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-5">
-
-        @foreach($footerTypes as $type=>$label)
-        @php $logo = $footers->firstWhere('type',$type); @endphp
 
         <div class="border rounded-xl p-4 bg-slate-50 space-y-3">
 
@@ -154,12 +158,12 @@
 
             <div class="flex justify-center">
                 <img id="preview-{{ $type }}"
-                    src="{{ $logo ? asset('storage/'.$logo->path) : '' }}"
-                    class="h-14 object-contain {{ !$logo ? 'hidden':'' }}">
+                    src="{{ $imageExists ? asset('storage/'.$logo->path) : asset('/no-image.png') }}"
+                    class="h-14 object-contain {{ !$imageExists ? 'hidden' : '' }}">
             </div>
 
             <span id="placeholder-{{ $type }}"
-                class="text-xs text-center text-slate-500 {{ $logo ? 'hidden':'' }}">
+                class="text-xs text-center text-slate-500 {{ $imageExists ? 'hidden' : '' }}">
                 Belum ada icon
             </span>
 
@@ -182,7 +186,7 @@
                 </button>
             </form>
 
-            @if($logo)
+            @if($logo && $imageExists)
             <form action="{{ route('admin.footer.destroy',$logo->id) }}" method="POST">
                 @csrf @method('DELETE')
                 <button onclick="return confirm('Yakin hapus icon ini?')"
@@ -193,11 +197,9 @@
             @endif
 
         </div>
-        @endforeach
+    @endforeach
 
-        </div>
     </div>
-
 </div>
 
 <script>

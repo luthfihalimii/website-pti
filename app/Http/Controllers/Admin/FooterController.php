@@ -11,9 +11,10 @@ class FooterController extends Controller
 {
     public function index()
     {
-        $logos = Logo::where('type', 'like', 'footer_%')->get();
+        // Ambil semua logo footer
+        $footers = Logo::where('type', 'like', 'footer_%')->get();
 
-        return view('admin.footer.index', compact('logos'));
+        return view('admin.footer.index', compact('footers'));
     }
 
     public function upload(Request $request)
@@ -25,20 +26,21 @@ class FooterController extends Controller
 
         $file = $request->file('logo');
 
+        // Ambil logo lama (jika ada)
         $logo = Logo::where('type', $request->type)->first();
 
-        // hapus lama
+        // Hapus file lama
         if ($logo && $logo->path && Storage::disk('public')->exists($logo->path)) {
             Storage::disk('public')->delete($logo->path);
         }
 
-        // simpan baru
+        // Simpan file baru di folder footer
         $path = $file->store('footer', 'public');
 
         Logo::updateOrCreate(
             ['type' => $request->type],
             [
-                'path' => $path, // ✅ FIX
+                'path' => $path,
                 'name' => $file->getClientOriginalName(),
             ]
         );

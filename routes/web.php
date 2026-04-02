@@ -36,6 +36,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('footer/upload', [FooterController::class, 'upload'])->name('footer.upload');
     Route::delete('footer/{id}', [FooterController::class, 'destroy'])->name('footer.destroy');
 
+
+
 });
 
 Route::post('/locale', [LocaleController::class, 'update'])->name('locale.switch');
