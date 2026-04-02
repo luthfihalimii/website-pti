@@ -11,8 +11,15 @@ class FooterController extends Controller
 {
     public function index()
     {
-        // Ambil semua logo footer
-        $footers = Logo::where('type', 'like', 'footer_%')->get();
+        $footers = Logo::whereIn('type', [
+            'footer_logo_pti',
+            'footer_map_icon',
+            'footer_email_icon',
+            'footer_phone_icon',
+            'footer_whatsapp_icon',
+            'footer_linkedin_icon',
+            'footer_clock_icon',
+        ])->get();
 
         return view('admin.footer.index', compact('footers'));
     }
