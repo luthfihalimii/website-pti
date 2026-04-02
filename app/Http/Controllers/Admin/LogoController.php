@@ -15,7 +15,7 @@ class LogoController extends Controller
         $clients = Logo::where('type','client')->latest()->get();
         $footers = Logo::where('type','like','footer_%')->get();
 
-        return view('admin.logos.index', compact('pti','clients','footers'));
+        return view('admin.logos.index', compact('pti', 'clients', 'footers'));
     }
 
     public function create()
@@ -31,16 +31,15 @@ class LogoController extends Controller
             'name' => 'nullable|string|max:255',
         ]);
 
-        $path = $request->file('logo')->store('logos', 'public');
+        $path = $request->file('logo')->store('logos','public');
 
         Logo::create([
             'type' => $request->type,
             'name' => $request->type === 'client' ? $request->name : null,
-            'path' => $path, // ✅ JANGAN pakai storage/
+            'path' => $path, // ✅ BENAR
         ]);
 
-        return redirect()->route('admin.logos.index')
-            ->with('success','Logo berhasil ditambahkan!');
+        return redirect()->route('admin.logos.index')->with('success','Logo berhasil diupload!');
     }
 
     public function update(Request $request, Logo $logo)
@@ -56,7 +55,7 @@ class LogoController extends Controller
                 Storage::disk('public')->delete($logo->path);
             }
 
-            $logo->path = $request->file('logo')->store('logos','public');
+            $logo->path = $request->file('logo')->store('logos','public'); // ✅ FIX
         }
 
         if ($logo->type === 'client') {
@@ -65,7 +64,7 @@ class LogoController extends Controller
 
         $logo->save();
 
-        return back()->with('success','Logo berhasil diupdate!');
+        return redirect()->route('admin.logos.index')->with('success','Logo berhasil diperbarui!');
     }
 
     public function destroy(Logo $logo)
@@ -76,6 +75,6 @@ class LogoController extends Controller
 
         $logo->delete();
 
-        return back()->with('success','Logo berhasil dihapus!');
+        return redirect()->back()->with('success','Logo berhasil dihapus!');
     }
 }

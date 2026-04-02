@@ -26,18 +26,22 @@
     <div class="bg-white border rounded-2xl p-6 shadow-sm">
         <h2 class="text-lg font-semibold text-slate-800 mb-4">Logo Navbar</h2>
 
-        @if($pti)
         <div class="flex flex-col md:flex-row items-center gap-6">
 
-            <img id="preview-pti"
-                src="{{ asset('storage/'.$pti->path) }}"
-                class="h-24 w-24 object-contain border rounded-xl bg-slate-50 p-2">
+            <div class="flex justify-center items-center h-24 w-24 border rounded-xl bg-slate-50 p-2">
+                @if($pti)
+                    <img src="{{ asset('storage/'.$pti->path) }}" class="h-20 w-20 object-contain">
+                @else
+                    <span class="text-sm text-slate-400">Belum ada logo</span>
+                @endif
+            </div>
 
-            <form action="{{ route('admin.logos.update',$pti) }}" method="POST" enctype="multipart/form-data" class="space-y-3 w-full md:w-auto">
+            @if($pti)
+            <form action="{{ route('admin.logos.update',$pti) }}" method="POST" enctype="multipart/form-data" class="space-y-3">
                 @csrf @method('PUT')
 
                 <label class="flex items-center gap-3 cursor-pointer">
-                    <span class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+                    <span class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
                         Pilih File
                     </span>
                     <span id="file-pti" class="text-sm text-slate-600">Belum ada file</span>
@@ -46,13 +50,13 @@
                         onchange="handleFile(this,'preview-pti','file-pti')">
                 </label>
 
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
                     Update Logo
                 </button>
             </form>
+            @endif
 
         </div>
-        @endif
     </div>
 
 
@@ -63,7 +67,7 @@
             <h2 class="text-lg font-semibold text-slate-800">Logo Client</h2>
 
             <a href="{{ route('admin.logos.create') }}"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
                 + Tambah
             </a>
         </div>
@@ -77,12 +81,12 @@
                     src="{{ asset('storage/'.$c->path) }}"
                     class="h-20 mx-auto object-contain">
 
-                {{-- FORM UPDATE --}}
+                {{-- FORM --}}
                 <form action="{{ route('admin.logos.update',$c) }}" method="POST" enctype="multipart/form-data" class="space-y-2">
                     @csrf @method('PUT')
 
                     <input type="text" name="name" value="{{ $c->name }}"
-                        class="w-full border px-3 py-2 rounded-lg text-sm text-slate-700">
+                        class="w-full border px-3 py-2 rounded-lg text-sm">
 
                     <label class="flex items-center gap-2 cursor-pointer">
                         <span class="bg-blue-600 text-white px-3 py-2 rounded-lg text-xs">
@@ -94,22 +98,22 @@
                             onchange="handleFile(this,'preview-{{ $c->id }}','file-{{ $c->id }}')">
                     </label>
 
-                    {{-- 🔥 BUTTON SEJAJAR --}}
+                    {{-- BUTTON SEJAJAR --}}
                     <div class="flex gap-2">
 
                         <button type="submit"
-                            class="w-1/2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">
+                            class="w-1/2 bg-blue-600 text-white py-2 rounded-lg text-sm">
                             Update
                         </button>
+
                 </form>
 
-                        {{-- HAPUS (BIRU SESUAI REQUEST) --}}
                         <form action="{{ route('admin.logos.destroy',$c) }}" method="POST" class="w-1/2">
                             @csrf @method('DELETE')
 
                             <button type="submit"
                                 onclick="return confirm('Yakin hapus logo ini?')"
-                                class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm">
+                                class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm">
                                 Hapus
                             </button>
                         </form>
@@ -159,7 +163,7 @@
                 Belum ada icon
             </span>
 
-            <form action="{{ route('admin.footer.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-2">
+            <form action="{{ route('admin.footer.upload') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="type" value="{{ $type }}">
 
@@ -173,7 +177,7 @@
                         onchange="handleFile(this,'preview-{{ $type }}','file-{{ $type }}')">
                 </label>
 
-                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">
+                <button class="w-full bg-blue-600 text-white py-2 rounded-lg text-sm">
                     Upload
                 </button>
             </form>
@@ -182,7 +186,7 @@
             <form action="{{ route('admin.footer.destroy',$logo->id) }}" method="POST">
                 @csrf @method('DELETE')
                 <button onclick="return confirm('Yakin hapus icon ini?')"
-                    class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm">
+                    class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm">
                     Hapus
                 </button>
             </form>
@@ -196,7 +200,6 @@
 
 </div>
 
-{{-- JS --}}
 <script>
 function handleFile(input, previewId, textId) {
     const file = input.files[0];
@@ -211,9 +214,6 @@ function handleFile(input, previewId, textId) {
             preview.src = e.target.result;
             preview.classList.remove('hidden');
         }
-
-        const placeholder = document.getElementById('placeholder-' + previewId.replace('preview-',''));
-        if (placeholder) placeholder.classList.add('hidden');
     };
     reader.readAsDataURL(file);
 }
