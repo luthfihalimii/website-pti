@@ -19,10 +19,11 @@ class FooterController extends Controller
             'footer_whatsapp_icon',
             'footer_linkedin_icon',
             'footer_clock_icon',
-        ])->get();
+        ])->get()->keyBy('type');
 
         return view('admin.footer.index', compact('footers'));
     }
+
 
     public function upload(Request $request)
     {
@@ -33,15 +34,14 @@ class FooterController extends Controller
 
         $file = $request->file('logo');
 
-        // Ambil logo lama (jika ada)
         $logo = Logo::where('type', $request->type)->first();
 
-        // Hapus file lama
+        // hapus lama
         if ($logo && $logo->path && Storage::disk('public')->exists($logo->path)) {
             Storage::disk('public')->delete($logo->path);
         }
 
-        // Simpan file baru di folder footer
+        // simpan baru
         $path = $file->store('footer', 'public');
 
         Logo::updateOrCreate(
@@ -55,6 +55,7 @@ class FooterController extends Controller
         return back()->with('success', 'Footer berhasil diupdate!');
     }
 
+
     public function destroy($id)
     {
         $logo = Logo::findOrFail($id);
@@ -66,5 +67,32 @@ class FooterController extends Controller
         $logo->delete();
 
         return back()->with('success', 'Footer berhasil dihapus!');
+    }
+
+
+    public function reset()
+    {
+        $types = [
+            'footer_logo_pti',
+            'footer_map_icon',
+            'footer_email_icon',
+            'footer_phone_icon',
+            'footer_whatsapp_icon',
+            'footer_linkedin_icon',
+            'footer_clock_icon',
+        ];
+
+        $footers = Logo::whereIn('type', $types)->get();
+
+        foreach ($footers as $footer) {
+
+            if ($footer->path && Storage::disk('public')->exists($footer->path)) {
+                Storage::disk('public')->delete($footer->path);
+            }
+
+            $footer->delete();
+        }
+
+        return back()->with('success','Semua footer berhasil direset!');
     }
 }
