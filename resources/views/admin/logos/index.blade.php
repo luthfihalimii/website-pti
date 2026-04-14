@@ -132,7 +132,7 @@
 
                     <button type="submit"
                             onclick="return confirm('Yakin hapus logo ini?')"
-                            class="w-full bg-red-500 text-white py-2 rounded-lg text-sm">
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
                         Hapus
                     </button>
                 </form>

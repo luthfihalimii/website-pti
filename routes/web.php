@@ -26,9 +26,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // LOGO
-    Route::get('logos', [LogoController::class, 'index'])->name('logos.index');
-    Route::post('logos', [LogoController::class, 'store'])->name('logos.store');
-    Route::post('logos', [LogoController::class, 'store'])->name('logos.create');
+    Route::get('logos/create', [LogoController::class, 'create'])->name('logos.create');  // Route for creating logos
+    Route::get('logos', [LogoController::class, 'index'])->name('logos.index');  // Show list of logos
+    Route::post('logos', [LogoController::class, 'store'])->name('logos.store');  // Store new logo
     Route::put('logos/{logo}', [LogoController::class, 'update'])->name('logos.update');
     Route::delete('logos/{logo}', [LogoController::class, 'destroy'])->name('logos.destroy');
 

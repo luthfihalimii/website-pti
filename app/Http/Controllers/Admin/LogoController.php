@@ -11,9 +11,9 @@ class LogoController extends Controller
 {
     public function index()
     {
-        $pti     = Logo::where('type','pti')->orderByDesc('id')->first();
-        $clients = Logo::where('type','client')->latest()->get();
-        $footers = Logo::where('type','like','footer_%')->get()->keyBy('type');
+        $pti = Logo::where('type', 'pti')->orderByDesc('id')->first();
+        $clients = Logo::where('type', 'client')->latest()->get();
+        $footers = Logo::where('type', 'like', 'footer_%')->get()->keyBy('type');
 
         return view('admin.logos.index', compact('pti', 'clients', 'footers'));
     }
@@ -31,14 +31,14 @@ class LogoController extends Controller
             'name' => 'nullable|string|max:255',
         ]);
 
-        $path = $request->file('logo')->store('logos','public');
+        $path = $request->file('logo')->store('logos', 'public');
 
         // kalau navbar → hapus dulu yang lama
-        if($request->type == 'pti'){
-            $old = Logo::where('type','pti')->first();
+        if ($request->type == 'pti') {
+            $old = Logo::where('type', 'pti')->first();
 
-            if($old){
-                if ($old->path && Storage::disk('public')->exists($old->path)) {
+            if ($old) {
+                if ($old->path) {
                     Storage::disk('public')->delete($old->path);
                 }
                 $old->delete();
@@ -52,7 +52,7 @@ class LogoController extends Controller
         ]);
 
         return redirect()->route('admin.logos.index')
-            ->with('success','Logo berhasil diupload!');
+            ->with('success', 'Logo berhasil diupload!');
     }
 
     public function update(Request $request, Logo $logo)
@@ -63,12 +63,10 @@ class LogoController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-
-            if ($logo->path && Storage::disk('public')->exists($logo->path)) {
+            if ($logo->path) {
                 Storage::disk('public')->delete($logo->path);
             }
-
-            $logo->path = $request->file('logo')->store('logos','public');
+            $logo->path = $request->file('logo')->store('logos', 'public');
         }
 
         if ($logo->type === 'client') {
@@ -78,18 +76,18 @@ class LogoController extends Controller
         $logo->save();
 
         return redirect()->route('admin.logos.index')
-            ->with('success','Logo berhasil diperbarui!');
+            ->with('success', 'Logo berhasil diperbarui!');
     }
 
     public function destroy(Logo $logo)
     {
-        if ($logo->path && Storage::disk('public')->exists($logo->path)) {
+        if ($logo->path) {
             Storage::disk('public')->delete($logo->path);
         }
 
         $logo->delete();
 
         return redirect()->back()
-            ->with('success','Logo berhasil dihapus!');
+            ->with('success', 'Logo berhasil dihapus!');
     }
 }
