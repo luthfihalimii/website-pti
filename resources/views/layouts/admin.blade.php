@@ -46,6 +46,9 @@
             <a href="{{ route('admin.products.index') }}" class="{{ request()->routeIs('admin.products.*') ? 'bg-white text-slate-950 shadow-lg shadow-sky-500/10' : 'text-slate-300 hover:bg-white/8 hover:text-white' }} block rounded-2xl px-4 py-3 font-medium transition">
               Produk
             </a>
+            <a href="{{ route('admin.services.index') }}" class="{{ request()->routeIs('admin.services.*') ? 'bg-white text-slate-950 shadow-lg shadow-sky-500/10' : 'text-slate-300 hover:bg-white/8 hover:text-white' }} block rounded-2xl px-4 py-3 font-medium transition">
+              Layanan
+            </a>
             <a href="{{ route('admin.product-inquiries.index') }}" class="{{ request()->routeIs('admin.product-inquiries.*') ? 'bg-white text-slate-950 shadow-lg shadow-sky-500/10' : 'text-slate-300 hover:bg-white/8 hover:text-white' }} block rounded-2xl px-4 py-3 font-medium transition">
               Inquiry Produk
             </a>

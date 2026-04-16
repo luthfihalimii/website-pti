@@ -3,11 +3,6 @@
   @method('PUT')
 @endif
 
-@php
-  $existingAttachments = old('attachment_titles', isset($product) ? $product->attachments->pluck('title')->all() : ['']);
-  $attachmentRows = max(count($existingAttachments), 1);
-@endphp
-
 <div class="grid gap-5 md:grid-cols-2">
   <label class="block">
     <span class="mb-2 block text-sm font-medium text-slate-700">Kategori</span>

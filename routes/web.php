@@ -19,6 +19,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductCatalogController;
 use App\Http\Controllers\ProductInquiryController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceControllerAdmin;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\FooterController;
 use Illuminate\Support\Facades\Route;
@@ -26,9 +27,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // LOGO
-    Route::get('logos/create', [LogoController::class, 'create'])->name('logos.create');  // Route for creating logos
-    Route::get('logos', [LogoController::class, 'index'])->name('logos.index');  // Show list of logos
-    Route::post('logos', [LogoController::class, 'store'])->name('logos.store');  // Store new logo
+    Route::get('logos/create', [LogoController::class, 'create'])->name('logos.create');
+    Route::get('logos', [LogoController::class, 'index'])->name('logos.index');
+    Route::post('logos', [LogoController::class, 'store'])->name('logos.store');
     Route::put('logos/{logo}', [LogoController::class, 'update'])->name('logos.update');
     Route::delete('logos/{logo}', [LogoController::class, 'destroy'])->name('logos.destroy');
 
@@ -38,7 +39,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::delete('footer/{id}', [FooterController::class, 'destroy'])->name('footer.destroy');
     Route::post('footer/reset', [FooterController::class, 'reset'])->name('footer.reset');
 
+    Route::resource('services', AdminServiceControllerAdmin::class)->except(['show']); 
+    Route::resource('products', AdminProductController::class)->except(['show']);
+    Route::resource('categories', AdminCategoryController::class)->except(['show']);
 });
+
 
 Route::post('/locale', [LocaleController::class, 'update'])->name('locale.switch');
 
