@@ -20,17 +20,21 @@ class ProductAttachment extends Model
         'sort_order',
     ];
 
+    // Relasi ke model Product
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
 
+    // Menambahkan URL untuk lampiran
     protected function getUrlAttribute(): string
     {
+        // Jika disk adalah 'public', kita dapat langsung menggunakan URL /storage
         if ($this->disk === 'public') {
-            return '/storage/'.ltrim($this->path, '/');
+            return '/storage/' . ltrim($this->path, '/');
         }
 
+        // Untuk disk selain 'public', menggunakan Storage::disk($this->disk)->url() untuk mendapatkan URL file
         return Storage::disk($this->disk)->url($this->path);
     }
 }

@@ -33,18 +33,18 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
-            'throw' => false,
-            'report' => false,
+            'serve' => true,  // Allow access via public URL (used for assets)
+            'throw' => false,  // Don't throw exceptions for file errors
+            'report' => false,  // Don't log file errors
         ],
 
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
-            'visibility' => 'public',
-            'throw' => false,
-            'report' => false,
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/') . '/storage',  // Correct URL for accessing public files
+            'visibility' => 'public',  // Make files publicly accessible
+            'throw' => false,  // Don't throw exceptions for file errors
+            'report' => false,  // Don't log file errors
         ],
 
         's3' => [
@@ -56,8 +56,8 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
-            'report' => false,
+            'throw' => false,  // Don't throw exceptions for file errors
+            'report' => false,  // Don't log file errors
         ],
 
     ],
@@ -74,7 +74,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/public'),  // Link public storage folder to /public/storage
     ],
 
 ];

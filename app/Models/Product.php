@@ -46,4 +46,14 @@ class Product extends Model
     {
         return $this->cover_image_path ? '/storage/' . ltrim($this->cover_image_path, '/') : null;
     }
+
+    public function features()
+    {
+        return $this->hasMany(ProductFeature::class);
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(ProductAttachment::class);
+    }
 }

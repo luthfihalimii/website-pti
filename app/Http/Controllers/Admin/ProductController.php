@@ -6,142 +6,252 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Models\Product;
+use App\Models\ProductAttachment;
 use App\Models\ProductCategory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Models\ProductFeature;
+use App\Models\ProductMedia;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;  // Pastikan Log facade ditambahkan
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')
-            ->orderBy('sort_order')
-            ->orderBy('name')
-            ->paginate(15);
-
-        return view('admin.products.index', compact('products'));
+        return view('admin.products.index', [
+            'products' => Product::query()
+                ->with('category')
+                ->orderBy('sort_order')
+                ->orderBy('name')
+                ->paginate(15),
+        ]);
     }
 
     public function create()
     {
-        $categories = ProductCategory::all();
-        return view('admin.products.create', compact('categories'));
+        return view('admin.products.create', [
+            'categories' => ProductCategory::query()->orderBy('sort_order')->orderBy('name')->get(),
+        ]);
     }
 
     public function store(StoreProductRequest $request)
     {
-        DB::beginTransaction();
+        $storedFiles = [];
 
         try {
-            $validated = $request->validated();
-            $product = Product::create([
-                ...$validated,
-                'is_featured' => $request->boolean('is_featured', false),
-            ]);
+            DB::transaction(function () use ($request, &$storedFiles): void {
+                $validated = $request->validated();
+                $coverImagePath = $request->hasFile('cover_image')
+                    ? $this->storeUploadedFile($request->file('cover_image'), 'products/covers', 'public', $storedFiles)
+                    : null;
 
-            if ($request->hasFile('cover_image')) {
-                $path = $request->file('cover_image')->store('products', 'public');
-                $product->cover_image_path = $path;
-                $product->cover_image_disk = 'public';
-                $product->save();
-            }
+                $product = Product::create([
+                    ...collect($validated)->except([
+                        'cover_image',
+                        'feature_titles',
+                        'feature_descriptions',
+                        'gallery_images',
+                        'attachment_titles',
+                        'attachment_files',
+                    ])->toArray(),
+                    'cover_image_path' => $coverImagePath,
+                    'cover_image_disk' => $coverImagePath ? 'public' : null,
+                    'is_featured' => $request->boolean('is_featured'),
+                ]);
 
-            $product->features()->sync($request->input('features', []));
-            DB::commit();
+                $this->syncFeatures($product, $request->input('feature_titles', []), $request->input('feature_descriptions', []));
+                $this->storeGalleryImages($product, $request->file('gallery_images', []), $storedFiles);
+                $this->storeAttachments($product, $request->input('attachment_titles', []), $request->file('attachment_files', []), $storedFiles);
+            });
+        } catch (Throwable $exception) {
+            $this->deleteStoredFiles($storedFiles);
 
-            return redirect()->route('admin.products.index')->with('status', 'Produk berhasil ditambahkan!');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-
-            // Log error
-            Log::error("Error storing product: " . $th->getMessage(), [
-                'request_data' => $request->all(),  // Menambahkan data request yang dikirim untuk membantu debugging
-                'exception' => $th
-            ]);
-
-            if (isset($path)) {
-                Storage::disk('public')->delete($path);
-            }
-
-            return redirect()->route('admin.products.index')->withErrors('Terjadi kesalahan saat menyimpan produk.');
+            throw $exception;
         }
+
+        return redirect()->route('admin.products.index')->with('status', 'Produk berhasil dibuat.');
     }
 
     public function edit(Product $product)
     {
-        $categories = ProductCategory::all();
-        return view('admin.products.edit', compact('product', 'categories'));
+        return view('admin.products.edit', [
+            'product' => $product->load(['features', 'media', 'attachments']),
+            'categories' => ProductCategory::query()->orderBy('sort_order')->orderBy('name')->get(),
+        ]);
     }
 
     public function update(UpdateProductRequest $request, Product $product)
     {
-        DB::beginTransaction();
+        $storedFiles = [];
+        $obsoleteFiles = [];
 
         try {
-            $validated = $request->validated();
-            $product->update([
-                ...$validated,
-                'is_featured' => $request->boolean('is_featured', false),
-            ]);
+            DB::transaction(function () use ($request, $product, &$storedFiles, &$obsoleteFiles): void {
+                $validated = $request->validated();
 
-            if ($request->hasFile('cover_image')) {
-                if ($product->cover_image_path) {
-                    Storage::disk('public')->delete($product->cover_image_path);  // Menghapus gambar lama
+                $data = [
+                    ...collect($validated)->except([
+                        'cover_image',
+                        'feature_titles',
+                        'feature_descriptions',
+                        'gallery_images',
+                        'attachment_titles',
+                        'attachment_files',
+                    ])->toArray(),
+                    'is_featured' => $request->boolean('is_featured'),
+                ];
+
+                if ($request->hasFile('cover_image')) {
+                    $data['cover_image_path'] = $this->storeUploadedFile($request->file('cover_image'), 'products/covers', 'public', $storedFiles);
+                    $data['cover_image_disk'] = 'public';
+
+                    if ($product->cover_image_path && $product->cover_image_disk) {
+                        $obsoleteFiles[] = $this->fileReference($product->cover_image_disk, $product->cover_image_path);
+                    }
                 }
-                $path = $request->file('cover_image')->store('products', 'public');
-                $product->cover_image_path = $path;
-                $product->cover_image_disk = 'public';
-                $product->save();
-            }
 
-            $product->features()->sync($request->input('features', []));
-            DB::commit();
+                $product->update($data);
 
-            return redirect()->route('admin.products.index')->with('status', 'Produk berhasil diperbarui!');
-        } catch (\Throwable $th) {
-            DB::rollBack();
+                if ($request->exists('feature_titles') || $request->exists('feature_descriptions')) {
+                    $product->features()->delete();
+                    $this->syncFeatures($product, $request->input('feature_titles', []), $request->input('feature_descriptions', []));
+                }
 
-            // Log error
-            Log::error("Error updating product: " . $th->getMessage(), [
-                'request_data' => $request->all(),
-                'exception' => $th
-            ]);
+                if ($request->hasFile('gallery_images')) {
+                    $existingMedia = $product->media()->get(['id', 'path', 'disk']);
 
-            if (isset($path)) {
-                Storage::disk('public')->delete($path);
-            }
+                    $this->storeGalleryImages($product, $request->file('gallery_images', []), $storedFiles);
+                    ProductMedia::query()->whereKey($existingMedia->modelKeys())->delete();
 
-            return redirect()->route('admin.products.index')->withErrors('Terjadi kesalahan saat memperbarui produk.');
+                    foreach ($existingMedia as $media) {
+                        $obsoleteFiles[] = $this->fileReference($media->disk, $media->path);
+                    }
+                }
+
+                if ($request->hasFile('attachment_files')) {
+                    $existingAttachments = $product->attachments()->get(['id', 'path', 'disk']);
+
+                    $this->storeAttachments($product, $request->input('attachment_titles', []), $request->file('attachment_files', []), $storedFiles);
+                    ProductAttachment::query()->whereKey($existingAttachments->modelKeys())->delete();
+
+                    foreach ($existingAttachments as $attachment) {
+                        $obsoleteFiles[] = $this->fileReference($attachment->disk, $attachment->path);
+                    }
+                }
+            });
+        } catch (Throwable $exception) {
+            $this->deleteStoredFiles($storedFiles);
+
+            throw $exception;
         }
+
+        $this->deleteStoredFiles($obsoleteFiles);
+
+        return redirect()->route('admin.products.index')->with('status', 'Produk berhasil diperbarui.');
     }
 
     public function destroy(Product $product)
     {
-        DB::beginTransaction();
+        $product->load(['media:id,product_id,path,disk', 'attachments:id,product_id,path,disk']);
 
-        try {
-            if ($product->cover_image_path) {
-                Storage::disk('public')->delete($product->cover_image_path);
+        $filesToDelete = [];
+
+        if ($product->cover_image_path && $product->cover_image_disk) {
+            $filesToDelete[] = $this->fileReference($product->cover_image_disk, $product->cover_image_path);
+        }
+
+        foreach ($product->media as $media) {
+            $filesToDelete[] = $this->fileReference($media->disk, $media->path);
+        }
+
+        foreach ($product->attachments as $attachment) {
+            $filesToDelete[] = $this->fileReference($attachment->disk, $attachment->path);
+        }
+
+        DB::transaction(function () use ($product): void {
+            $product->delete();
+        });
+
+        $this->deleteStoredFiles($filesToDelete);
+
+        return redirect()->route('admin.products.index')->with('status', 'Produk berhasil dihapus.');
+    }
+
+    private function syncFeatures(Product $product, array $titles, array $descriptions): void
+    {
+        foreach ($titles as $index => $title) {
+            $title = trim((string) $title);
+
+            if ($title === '') {
+                continue;
             }
 
-            $product->features()->delete();
-            $product->delete();
-
-            DB::commit();
-
-            return redirect()->route('admin.products.index')->with('status', 'Produk berhasil dihapus!');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-
-            // Log error
-            Log::error("Error deleting product: " . $th->getMessage(), [
+            ProductFeature::create([
                 'product_id' => $product->id,
-                'exception' => $th
+                'title' => $title,
+                'description' => $descriptions[$index] ?? null,
+                'sort_order' => $index,
             ]);
-
-            return redirect()->route('admin.products.index')->withErrors('Terjadi kesalahan saat menghapus produk.');
         }
+    }
+
+    /**
+     * @param  array<int, UploadedFile>  $images
+     */
+    private function storeGalleryImages(Product $product, array $images, array &$storedFiles): void
+    {
+        foreach ($images as $index => $image) {
+            ProductMedia::create([
+                'product_id' => $product->id,
+                'path' => $this->storeUploadedFile($image, 'products/gallery', 'public', $storedFiles),
+                'disk' => 'public',
+                'alt_text' => $product->name.' gallery '.($index + 1),
+                'sort_order' => $index,
+            ]);
+        }
+    }
+
+    /**
+     * @param  array<int, UploadedFile>  $files
+     */
+    private function storeAttachments(Product $product, array $titles, array $files, array &$storedFiles): void
+    {
+        foreach ($files as $index => $file) {
+            ProductAttachment::create([
+                'product_id' => $product->id,
+                'title' => $titles[$index] ?? ('Attachment '.($index + 1)),
+                'path' => $this->storeUploadedFile($file, 'products/attachments', 'public', $storedFiles),
+                'disk' => 'public',
+                'mime_type' => $file->getClientMimeType(),
+                'sort_order' => $index,
+            ]);
+        }
+    }
+
+    private function storeUploadedFile(UploadedFile $file, string $directory, string $disk, array &$storedFiles): string
+    {
+        $path = $file->store($directory, $disk);
+        $storedFiles[] = $this->fileReference($disk, $path);
+
+        return $path;
+    }
+
+    private function deleteStoredFiles(array $storedFiles): void
+    {
+        foreach ($storedFiles as $file) {
+            Storage::disk($file['disk'])->delete($file['path']);
+        }
+    }
+
+    /**
+     * @return array{disk: string, path: string}
+     */
+    private function fileReference(string $disk, string $path): array
+    {
+        return [
+            'disk' => $disk,
+            'path' => $path,
+        ];
     }
 }
