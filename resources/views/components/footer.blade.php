@@ -1,18 +1,26 @@
 <footer class="text-white">
   <div class="footer-gradient px-6 py-10">
     <div class="max-w-6xl mx-auto">
+      @php
+        $footerLogos = \App\Models\Logo::where('type', 'like', 'footer_%')->get()->keyBy('type');
+
+        $logoPti = $footerLogos->get('footer_logo_pti');
+        $mapIcon = $footerLogos->get('footer_map_icon');
+        $emailIcon = $footerLogos->get('footer_email_icon');
+        $phoneIcon = $footerLogos->get('footer_phone_icon');
+        $whatsappIcon = $footerLogos->get('footer_whatsapp_icon');
+        $linkedinIcon = $footerLogos->get('footer_linkedin_icon');
+        $clockIcon = $footerLogos->get('footer_clock_icon');
+      @endphp
+
       <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
 
         <!-- KIRI -->
         <div>
-          @php
-            $footerLogos = \App\Models\Logo::where('type','like','footer_%')->get()->keyBy('type');
-          @endphp
-
           <div class="inline-flex items-center gap-3 bg-white/95 text-gray-800 rounded-lg px-4 py-3">
             <img class="h-9 w-auto"
-              src="{{ asset($footerLogos['footer_logo_pti']) 
-                    ? asset('storage/'.$footerLogos['footer_logo_pti']->path) 
+              src="{{ $logoPti && $logoPti->path
+                    ? asset('storage/' . $logoPti->path)
                     : asset('assets/logo/logo.svg') }}"
               alt="Piramidasoft">
 
@@ -29,46 +37,51 @@
 
             <li class="flex items-center gap-3">
               <img
-                src="{{asset($footerLogos['footer_map_icon'])
-                      ? asset('storage/'.$footerLogos['footer_map_icon']->path)
+                src="{{ $mapIcon && $mapIcon->path
+                      ? asset('storage/' . $mapIcon->path)
                       : asset('assets/icons/place.svg') }}"
-                class="w-5 h-5">
+                class="w-5 h-5"
+                alt="Map Icon">
               <span>{{ config('site.company.address') }}</span>
             </li>
 
             <li class="flex items-center gap-3">
               <img
-                src="{{ asset($footerLogos['footer_email_icon'])
-                      ? asset('storage/'.$footerLogos['footer_email_icon']->path)
+                src="{{ $emailIcon && $emailIcon->path
+                      ? asset('storage/' . $emailIcon->path)
                       : asset('assets/icons/mail.svg') }}"
-                class="w-5 h-5">
+                class="w-5 h-5"
+                alt="Email Icon">
               <span>{{ config('site.company.primary_email') }}</span>
             </li>
 
             <li class="flex items-center gap-3">
               <img
-                src="{{ asset($footerLogos['footer_phone_icon'])
-                      ? asset('storage/'.$footerLogos['footer_phone_icon']->path)
+                src="{{ $phoneIcon && $phoneIcon->path
+                      ? asset('storage/' . $phoneIcon->path)
                       : asset('assets/icons/telp.svg') }}"
-                class="w-5 h-5">
+                class="w-5 h-5"
+                alt="Phone Icon">
               <span>{{ config('site.company.phone') }}</span>
             </li>
 
             <li class="flex items-center gap-3">
               <img
-                src="{{ asset($footerLogos['footer_whatsapp_icon'])
-                      ? asset('storage/'.$footerLogos['footer_whatsapp_icon']->path)
+                src="{{ $whatsappIcon && $whatsappIcon->path
+                      ? asset('storage/' . $whatsappIcon->path)
                       : asset('assets/icons/whatsapp.svg') }}"
-                class="w-5 h-5">
+                class="w-5 h-5"
+                alt="WhatsApp Icon">
               <span>{{ config('site.company.whatsapp') }}</span>
             </li>
 
             <li class="flex items-center gap-3">
               <img
-                src="{{ isset($footerLogos['footer_linkedin_icon'])
-                      ? asset('storage/'.$footerLogos['footer_linkedin_icon']->path)
+                src="{{ $linkedinIcon && $linkedinIcon->path
+                      ? asset('storage/' . $linkedinIcon->path)
                       : asset('assets/icons/linkedin.svg') }}"
-                class="w-5 h-5">
+                class="w-5 h-5"
+                alt="LinkedIn Icon">
               <span>{{ config('site.company.linkedin') }}</span>
             </li>
 
@@ -107,10 +120,11 @@
 
                 <div class="flex items-center gap-2 px-4 py-3 border-r border-gray-200">
                   <img
-                    src="{{ asset($footerLogos['footer_clock_icon'])
-                          ? asset('storage/'.$footerLogos['footer_clock_icon']->path)
+                    src="{{ $clockIcon && $clockIcon->path
+                          ? asset('storage/' . $clockIcon->path)
                           : asset('assets/icons/jam.svg') }}"
-                    class="w-4 h-4">
+                    class="w-4 h-4"
+                    alt="Clock Icon">
 
                   <div class="leading-tight font-semibold text-[14px]">
                     <div>Jam</div>
