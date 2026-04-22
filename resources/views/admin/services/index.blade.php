@@ -3,6 +3,7 @@
 @section('title', 'Layanan Produk')
 
 @section('content')
+  <!-- Section Header -->
   <section class="rounded-[30px] border border-slate-200/80 bg-white p-6 shadow-sm">
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
@@ -22,46 +23,56 @@
     </div>
   </section>
 
+  <!-- Layanan Table -->
   <div class="mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
     <div class="overflow-x-auto">
       <table class="min-w-[760px] divide-y divide-slate-200 text-sm">
-      <thead class="bg-slate-50 text-left text-slate-600">
-        <tr>
-          <th class="px-5 py-4 font-semibold">Nama</th>
-          <th class="px-5 py-4 font-semibold">Kategori</th>
-          <th class="px-5 py-4 font-semibold">Status</th>
-          <th class="px-5 py-4 font-semibold">Urutan</th>
-          <th class="px-5 py-4 font-semibold"></th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-200">
-        @forelse ($services as $service)
+        <thead class="bg-slate-50 text-left text-slate-600">
           <tr>
-            <td class="px-5 py-4 font-medium text-slate-950">{{ $service->name }}</td>
-            <td class="px-5 py-4 text-slate-600">{{ $service->category->name }}</td>
-            <td class="px-5 py-4 text-slate-600">{{ $service->status }}</td>
-            <td class="px-5 py-4 text-slate-600">{{ $service->sort_order }}</td>
-            <td class="px-5 py-4 text-right">
-              <div class="admin-table-actions inline-flex items-center gap-4 whitespace-nowrap">
-                <a href="{{ route('admin.services.edit', $service) }}" class="font-semibold text-blue-600 hover:text-blue-700">Edit</a>
-                <form action="{{ route('admin.services.destroy', $service) }}" method="POST" onsubmit="return confirm('Hapus layanan ini?');">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="font-semibold text-red-600 hover:text-red-700">Hapus</button>
-                </form>
-              </div>
-            </td>
+            <th class="px-5 py-4 font-semibold">Nama</th>
+            <th class="px-5 py-4 font-semibold">Kategori</th>
+            <th class="px-5 py-4 font-semibold">Status</th>
+            <th class="px-5 py-4 font-semibold">Urutan</th>
+            <th class="px-5 py-4 font-semibold">Gambar</th>
+            <th class="px-5 py-4 font-semibold"></th>
           </tr>
-        @empty
-          <tr>
-            <td colspan="5" class="px-5 py-12 text-center text-slate-500">Belum ada layanan.</td>
-          </tr>
-        @endforelse
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          @forelse ($services as $service)
+            <tr>
+              <td class="px-5 py-4 font-medium text-slate-950">{{ $service->name }}</td>
+              <td class="px-5 py-4 text-slate-600">{{ $service->category->name }}</td>
+              <td class="px-5 py-4 text-slate-600">{{ ucfirst($service->status) }}</td>
+              <td class="px-5 py-4 text-slate-600">{{ $service->sort_order }}</td>
+              <td class="px-5 py-4 text-slate-600">
+                @if($service->image)
+                  <img src="{{ asset('storage/' . $service->image) }}" alt="Gambar Layanan" class="w-16 h-16 object-cover rounded-full">
+                @else
+                  <span class="text-slate-500">Tidak ada gambar</span>
+                @endif
+              </td>
+              <td class="px-5 py-4 text-right">
+                <div class="admin-table-actions inline-flex items-center gap-4 whitespace-nowrap">
+                  <a href="{{ route('admin.services.edit', $service) }}" class="font-semibold text-blue-600 hover:text-blue-700">Edit</a>
+                  <form action="{{ route('admin.services.destroy', $service) }}" method="POST" onsubmit="return confirm('Hapus layanan ini?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="font-semibold text-red-600 hover:text-red-700">Hapus</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          @empty
+            <tr>
+              <td colspan="6" class="px-5 py-12 text-center text-slate-500">Belum ada layanan.</td>
+            </tr>
+          @endforelse
+        </tbody>
+      </table>
     </div>
   </div>
 
+  <!-- Pagination -->
   @if ($services->hasPages())
     <div class="mt-6">
       {{ $services->links() }}
