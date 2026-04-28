@@ -13,7 +13,7 @@ class AdminUserSeeder extends Seeder
             ['email' => 'admin@piramidasoft.com'],
             [
                 'name' => 'Piramida Admin',
-                'password' => 'PyFpepVPSugPhXpfiult',
+                'password' => 'piramida123',
                 'is_admin' => true,
             ]
         );
