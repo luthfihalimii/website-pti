@@ -87,7 +87,9 @@ Route::post('/lowongan/{slug}/form', [JobApplicationController::class, 'store'])
 
 Route::get('/publikasi', [PublicationController::class, 'index'])->name('publications.index');
 Route::get('/publikasi/flipbook', [PublicationController::class, 'flipbook'])->name('publications.flipbook');
-Route::redirect('/login', '/admin/login');
+Route::get('/login', function () {
+    return redirect('/admin/login');
+})->name('login');
 Route::get('/admin', AdminEntryRedirectController::class);
 Route::get('/dashboard', AdminEntryRedirectController::class);
 

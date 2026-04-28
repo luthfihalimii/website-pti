@@ -37,6 +37,14 @@
         <input type="number" id="sort_order" name="sort_order" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
       </div>
 
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-slate-700">Status</label>
+        <select name="status" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+</div>
+
       <button type="submit" class="inline-flex h-12 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700">
         Simpan Layanan
       </button>
