@@ -3,22 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Service; // Pastikan sudah ada model Service
 use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
     public function home()
     {
-        $services = collect(config('site.home.services'))
-            ->map(fn (array $service) => [
-                ...$service,
-                'image' => asset($service['image']),
-            ])
-            ->all();
+        // Mengambil layanan dari database
+        $services = Service::query()
+            ->where('status', 'active')  // Menggunakan status sebagai filter
+            ->orderBy('sort_order')
+            ->get()
+            ->map(fn (Service $service) => [
+                'title' => $service->name,  // Menggunakan name daripada title jika sesuai
+                'description' => $service->description,
+                'image' => asset('storage/' . $service->image), // Pastikan kolom image ada di tabel
+                'icon' => $service->icon ?? null,  // Jika kolom icon ada, pastikan validasi jika tidak ada
+            ]);
 
+        // Mengambil produk unggulan dari database
         $products = Product::query()
             ->with('features')
-            ->published()
+            ->published() // Pastikan ada scope published() di model Product
             ->where('is_featured', true)
             ->orderBy('sort_order')
             ->get()
@@ -33,6 +40,7 @@ class PageController extends Controller
                 'link' => route('products.show', $product->slug),
             ]);
 
+        // Jika produk unggulan kurang dari 5, ambil fallback dari konfigurasi
         if ($products->count() < 5) {
             $fallbackProducts = collect(config('site.home.featured_products'))
                 ->map(fn (array $product) => [
@@ -47,8 +55,7 @@ class PageController extends Controller
             $products = $products->concat($fallbackProducts)->take(5);
         }
 
-        $products = $products->values()->all();
-
+        // Mengambil logo klien dari konfigurasi
         $clients = collect(config('site.home.clients'))
             ->map(fn (array $client) => [
                 ...$client,

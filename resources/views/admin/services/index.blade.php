@@ -34,7 +34,7 @@
             <th class="px-5 py-4 font-semibold">Status</th>
             <th class="px-5 py-4 font-semibold">Urutan</th>
             <th class="px-5 py-4 font-semibold">Gambar</th>
-            <th class="px-5 py-4 font-semibold"></th>
+            <th class="px-5 py-4 font-semibold">Aksi</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-200">

@@ -19,13 +19,13 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductCatalogController;
 use App\Http\Controllers\ProductInquiryController;
 use App\Http\Controllers\PublicationController;
-use App\Http\Controllers\Admin\ServiceController as AdminServiceControllerAdmin;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\FooterController;
+use App\Http\Controllers\Admin\AdminServiceController;  // Admin Service Controller
+use App\Http\Controllers\ServiceController;  // Service Controller for Public
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
-
     // LOGO
     Route::get('logos/create', [LogoController::class, 'create'])->name('logos.create');
     Route::get('logos', [LogoController::class, 'index'])->name('logos.index');
@@ -39,17 +39,19 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::delete('footer/{id}', [FooterController::class, 'destroy'])->name('footer.destroy');
     Route::post('footer/reset', [FooterController::class, 'reset'])->name('footer.reset');
 
-    Route::resource('services', AdminServiceControllerAdmin::class)->except(['show']); 
+    // Rute untuk CRUD layanan di Admin
+    Route::resource('services', AdminServiceController::class)->except(['show']);
     Route::resource('products', AdminProductController::class)->except(['show']);
     Route::resource('categories', AdminCategoryController::class)->except(['show']);
 });
 
+// Rute untuk Publik (Read-Only)
+Route::get('/layanan', [ServiceController::class, 'index'])->name('services.index');
+Route::get('/layanan/{service}', [ServiceController::class, 'show'])->name('services.show');
 
 Route::post('/locale', [LocaleController::class, 'update'])->name('locale.switch');
-
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/tentang', [PageController::class, 'about'])->name('about');
-Route::get('/layanan', [PageController::class, 'services'])->name('services');
 Route::get('/produk', [ProductCatalogController::class, 'index'])->name('products.index');
 Route::get('/produk/{slug}', [ProductCatalogController::class, 'show'])->name('products.show');
 Route::post('/produk/{slug}/inquiry', [ProductInquiryController::class, 'store'])

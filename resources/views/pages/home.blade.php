@@ -61,7 +61,7 @@
         @foreach ($services as $service)
           <article class="service-card">
             <div class="service-image-wrap">
-              <img src="{{ $service['image'] }}" alt="{{ __($service['title']) }}">
+              <img src="{{ asset('storage/' . $service['image']) }}" alt="{{ __($service['title']) }}">
             </div>
             <div class="service-icon">{{ $service['icon'] }}</div>
             <div class="service-body">
@@ -126,9 +126,10 @@
       </div>
     </div>
   </section>
-@php
-  $clientLogos = \App\Models\Logo::where('type', 'client')->latest()->get();
-@endphp
+
+  @php
+    $clientLogos = \App\Models\Logo::where('type', 'client')->latest()->get();
+  @endphp
   <section class="home-section bg-[#ECEFF4] pb-16 md:pb-20">
     <div class="mx-auto w-[92%] max-w-[1200px]">
       <header class="text-center">
@@ -142,13 +143,9 @@
           @foreach ($clientLogos as $client)
             <figure class="client-badge">
               <div class="client-badge-shape">
-                <figure class="client-badge">
-              <div class="client-badge-shape">
                 <img src="{{ asset('storage/' . $client->path) }}" alt="Client Logo">
               </div>
-            </figure>
-              </div>
-              <figcaption>{{ __($client['name']) }}</figcaption>
+              <figcaption>{{ __($client->name) }}</figcaption>
             </figure>
           @endforeach
         </div>

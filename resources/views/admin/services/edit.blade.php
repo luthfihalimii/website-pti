@@ -9,10 +9,13 @@
       @csrf
       @method('PUT')
 
+      <!-- Nama Layanan -->
       <div class="mb-4">
         <label for="name" class="block text-sm font-medium text-slate-700">Nama Layanan</label>
-       <input type="text" id="name" name="name" value="{{ old('name', $service->name ?? '') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
+        <input type="text" id="name" name="name" value="{{ old('name', $service->name ?? '') }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
+      </div>
 
+      <!-- Kategori Layanan -->
       <div class="mb-4">
         <label for="category_id" class="block text-sm font-medium text-slate-700">Kategori</label>
         <select id="category_id" name="category_id" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
@@ -22,11 +25,13 @@
         </select>
       </div>
 
+      <!-- Deskripsi Layanan -->
       <div class="mb-4">
         <label for="description" class="block text-sm font-medium text-slate-700">Deskripsi</label>
         <textarea id="description" name="description" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" rows="4" required>{{ old('description', $service->description) }}</textarea>
       </div>
 
+      <!-- Gambar Layanan -->
       <div class="mb-4">
         <label for="image" class="block text-sm font-medium text-slate-700">Gambar Layanan</label>
         <input type="file" id="image" name="image" class="h-12 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
@@ -35,11 +40,13 @@
         @endif
       </div>
 
+      <!-- Urutan Layanan -->
       <div class="mb-4">
         <label for="sort_order" class="block text-sm font-medium text-slate-700">Urutan</label>
         <input type="number" id="sort_order" name="sort_order" value="{{ old('sort_order', $service->sort_order) }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
       </div>
 
+      <!-- Tombol Simpan -->
       <button type="submit" class="inline-flex h-12 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700">
         Simpan Layanan
       </button>

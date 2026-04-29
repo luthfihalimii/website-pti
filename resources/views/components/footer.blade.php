@@ -92,10 +92,10 @@
         <div>
           <h4 class="font-semibold text-lg">{{ __('Layanan') }}</h4>
           <ul class="mt-4 space-y-2 text-sm text-white/95 list-disc list-inside">
-            <li><a href="{{ route('services') }}#eprocurement" class="hover:underline">E-Procurement</a></li>
-            <li><a href="{{ route('services') }}#itconsultant" class="hover:underline">IT Consultant</a></li>
-            <li><a href="{{ route('services') }}#business" class="hover:underline">Business System</a></li>
-            <li><a href="{{ route('services') }}#egovernment" class="hover:underline">E-Government & Smart City</a></li>
+            <li><a href="{{ route('services.index') }}#eprocurement" class="hover:underline">E-Procurement</a></li>
+            <li><a href="{{ route('services.index') }}#itconsultant" class="hover:underline">IT Consultant</a></li>
+            <li><a href="{{ route('services.index') }}#business" class="hover:underline">Business System</a></li>
+            <li><a href="{{ route('services.index') }}#egovernment" class="hover:underline">E-Government & Smart City</a></li>
           </ul>
         </div>
 
