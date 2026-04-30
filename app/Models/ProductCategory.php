@@ -18,20 +18,17 @@ class ProductCategory extends Model
         'is_active',
     ];
 
-    // Properti untuk casting atribut
     protected $casts = [
         'is_active' => 'boolean',
     ];
 
-    // Relasi ke produk
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
-    // Relasi ke layanan
     public function services(): HasMany
     {
-        return $this->hasMany(Service::class);
+        return $this->hasMany(Service::class, 'category_id');
     }
 }
