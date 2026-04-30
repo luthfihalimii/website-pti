@@ -5,7 +5,6 @@
 @section('content')
 <div class="space-y-8 p-6">
 
-    {{-- ALERT SUCCESS / ERROR --}}
     @if(session('success'))
         <div class="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
             {{ session('success') }}
@@ -22,8 +21,7 @@
         </div>
     @endif
 
-
-    {{-- ================= NAVBAR LOGO ================= --}}
+    {{-- NAVBAR LOGO --}}
     <div class="bg-white border rounded-2xl p-6 shadow-sm">
         <h2 class="text-lg font-semibold text-slate-800 mb-4">Logo Navbar</h2>
 
@@ -38,13 +36,18 @@
                 @endif
             </div>
 
-            @if($pti)
-            <form action="{{ route('admin.logos.update', $pti) }}"
+            <form action="{{ $pti ? route('admin.logos.update', $pti) : route('admin.logos.store') }}"
                   method="POST"
                   enctype="multipart/form-data"
                   class="space-y-3">
                 @csrf
-                @method('PUT')
+
+                @if($pti)
+                    @method('PUT')
+                @else
+                    <input type="hidden" name="type" value="pti">
+                    <input type="hidden" name="name" value="Logo Navbar">
+                @endif
 
                 <label class="flex items-center gap-3 cursor-pointer">
                     <span class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
@@ -56,19 +59,18 @@
                     <input type="file"
                            name="logo"
                            hidden
+                           required
                            onchange="handleFile(this,'preview-pti','file-pti')">
                 </label>
 
-                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm w-full">
-                    Update Logo
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm w-full">
+                    {{ $pti ? 'Update Logo' : 'Upload Logo' }}
                 </button>
             </form>
-            @endif
         </div>
     </div>
 
-
-    {{-- ================= CLIENT LOGO ================= --}}
+    {{-- CLIENT LOGO --}}
     <div class="bg-white border rounded-2xl p-6 shadow-sm">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-semibold text-slate-800">Logo Client</h2>
@@ -87,9 +89,7 @@
                          src="{{ asset('storage/'.$c->path) }}"
                          class="h-20 mx-auto object-contain">
                 @else
-                    <span class="text-sm text-slate-400">
-                        Logo tidak ditemukan
-                    </span>
+                    <span class="text-sm text-slate-400">Logo tidak ditemukan</span>
                 @endif
 
                 <form action="{{ route('admin.logos.update',$c) }}"
@@ -132,7 +132,7 @@
 
                     <button type="submit"
                             onclick="return confirm('Yakin hapus logo ini?')"
-                            class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
+                            class="w-full bg-red-500 text-white py-2 rounded-lg text-sm">
                         Hapus
                     </button>
                 </form>
@@ -146,13 +146,9 @@
         </div>
     </div>
 
-
-
-    {{-- ================= FOOTER LOGO ================= --}}
+    {{-- FOOTER LOGO --}}
     <div class="bg-white border rounded-2xl p-6 shadow-sm">
-        <h2 class="text-lg font-semibold text-slate-800 mb-4">
-            Logo Footer
-        </h2>
+        <h2 class="text-lg font-semibold text-slate-800 mb-4">Logo Footer</h2>
 
         @php
         $footerTypes = [
@@ -167,29 +163,21 @@
         @endphp
 
         <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-5">
-
             @foreach($footerTypes as $type => $label)
             @php
                 $logo = $footers->firstWhere('type',$type);
             @endphp
 
             <div class="border rounded-xl p-4 bg-slate-50 space-y-3 text-center">
-
-                <p class="text-sm font-semibold text-slate-800">
-                    {{ $label }}
-                </p>
+                <p class="text-sm font-semibold text-slate-800">{{ $label }}</p>
 
                 <div class="flex justify-center items-center h-24 w-24 border rounded-xl bg-white mx-auto">
                     @if($logo && $logo->path)
-                        <img
-                            src="{{ asset('storage/'.$logo->path) }}"
-                            class="h-20 w-20 object-contain"
-                            id="preview-{{ $type }}"
-                        >
+                        <img src="{{ asset('storage/'.$logo->path) }}"
+                             class="h-20 w-20 object-contain"
+                             id="preview-{{ $type }}">
                     @else
-                        <span class="text-xs text-slate-400">
-                            Belum ada logo
-                        </span>
+                        <span class="text-xs text-slate-400">Belum ada logo</span>
                     @endif
                 </div>
 
@@ -213,7 +201,7 @@
                                onchange="handleFile(this,'preview-{{ $type }}','file-{{ $type }}')">
                     </label>
 
-                    <button class="w-full bg-blue-600 text-white py-2 rounded-lg text-sm mt-1">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg text-sm mt-1">
                         Upload
                     </button>
                 </form>
@@ -224,22 +212,19 @@
                     @csrf
                     @method('DELETE')
 
-                    <button
-                        onclick="return confirm('Yakin hapus icon ini?')"
-                        class="w-full bg-red-500 text-white py-2 rounded-lg text-sm mt-1">
+                    <button type="submit"
+                            onclick="return confirm('Yakin hapus icon ini?')"
+                            class="w-full bg-red-500 text-white py-2 rounded-lg text-sm mt-1">
                         Hapus
                     </button>
                 </form>
                 @endif
-
             </div>
             @endforeach
-
         </div>
     </div>
 
 </div>
-
 
 <script>
 function handleFile(input, previewId, textId) {

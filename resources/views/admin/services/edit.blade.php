@@ -46,6 +46,15 @@
         <input type="number" id="sort_order" name="sort_order" value="{{ old('sort_order', $service->sort_order) }}" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
       </div>
 
+      <!-- Status Layanan -->
+      <div class="mb-4">
+        <label for="status" class="block text-sm font-medium text-slate-700">Status</label>
+        <select id="status" name="status" class="h-12 w-full rounded-xl border border-slate-300 px-4 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
+          <option value="active" {{ old('status', $service->status) == 'active' ? 'selected' : '' }}>Active</option>
+          <option value="inactive" {{ old('status', $service->status) == 'inactive' ? 'selected' : '' }}>Inactive</option>
+        </select>
+      </div>
+
       <!-- Tombol Simpan -->
       <button type="submit" class="inline-flex h-12 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700">
         Simpan Layanan

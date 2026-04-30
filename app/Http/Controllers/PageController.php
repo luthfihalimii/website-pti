@@ -3,29 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Service; // Pastikan sudah ada model Service
+use App\Models\Service;
 use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
     public function home()
     {
-        // Mengambil layanan dari database
+        // 🔥 AMBIL DATA LAYANAN DARI DATABASE (FIX)
         $services = Service::query()
-            ->where('status', 'active')  // Menggunakan status sebagai filter
+            ->where('status', 'active')
             ->orderBy('sort_order')
+            ->take(4)
             ->get()
             ->map(fn (Service $service) => [
-                'title' => $service->name,  // Menggunakan name daripada title jika sesuai
+                'title' => $service->name,
                 'description' => $service->description,
-                'image' => asset('storage/' . $service->image), // Pastikan kolom image ada di tabel
-                'icon' => $service->icon ?? null,  // Jika kolom icon ada, pastikan validasi jika tidak ada
+                'image' => $service->image, // ⬅️ PENTING (JANGAN pakai asset di sini)
+                'icon' => '▣',
             ]);
 
-        // Mengambil produk unggulan dari database
+        // Produk (tidak diubah)
         $products = Product::query()
             ->with('features')
-            ->published() // Pastikan ada scope published() di model Product
+            ->published()
             ->where('is_featured', true)
             ->orderBy('sort_order')
             ->get()
@@ -40,7 +41,6 @@ class PageController extends Controller
                 'link' => route('products.show', $product->slug),
             ]);
 
-        // Jika produk unggulan kurang dari 5, ambil fallback dari konfigurasi
         if ($products->count() < 5) {
             $fallbackProducts = collect(config('site.home.featured_products'))
                 ->map(fn (array $product) => [
@@ -55,7 +55,6 @@ class PageController extends Controller
             $products = $products->concat($fallbackProducts)->take(5);
         }
 
-        // Mengambil logo klien dari konfigurasi
         $clients = collect(config('site.home.clients'))
             ->map(fn (array $client) => [
                 ...$client,

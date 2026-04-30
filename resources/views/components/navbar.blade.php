@@ -54,9 +54,12 @@ $logoPti = \App\Models\Logo::where('type','pti')->latest()->first();
 
         {{-- LOGO --}}
         <a href="{{ route('home') }}" class="flex items-center gap-2 text-slate-950">
-          <img class="h-8 w-auto"
-               src="{{ ($logoPti && $logoPti->path) ? asset('storage/'.$logoPti->path) : asset('assets/logo/logo.svg') }}"
-               alt="Piramidasoft">
+          @if ($logoPti && $logoPti->path)
+            <img class="h-8 w-auto"
+                src="{{ asset('storage/'.$logoPti->path) }}"
+                alt="Piramidasoft">
+          @endif
+
           <span class="font-bold tracking-wide text-[16px]">
             PIRAMIDASOFT
           </span>

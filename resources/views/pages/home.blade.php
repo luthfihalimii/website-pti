@@ -14,8 +14,7 @@
             <img
               src="{{ asset('assets/images/tentang-kami.png') }}"
               alt="{{ __('Tim Piramida Teknologi Informasi') }}"
-              class="about-image"
-            >
+              class="about-image">
           </div>
           <div class="about-pti-badge">PTI</div>
           <div class="about-left-accent"></div>
@@ -58,72 +57,45 @@
       </header>
 
       <div class="mt-9 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-        @foreach ($services as $service)
-          <article class="service-card">
-            <div class="service-image-wrap">
-              <img src="{{ asset('storage/' . $service['image']) }}" alt="{{ __($service['title']) }}">
-            </div>
-            <div class="service-icon">{{ $service['icon'] }}</div>
-            <div class="service-body">
-              <h3>{{ __($service['title']) }}</h3>
-              <p>{{ __($service['description']) }}</p>
-            </div>
-          </article>
-        @endforeach
-      </div>
+      @foreach ($services as $service)
+        @php
+          $title = is_array($service) ? ($service['title'] ?? '') : ($service->name ?? '');
+          $description = is_array($service) ? ($service['description'] ?? '') : ($service->description ?? '');
+          $image = is_array($service) ? ($service['image'] ?? null) : ($service->image ?? null);
+
+          $imageUrl = asset('assets/images/hero-pages.png');
+
+          if (!empty($image)) {
+              $possiblePaths = [
+                  $image,
+                  'products/covers/' . basename($image),
+                  'footer/' . basename($image),
+                  'logos/' . basename($image),
+              ];
+
+              foreach ($possiblePaths as $path) {
+                  if (file_exists(public_path('storage/' . $path))) {
+                      $imageUrl = asset('storage/' . $path);
+                      break;
+                  }
+              }
+          }
+        @endphp
+
+        <article class="service-card">
+          <div class="service-image-wrap">
+            <img src="{{ $imageUrl }}" alt="{{ $title }}">
+          </div>
+
+          <div class="service-icon">▣</div>
+
+          <div class="service-body">
+            <h3>{{ $title }}</h3>
+            <p>{{ $description }}</p>
+          </div>
+        </article>
+      @endforeach
     </div>
-  </section>
-
-  <section class="home-section bg-[#ECEFF4] pb-16 md:pb-20">
-    <div class="mx-auto w-[92%] max-w-[1200px]" id="homeProductShowcase" data-product-count="{{ count($products) }}">
-      <header class="text-center">
-        <h2 class="home-heading">{{ __('Produk Unggulan Kami') }}</h2>
-        <p class="home-subheading">{{ __('Kami menawarkan beberapa produk untuk bisnis anda dengan berbagai pilihan') }}</p>
-      </header>
-
-      <article class="product-featured-card mt-9">
-        <div class="product-featured-image-wrap">
-          <img
-            src="{{ $products[0]['image'] }}"
-            alt="{{ __($products[0]['title']) }}"
-            data-product-image
-          >
-        </div>
-        <div class="product-featured-content">
-          <div class="product-featured-title-bar">
-            <h3 data-product-title>{{ __($products[0]['title']) }}</h3>
-          </div>
-
-          <div class="space-y-3 text-[14px] leading-relaxed text-[#525B6C]" data-product-summary>
-            @foreach ($products[0]['summary'] as $paragraph)
-              <p>{{ __($paragraph) }}</p>
-            @endforeach
-          </div>
-
-          <a href="{{ $products[0]['link'] }}" class="product-detail-link" data-product-link>{{ __('Lihat Detail') }}</a>
-        </div>
-      </article>
-
-      <div class="product-tabs-board mt-7">
-        <button type="button" aria-label="{{ __('Sebelumnya') }}" aria-controls="homeProductTabsTrack" class="product-arrow" data-product-arrow="prev">&lt;</button>
-        <div class="product-tabs" id="homeProductTabsTrack" data-product-track>
-          @foreach ($products as $index => $product)
-            <button
-              type="button"
-              class="product-tab {{ $index === 0 ? 'is-active' : '' }}"
-              data-product-tab="{{ $index }}"
-              data-product-title="{{ __($product['title']) }}"
-              data-product-image="{{ $product['image'] }}"
-              data-product-link="{{ $product['link'] }}"
-              data-product-summary='@json(array_map(static fn ($paragraph) => __($paragraph), $product['summary']))'
-            >
-              <img src="{{ $product['image'] }}" alt="{{ __($product['tab']) }}">
-              <span>{!! nl2br(e(__($product['tab_mobile']))) !!}</span>
-            </button>
-          @endforeach
-        </div>
-        <button type="button" aria-label="{{ __('Berikutnya') }}" aria-controls="homeProductTabsTrack" class="product-arrow" data-product-arrow="next">&gt;</button>
-      </div>
     </div>
   </section>
 
